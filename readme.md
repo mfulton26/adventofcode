@@ -1,4 +1,4 @@
-# adventofcodesolvers
+# adventofcode
 
 ## Requirements
 
