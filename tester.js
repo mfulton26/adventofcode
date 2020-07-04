@@ -113,7 +113,7 @@ export async function getTestCases(year, day, part) {
   ).toString();
   const response = await fetch(url);
   if (response.status === 404) {
-    throw new Error("no tests found; you lose badly!");
+    throw new Error("test cases not found; you lose badly!");
   }
   return response.json();
 }
