@@ -1,5 +1,7 @@
 # adventofcode
 
+Solvers and testers for [Advent of Code](https://adventofcode.com/).
+
 ## Requirements
 
 Chromium web browser.
