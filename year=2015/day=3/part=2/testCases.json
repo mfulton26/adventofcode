@@ -1,0 +1,5 @@
+[
+  { "input": "^v", "expected": 3 },
+  { "input": "^>v<", "expected": 3 },
+  { "input": "^v^v^v^v^v", "expected": 11 }
+]

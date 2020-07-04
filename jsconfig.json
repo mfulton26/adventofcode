@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "module": "esnext",
+    "target": "esnext",
+    "strict": true,
+    "lib": [
+      "dom",
+      "esnext"
+    ]
+  }
+}
