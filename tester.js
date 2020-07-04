@@ -108,7 +108,7 @@ export async function getTester(year, day, part) {
  */
 export async function getTestCases(year, day, part) {
   const url = new URL(
-    `/year=${year}/day=${day}/part=${part}/testCases.json`,
+    `year=${year}/day=${day}/part=${part}/testCases.json`,
     import.meta.url
   ).toString();
   const response = await fetch(url);
