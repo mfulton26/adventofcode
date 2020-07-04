@@ -2,15 +2,15 @@ import { getSolver, parsePathname } from "./solver.js";
 import { indexIterable } from "./iterables/indexer.js";
 
 const Status = {
-  Passed: {
+  PASSED: {
     name: "passed",
     circle: "🟢",
   },
-  Failed: {
+  FAILED: {
     name: "failed",
     circle: "🔴",
   },
-  Erred: {
+  ERRED: {
     name: "erred",
     circle: "🟡",
   },
@@ -62,19 +62,22 @@ export async function* testPart(year, day, part) {
       try {
         const actual = solve(input);
         if (actual === expected) {
+          const status = Status.PASSED;
           const reason = ["expected", expected, "and got", actual];
-          yield { name, status: Status.Passed, reason };
-          console.info("status:", "passed 🟢");
+          yield { name, status, reason };
+          console.info("status:", status.name, status.circle);
           console.info("reason:", ...reason);
         } else {
+          const status = Status.FAILED;
           const reason = ["expected", expected, "but got", actual];
-          yield { name, status: Status.Failed, reason };
-          console.info("status:", "failed 🔴");
+          yield { name, status, reason };
+          console.info("status:", status.name, status.circle);
           console.info("reason:", ...reason);
         }
       } catch (error) {
-        yield { name, status: Status.Erred, reason: error };
-        console.info("status:", "erred 🟡");
+        const status = Status.ERRED;
+        yield { name, status, reason: error };
+        console.info("status:", status.name, status.circle);
         console.error("reason:", error);
       } finally {
         console.timeEnd("duration");
