@@ -1,7 +1,9 @@
-export function* split(
-  /** @type {string} */ string,
-  /** @type {RegExp} */ separator
-) {
+/**
+ * @param {string} string
+ * @param {RegExp} separator
+ * @returns {Generator<string>}
+ */
+export function* split(string, separator) {
   let index = 0;
   for (const match of string.matchAll(separator)) {
     if (match.index) {

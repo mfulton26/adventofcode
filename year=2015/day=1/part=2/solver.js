@@ -1,6 +1,10 @@
 import { parseDirection } from "../directionParser.js";
 
-export function solve(/** @type {string} */ input) {
+/**
+ * @param {string} input
+ * @returns {number}
+ */
+export function solve(input) {
   let position = 0;
   let floor = 0;
   for (const char of input) {
@@ -11,4 +15,5 @@ export function solve(/** @type {string} */ input) {
       return position;
     }
   }
+  throw new Error("position not found");
 }

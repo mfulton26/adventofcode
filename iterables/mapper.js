@@ -1,9 +1,11 @@
 /**
  * @template T
  * @template R
+ * @param {(value: T) => R} fn
+ * @returns {(iterable: Iterable<T>) => Generator<R>}
  */
-export default function iterableMapper(/** @type {(value: T) => R} */ fn) {
-  return function* (/** @type {Iterable<T>} */ iterable) {
+export default function iterableMapper(fn) {
+  return function* (iterable) {
     yield* mapIterable(iterable, fn);
   };
 }
@@ -11,11 +13,11 @@ export default function iterableMapper(/** @type {(value: T) => R} */ fn) {
 /**
  * @template T
  * @template R
+ * @param {Iterable<T>} iterable
+ * @param {(value: T) => R} fn
+ * @returns {Generator<R>}
  */
-export function* mapIterable(
-  /** @type {Iterable<T>} */ iterable,
-  /** @type {(value: T) => R} */ fn
-) {
+export function* mapIterable(iterable, fn) {
   for (const value of iterable) {
     yield fn(value);
   }

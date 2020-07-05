@@ -1,10 +1,12 @@
 import { hashLocation } from "../locationHasher.js";
 import { parseMove } from "../moveParser.js";
 
-export function solve(
-  /** @type {string} */ input,
-  /** @type {[number, number]} */ origin = [0, 0]
-) {
+/**
+ * @param {string} input
+ * @param {[number, number]} [origin]
+ * @returns {number}
+ */
+export function solve(input, origin = [0, 0]) {
   const locationHasheSet = new Set([hashLocation(origin)]);
   const santa = { location: origin };
   for (const char of input) {

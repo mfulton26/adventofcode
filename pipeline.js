@@ -1,6 +1,7 @@
-export default function pipeline(
-  /** @type {Array<(value: any) => any>} */ ...steps
-) {
+/**
+ * @param {Array<(value: any) => any>} steps
+ */
+export default function pipeline(...steps) {
   return function (/** @type {any} */ value) {
     for (const step of steps) {
       value = step(value);
@@ -9,9 +10,10 @@ export default function pipeline(
   };
 }
 
-export function generate(
-  /** @type {() => Generator<(value: any) => any>} */ stepsFn
-) {
+/**
+ * @param {() => Generator<(value: any) => any>} stepsFn
+ */
+export function generate(stepsFn) {
   return function (/** @type {any} */ value) {
     for (const step of stepsFn()) {
       value = step(value);

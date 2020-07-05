@@ -1,6 +1,7 @@
 /**
  * @param {object} [options]
  * @param {number} [options.part]
+ * @returns {Promise<void>}
  */
 export async function solve({ part } = {}) {
   const { year, day } = parsePathname(location.pathname);
@@ -13,6 +14,7 @@ export async function solve({ part } = {}) {
 
 /**
  * @param {string} pathname
+ * @returns {{ year: number; day: number }}
  */
 export function parsePathname(pathname) {
   const match = /\/(?<year>\d+)\/day\/(?<day>\d+)/.exec(pathname);
@@ -27,6 +29,7 @@ export function parsePathname(pathname) {
 /**
  * @param {number} year
  * @param {number} day
+ * @returns {Promise<string>}
  */
 async function getInput(year, day) {
   const rawInput = await getRawInput(year, day);
@@ -36,6 +39,7 @@ async function getInput(year, day) {
 /**
  * @param {number} year
  * @param {number} day
+ * @returns {Promise<string>}
  */
 async function getRawInput(year, day) {
   const pathname = `/${year}/day/${day}/input`;
@@ -49,6 +53,7 @@ async function getRawInput(year, day) {
  * @param {number} day
  * @param {number} part
  * @param {string} input
+ * @returns {Promise<void>}
  */
 export async function solvePart(year, day, part, input) {
   console.group(`Part ${part}`);
@@ -77,6 +82,8 @@ export async function solvePart(year, day, part, input) {
  * @param {number} year
  * @param {number} day
  * @param {number} part
+ * @returns {Promise<{ solve: (input: string) => any}>}
+ * @throws
  */
 export async function getSolver(year, day, part) {
   try {

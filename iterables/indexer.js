@@ -1,18 +1,21 @@
 /**
  * @template T
  * @template K
+ * @param {(value: T) => K} fn
+ * @returns {(iterable: Iterable<T>) => Map<K, T[]>}
  */
-export default function iterableIndexer(/** @type {(value: T) => K} */ fn) {
-  return function (/** @type {Iterable<T>} */ iterable) {
+export default function iterableIndexer(fn) {
+  return function (iterable) {
     return indexIterable(iterable, fn);
   };
 }
 
 /**
- * @param {Iterable<T>} iterable
- * @param {(value: T) => K} fn
  * @template T
  * @template K
+ * @param {Iterable<T>} iterable
+ * @param {(value: T) => K} fn
+ * @returns {Map<K, T[]>}
  */
 export function indexIterable(iterable, fn) {
   /** @type {Map<K, T[]>} */

@@ -19,6 +19,7 @@ const Status = {
 /**
  * @param {object} [options]
  * @param {number} [options.part]
+ * @returns {Promise<void>}
  */
 export async function test({ part } = {}) {
   const { year, day } = parsePathname(location.pathname);
@@ -72,9 +73,37 @@ export async function test({ part } = {}) {
 }
 
 /**
+ * @typedef {object} TestResult
+ * @property {string} name
+ * @property {{name: string; circle: string }} status
+ * @property {any[]} reason
+ * @property {number} start
+ * @property {number} end
+ * @property {number} elapsed
+ */
+
+/**
  * @param {number} year
  * @param {number} day
  * @param {number} part
+ * @returns {AsyncGenerator<{
+ *   name: string;
+ *   status?: never;
+ *   reason?: never;
+ *   start?: never;
+ *   end?: never;
+ *   elapsed?: never;
+ * } | {
+ *   name: string;
+ *   status: {
+ *       name: string;
+ *       circle: string;
+ *   };
+ *   reason: any[] | [Error];
+ *   start: number;
+ *   end: number;
+ *   elapsed: number;
+ * }>}
  */
 export async function* testPart(year, day, part) {
   /** @type {Array<{name?: string; input: string; expected: any}>} */
