@@ -1,9 +1,13 @@
-export async function solve() {
+/**
+ * @param {object} [options]
+ * @param {number} [options.part]
+ */
+export async function solve({ part } = {}) {
   const { year, day } = parsePathname(location.pathname);
+  const parts = part !== undefined ? [part] : day === 25 ? [1] : [1, 2];
   const input = await getInput(year, day);
-  await solvePart(year, day, 1, input);
-  if (day !== 25) {
-    await solvePart(year, day, 2, input);
+  for (const part of parts) {
+    await solvePart(year, day, part, input);
   }
 }
 

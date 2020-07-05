@@ -16,17 +16,19 @@ const Status = {
   },
 };
 
-export async function test() {
+/**
+ * @param {object} [options]
+ * @param {number} [options.part]
+ */
+export async function test({ part } = {}) {
   const { year, day } = parsePathname(location.pathname);
   console.group(`Year ${year} Day ${day}`);
   console.time("totalDuration");
   try {
     const results = [];
-    for await (const result of testPart(year, day, 1)) {
-      results.push(result);
-    }
-    if (day !== 25) {
-      for await (const result of testPart(year, day, 2)) {
+    const parts = part !== undefined ? [part] : day === 25 ? [1] : [1, 2];
+    for (const part of parts) {
+      for await (const result of testPart(year, day, part)) {
         results.push(result);
       }
     }
