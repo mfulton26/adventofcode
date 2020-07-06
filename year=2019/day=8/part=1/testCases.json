@@ -1,0 +1,7 @@
+[
+  {
+    "input": "123456789012",
+    "options": { "size": { "width": 3, "height": 2 } },
+    "expected": 1
+  }
+]

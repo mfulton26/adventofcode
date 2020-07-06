@@ -5,9 +5,9 @@
  * @param {R} accumulator
  * @returns {(iterable: Iterable<T>) => R}
  */
-export default function iterableReducer(fn, accumulator) {
+export default function reducer(fn, accumulator) {
   return function (iterable) {
-    return reduceIterable(iterable, fn, accumulator);
+    return reduce(iterable, fn, accumulator);
   };
 }
 
@@ -19,7 +19,7 @@ export default function iterableReducer(fn, accumulator) {
  * @param {R} accumulator
  * @returns {R}
  */
-export function reduceIterable(iterable, fn, accumulator) {
+export function reduce(iterable, fn, accumulator) {
   for (const value of iterable) {
     accumulator = fn(accumulator, value);
   }

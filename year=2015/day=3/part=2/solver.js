@@ -1,6 +1,6 @@
 import { hashLocation } from "../locationHasher.js";
 import { parseMove } from "../moveParser.js";
-import { cycleIterable } from "../../../iterables/cycler.js";
+import { cycle } from "../../../iterables/cycler.js";
 
 /**
  * @param {string} input
@@ -26,6 +26,6 @@ export function solve(input, origin = [0, 0]) {
  * @template T
  */
 function takeTurns(iterable) {
-  const iterator = cycleIterable(iterable)[Symbol.iterator]();
+  const iterator = cycle(iterable)[Symbol.iterator]();
   return () => iterator.next().value;
 }

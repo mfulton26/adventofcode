@@ -4,9 +4,9 @@
  * @param {(value: T) => K} fn
  * @returns {(iterable: Iterable<T>) => Map<K, T[]>}
  */
-export default function iterableIndexer(fn) {
+export default function indexer(fn) {
   return function (iterable) {
-    return indexIterable(iterable, fn);
+    return index(iterable, fn);
   };
 }
 
@@ -17,7 +17,7 @@ export default function iterableIndexer(fn) {
  * @param {(value: T) => K} fn
  * @returns {Map<K, T[]>}
  */
-export function indexIterable(iterable, fn) {
+export function index(iterable, fn) {
   /** @type {Map<K, T[]>} */
   const map = new Map();
   for (const value of iterable) {

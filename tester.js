@@ -1,5 +1,15 @@
 import { getSolver, parsePathname } from "./solver.js";
-import { indexIterable } from "./iterables/indexer.js";
+import { index } from "./iterables/indexer.js";
+
+/**
+ * @typedef {object} TestResult
+ * @property {string} name
+ * @property {{name: string; circle: string }} status
+ * @property {any[]} reason
+ * @property {number} start
+ * @property {number} end
+ * @property {number} elapsed
+ */
 
 const Status = {
   PASSED: {
@@ -58,7 +68,7 @@ export async function test({ part } = {}) {
       }
     }
     console.group("Test Summary");
-    const resultsByStatus = indexIterable(results, ({ status }) => status);
+    const resultsByStatus = index(results, ({ status }) => status);
     for (const status of Object.values(Status)) {
       const count = resultsByStatus.get(status)?.length;
       if (count) {
@@ -71,16 +81,6 @@ export async function test({ part } = {}) {
     console.groupEnd();
   }
 }
-
-/**
- * @typedef {object} TestResult
- * @property {string} name
- * @property {{name: string; circle: string }} status
- * @property {any[]} reason
- * @property {number} start
- * @property {number} end
- * @property {number} elapsed
- */
 
 /**
  * @param {number} year
@@ -96,8 +96,8 @@ export async function test({ part } = {}) {
  * } | {
  *   name: string;
  *   status: {
- *       name: string;
- *       circle: string;
+ *     name: string;
+ *     circle: string;
  *   };
  *   reason: any[] | [Error];
  *   start: number;
@@ -106,17 +106,27 @@ export async function test({ part } = {}) {
  * }>}
  */
 export async function* testPart(year, day, part) {
-  /** @type {Array<{name?: string; input: string; expected: any}>} */
   const testCases = await getTestCases(year, day, part);
-  const { solve } = await getSolver(year, day, part);
-  for (const { input, name = input, expected } of testCases) {
+  const solver = await getSolver(year, day, part);
+  for (const {
+    functionName = "solve",
+    input,
+    options,
+    args = [Array.isArray(input) ? input.join("\n") : input, options],
+    name: explicitName,
+    expected,
+  } of testCases) {
+    const name =
+      explicitName ??
+      `${functionName}(${args.map((arg) => JSON.stringify(arg)).join(", ")})`;
+    const fn = solver[functionName];
     yield { name };
     const start = performance.now();
     try {
-      const actual = solve(input);
+      const actual = fn(...args);
       const end = performance.now();
       const elapsed = end - start;
-      if (actual === expected) {
+      if (JSON.stringify(actual) === JSON.stringify(expected)) {
         yield {
           name,
           status: Status.PASSED,
@@ -167,6 +177,19 @@ export async function getTester(year, day, part) {
  * @param {number} year
  * @param {number} day
  * @param {number} part
+ * @returns {Promise<Array<{
+ *   name?: string;
+ *   functionName?: string;
+ *   expected: any;
+ * } & ({
+ *   input: string | string[];
+ *   options: object;
+ *   args: never;
+ * } | {
+ *   args: any[];
+ *   input: never;
+ *   options: never;
+ * })>>}
  */
 export async function getTestCases(year, day, part) {
   const url = new URL(

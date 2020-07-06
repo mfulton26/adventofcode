@@ -4,9 +4,9 @@
  * @param {(value: T) => R} fn
  * @returns {(iterable: Iterable<T>) => Generator<R>}
  */
-export default function iterableMapper(fn) {
+export default function mapper(fn) {
   return function* (iterable) {
-    yield* mapIterable(iterable, fn);
+    yield* map(iterable, fn);
   };
 }
 
@@ -17,7 +17,7 @@ export default function iterableMapper(fn) {
  * @param {(value: T) => R} fn
  * @returns {Generator<R>}
  */
-export function* mapIterable(iterable, fn) {
+export function* map(iterable, fn) {
   for (const value of iterable) {
     yield fn(value);
   }

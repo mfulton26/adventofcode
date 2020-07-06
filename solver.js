@@ -82,8 +82,7 @@ export async function solvePart(year, day, part, input) {
  * @param {number} year
  * @param {number} day
  * @param {number} part
- * @returns {Promise<{ solve: (input: string) => any}>}
- * @throws
+ * @returns {Promise<{ solve: (input: string, options?: object) => any } & Record<string, (...args: any[]) => any>>}
  */
 export async function getSolver(year, day, part) {
   try {
