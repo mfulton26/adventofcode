@@ -1,0 +1,20 @@
+{
+  "$id": "https://mfulton26.github.io/adventofcode/testCasesSchema.json",
+  "$schema": "http://json-schema.org/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": { "type": "string", "description": "foo" },
+      "functionName": { "type": "string", "default": "solve" },
+      "input": { "type": ["string", "array"], "items": { "type": "string" } },
+      "options": {},
+      "args": { "type": "array" },
+      "expected": {}
+    },
+    "required": ["expected"],
+    "if": { "required": ["input"] },
+    "then": { "not": { "required": ["args"] } },
+    "else": { "required": ["args"], "not": { "required": ["options"] } }
+  }
+}
