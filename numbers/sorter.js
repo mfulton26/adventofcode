@@ -1,9 +1,9 @@
-import { compareNumbers } from "./comparer.js";
+import { compare } from "./comparer.js";
 
 /**
  * @param {number[]} numbers
  * @returns {number[]}
  */
-export function sortNumbers(numbers) {
-  return numbers.sort(compareNumbers);
+export function sort(numbers) {
+  return numbers.sort(compare);
 }

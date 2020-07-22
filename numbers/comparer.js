@@ -3,6 +3,6 @@
  * @param {number} b
  * @returns {number}
  */
-export function compareNumbers(a, b) {
+export function compare(a, b) {
   return a - b;
 }
