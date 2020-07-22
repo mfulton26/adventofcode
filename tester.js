@@ -112,7 +112,10 @@ export async function* testPart(year, day, part) {
     functionName = "solve",
     input,
     options,
-    args = [Array.isArray(input) ? input.join("\n") : input, options],
+    args = [
+      Array.isArray(input) ? input.join("\n") : input,
+      ...(options === undefined ? [] : [options]),
+    ],
     name: explicitName,
     expected,
   } of testCases) {

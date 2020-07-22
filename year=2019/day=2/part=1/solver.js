@@ -1,11 +1,21 @@
+const defaultMemoryReplacements = /** @type {[number, number][]} */ (Object.freeze(
+  [Object.freeze([1, 12]), Object.freeze([2, 2])]
+));
+
 /**
  * @param {string} input
+ * @param {object} [options]
+ * @param {readonly (readonly [number, number])[]} [options.memoryReplacements]
  * @returns {number}
  */
-export function solve(input) {
+export function solve(
+  input,
+  { memoryReplacements = defaultMemoryReplacements } = {}
+) {
   const memory = input.split(",").map(Number);
-  memory[1] = 12;
-  memory[2] = 2;
+  for (const [position, value] of memoryReplacements) {
+    memory[position] = value;
+  }
   runProgram(memory);
   return memory[0];
 }
