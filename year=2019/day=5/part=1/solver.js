@@ -25,7 +25,7 @@ function program(memory) {
         },
         divisor: 10,
         /**
-         * @param {number=} value
+         * @param {number} [value]
          */
         next(value) {
           this.divisor *= 10;

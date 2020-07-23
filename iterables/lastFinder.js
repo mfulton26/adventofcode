@@ -1,7 +1,7 @@
 /**
  * @template T
  * @param {Iterable<T>} iterable
- * @returns {T=}
+ * @returns {T | undefined}
  */
 export function findLast(iterable) {
   let value;

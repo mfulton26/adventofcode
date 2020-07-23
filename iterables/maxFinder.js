@@ -1,7 +1,7 @@
 /**
  * @template T
  * @param {Iterable<T>} iterable
- * @returns {T=}
+ * @returns {T | undefined}
  */
 export function findMax(iterable) {
   const iterator = iterable[Symbol.iterator]();
