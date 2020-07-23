@@ -5,5 +5,9 @@ const isNiceRegExp = /^(?=(?:.*[aeiou].*){3,})(?=.*(.)\1)(?!.*(?:ab|cd|pq|xy).*)
  * @returns {number}
  */
 export function solve(input) {
-  return input.match(isNiceRegExp)?.length ?? 0;
+  let count = 0;
+  for (const _ of input.matchAll(isNiceRegExp)) {
+    count++;
+  }
+  return count;
 }

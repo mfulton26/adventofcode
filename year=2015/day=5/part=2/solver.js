@@ -5,5 +5,9 @@ const isNiceRegExp = /^(?=.*(.).\1.*)(?=.*(..).*\2).*$/gm;
  * @returns {number}
  */
 export function solve(input) {
-  return input.match(isNiceRegExp)?.length ?? 0;
+  let count = 0;
+  for (const _ of input.matchAll(isNiceRegExp)) {
+    count++;
+  }
+  return count;
 }
