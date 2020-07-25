@@ -60,13 +60,13 @@ export async function solvePart(year, day, part, input) {
   try {
     const { solve } = await getSolver(year, day, part);
     if (solve) {
-      console.time("duartion");
+      console.time("duration");
       try {
         console.log("answer:", solve(input));
       } catch (error) {
         console.error(error);
       } finally {
-        console.timeEnd("duartion");
+        console.timeEnd("duration");
       }
     } else {
       console.info(undefined);
@@ -82,16 +82,12 @@ export async function solvePart(year, day, part, input) {
  * @param {number} year
  * @param {number} day
  * @param {number} part
- * @returns {Promise<{ solve: (input: string, options?: object) => any } & Record<string, (...args: any[]) => any>>}
+ * @returns {Promise<{ solve: (input: string, options?: object) => unknown } & Record<string, (...args: unknown[]) => unknown>>}
  */
 export async function getSolver(year, day, part) {
-  try {
-    const url = new URL(
-      `year=${year}/day=${day}/part=${part}/solver.js`,
-      import.meta.url
-    ).toString();
-    return await import(url);
-  } catch (error) {
-    throw new TypeError("solver not found; you lose!");
-  }
+  const url = new URL(
+    `year=${year}/day=${day}/part=${part}/solver.js`,
+    import.meta.url
+  );
+  return await import(url);
 }

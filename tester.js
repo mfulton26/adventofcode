@@ -164,6 +164,24 @@ export async function* testPart(year, day, part) {
 }
 
 /**
+ * @param {any} actual
+ * @param {any} expected
+ * @returns {boolean}
+ */
+function check(actual, expected) {
+  if (expected instanceof Object) {
+    for (const key in expected) {
+      if (!check(expected[key], actual[key])) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    return actual === expected;
+  }
+}
+
+/**
  * @param {number} year
  * @param {number} day
  * @param {number} part
@@ -198,10 +216,7 @@ export async function getTestCases(year, day, part) {
   const url = new URL(
     `year=${year}/day=${day}/part=${part}/testCases.json`,
     import.meta.url
-  ).toString();
+  );
   const response = await fetch(url);
-  if (response.status === 404) {
-    throw new Error("test cases not found; you lose badly!");
-  }
   return response.json();
 }

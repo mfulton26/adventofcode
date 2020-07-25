@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "checkJs": true,
+    "checkJs": false,
     "module": "esnext",
     "target": "esnext",
     "strict": true,
