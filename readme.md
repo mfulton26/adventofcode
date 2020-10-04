@@ -18,17 +18,15 @@ Solvers and testers for [Advent of Code](https://adventofcode.com/).
 Part one and two can be solved for a puzzle by loading the solver module and callings its `solve` function.
 
 ```js
-await import(
-  "https://mfulton26.github.io/adventofcode/solver.js"
-).then(({ solve }) => solve());
+await import("https://mfulton26.github.io/adventofcode/solver.js").then(({ solve }) => solve());
 ```
 
 A `part` parameter can be specified to only solve part `1` or `2` of a puzzle.
 
 ```js
-await import(
-  "https://mfulton26.github.io/adventofcode/solver.js"
-).then(({ solve }) => solve({ part: 1 }));
+await import("https://mfulton26.github.io/adventofcode/solver.js").then(({ solve }) =>
+  solve({ part: 1 })
+);
 ```
 
 ### Testing Solvers
@@ -36,17 +34,15 @@ await import(
 Part one and two can be tested for a puzzle by loading the tester module and callings its `test` function.
 
 ```js
-await import(
-  "https://mfulton26.github.io/adventofcode/tester.js"
-).then(({ test }) => test());
+await import("https://mfulton26.github.io/adventofcode/tester.js").then(({ test }) => test());
 ```
 
 A `part` parameter can be specified to only test part `1` or `2` of a puzzle.
 
 ```js
-await import(
-  "https://mfulton26.github.io/adventofcode/tester.js"
-).then(({ test }) => test({ part: 2 }));
+await import("https://mfulton26.github.io/adventofcode/tester.js").then(({ test }) =>
+  test({ part: 2 })
+);
 ```
 
 ## Development
