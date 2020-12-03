@@ -1,10 +1,15 @@
 export default class Signals {
+  /** @type {Map<string, number>} */
   #signals = new Map();
 
   constructor(connections) {
     this.connections = connections;
   }
 
+  /**
+   * @param {string} identifier
+   * @returns {number=}
+   */
   get(identifier) {
     if (!isNaN(identifier)) {
       return Number(identifier);

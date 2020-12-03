@@ -4,6 +4,10 @@ const directions = {
   ")": (floor) => floor - 1,
 };
 
-export function parseDirection(/** @type {string} */ char) {
+/**
+ * @param {string} char
+ * @returns {(floor: number) => number}
+ */
+export function parseDirection(char) {
   return directions[char];
 }

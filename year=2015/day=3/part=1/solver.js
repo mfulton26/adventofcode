@@ -7,12 +7,12 @@ import { parseMove } from "../moveParser.js";
  * @returns {number}
  */
 export function solve(input, origin = [0, 0]) {
-  const locationHasheSet = new Set([hashLocation(origin)]);
+  const locationHashSet = new Set([hashLocation(origin)]);
   const santa = { location: origin };
   for (const char of input) {
     const move = parseMove(char);
     santa.location = move(santa.location);
-    locationHasheSet.add(hashLocation(santa.location));
+    locationHashSet.add(hashLocation(santa.location));
   }
-  return locationHasheSet.size;
+  return locationHashSet.size;
 }

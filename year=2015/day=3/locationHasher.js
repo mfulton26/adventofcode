@@ -1,3 +1,7 @@
-export function hashLocation(/** @type {[number, number]} */ location) {
+/**
+ * @param {[number, number]} location
+ * @returns {any}
+ */
+export function hashLocation(location) {
   return String(location);
 }

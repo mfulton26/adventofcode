@@ -2,6 +2,10 @@ import { parseConnections } from "../connectionsParser.js";
 
 import Signals from "../Signals.js";
 
+/**
+ * @param {string} input
+ * @returns {number}
+ */
 export function solve(input) {
   const connections = parseConnections(input);
   const signals = new Signals(connections);

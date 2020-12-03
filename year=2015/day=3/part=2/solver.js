@@ -8,16 +8,16 @@ import { cycle } from "../../../iterables/cycler.js";
  * @returns {number}
  */
 export function solve(input, origin = [0, 0]) {
-  const locationHasheSet = new Set([hashLocation(origin)]);
+  const locationHashSet = new Set([hashLocation(origin)]);
   const santas = Array.from({ length: 2 }, () => ({ location: origin }));
   const nextSanta = takeTurns(santas);
   for (const char of input) {
     const move = parseMove(char);
     const santa = nextSanta();
     santa.location = move(santa.location);
-    locationHasheSet.add(hashLocation(santa.location));
+    locationHashSet.add(hashLocation(santa.location));
   }
-  return locationHasheSet.size;
+  return locationHashSet.size;
 }
 
 /**

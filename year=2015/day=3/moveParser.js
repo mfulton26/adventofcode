@@ -6,6 +6,10 @@ const moves = {
   ["<"]: ([x, y]) => [x - 1, y],
 };
 
-export function parseMove(/** @type {string} */ char) {
+/**
+ * @param {string} char
+ * @returns {([x, y]: [number, number]) => [number, number]}
+ */
+export function parseMove(char) {
   return moves[char];
 }
