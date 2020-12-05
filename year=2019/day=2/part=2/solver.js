@@ -1,9 +1,3 @@
-const DESIRED_OUTPUT = 19690720;
-
-/**
- * @param {string} input
- * @returns {number}
- */
 export function solve(input) {
   const initialMemory = input.split(",").map(Number);
   for (let noun = 0; noun <= 99; noun++) {
@@ -12,20 +6,13 @@ export function solve(input) {
       memory[1] = noun;
       memory[2] = verb;
       runProgram(memory);
-      if (memory[0] === DESIRED_OUTPUT) {
+      if (memory[0] === 19690720) {
         return 100 * noun + verb;
       }
     }
   }
-  throw new Error(
-    `no input noun and verb found to cause the program to produce the output ${DESIRED_OUTPUT}`
-  );
 }
 
-/**
- * @param {number[]} memory
- * @returns {number[]}
- */
 export function runProgram(memory) {
   for (let instructionPointer = 0; memory[instructionPointer] !== 99; ) {
     const opcode = memory[instructionPointer++];
