@@ -33,7 +33,7 @@ export function parsePathname(pathname) {
  */
 async function getInput(year, day) {
   const rawInput = await getRawInput(year, day);
-  return rawInput.replace(/\n$/m, "");
+  return rawInput.trimRight();
 }
 
 /**
