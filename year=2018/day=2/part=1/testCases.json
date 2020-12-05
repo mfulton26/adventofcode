@@ -1,0 +1,6 @@
+[
+  {
+    "input": ["abcdef", "babab", "abbcde", "abcccd", "aabcd", "abcde", "ababa"],
+    "expected": 12
+  }
+]
