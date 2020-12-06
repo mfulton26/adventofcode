@@ -1,18 +1,16 @@
-import { hashLocation } from "../locationHasher.js";
-import { parseMove } from "../moveParser.js";
+const moves = {
+  ["^"]: ([x, y]) => [x, y + 1],
+  ["v"]: ([x, y]) => [x, y - 1],
+  [">"]: ([x, y]) => [x + 1, y],
+  ["<"]: ([x, y]) => [x - 1, y],
+};
 
-/**
- * @param {string} input
- * @param {[number, number]} [origin]
- * @returns {number}
- */
 export function solve(input, origin = [0, 0]) {
-  const locationHasheSet = new Set([hashLocation(origin)]);
+  const locationHashSet = new Set([`${origin}`]);
   const santa = { location: origin };
   for (const char of input) {
-    const move = parseMove(char);
-    santa.location = move(santa.location);
-    locationHasheSet.add(hashLocation(santa.location));
+    santa.location = moves[char](santa.location);
+    locationHashSet.add(`${santa.location}`);
   }
-  return locationHasheSet.size;
+  return locationHashSet.size;
 }

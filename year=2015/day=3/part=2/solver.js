@@ -1,31 +1,18 @@
-import { hashLocation } from "../locationHasher.js";
-import { parseMove } from "../moveParser.js";
-import { cycle } from "../../../iterables/cycler.js";
+const moves = {
+  ["^"]: ([x, y]) => [x, y + 1],
+  ["v"]: ([x, y]) => [x, y - 1],
+  [">"]: ([x, y]) => [x + 1, y],
+  ["<"]: ([x, y]) => [x - 1, y],
+};
 
-/**
- * @param {string} input
- * @param {[number, number]} [origin]
- * @returns {number}
- */
 export function solve(input, origin = [0, 0]) {
-  const locationHasheSet = new Set([hashLocation(origin)]);
+  const locationHashSet = new Set([`${origin}`]);
   const santas = Array.from({ length: 2 }, () => ({ location: origin }));
-  const nextSanta = takeTurns(santas);
+  let santaIndex = 0;
   for (const char of input) {
-    const move = parseMove(char);
-    const santa = nextSanta();
-    santa.location = move(santa.location);
-    locationHasheSet.add(hashLocation(santa.location));
+    const santa = santas[santaIndex++ % santas.length];
+    santa.location = moves[char](santa.location);
+    locationHashSet.add(`${santa.location}`);
   }
-  return locationHasheSet.size;
-}
-
-/**
- * @param {Iterable<T>} iterable
- * @returns {() => T}
- * @template T
- */
-function takeTurns(iterable) {
-  const iterator = cycle(iterable)[Symbol.iterator]();
-  return () => iterator.next().value;
+  return locationHashSet.size;
 }
