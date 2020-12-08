@@ -1,33 +1,19 @@
 export function solve(input) {
-  const graph = parseGraph(input);
-  const containingColors = new Set();
+  const rules = parseRules(input);
+  const graph = buildContainingColorsGraph(rules);
+  const eventuallyContainingColors = new Set();
   const queue = ["shiny gold"];
   while (queue.length) {
     const color = queue.shift();
     if (!graph.has(color)) {
       continue;
     }
-    const containers = graph.get(color);
-    for (const containingColor of containers.keys()) {
-      containingColors.add(containingColor);
+    for (const containingColor of graph.get(color)) {
+      eventuallyContainingColors.add(containingColor);
       queue.push(containingColor);
     }
   }
-  return containingColors.size;
-}
-
-function parseGraph(text) {
-  const rules = parseRules(text);
-  const graph = new Map();
-  for (const [containingColor, contents] of rules) {
-    for (const { quantity, color } of contents) {
-      if (!graph.has(color)) {
-        graph.set(color, new Map());
-      }
-      graph.get(color).set(containingColor, quantity);
-    }
-  }
-  return graph;
+  return eventuallyContainingColors.size;
 }
 
 function parseRules(text) {
@@ -59,4 +45,17 @@ function parseContent(text) {
   const [, quantity, bagText] = text.match(/(\d+) (.*)/);
   const { color } = parseBag(bagText);
   return { quantity: Number(quantity), color };
+}
+
+function buildContainingColorsGraph(rules) {
+  const graph = new Map();
+  for (const [containingColor, contents] of rules) {
+    for (const { color: child } of contents) {
+      if (!graph.has(child)) {
+        graph.set(child, new Set());
+      }
+      graph.get(child).add(containingColor);
+    }
+  }
+  return graph;
 }

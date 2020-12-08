@@ -11,5 +11,8 @@ export function solve(input) {
 }
 
 function intersect(a, b) {
+  if (b.size < a.size) {
+    return intersect(b, a);
+  }
   return new Set(Array.from(a).filter((value) => b.has(value)));
 }
