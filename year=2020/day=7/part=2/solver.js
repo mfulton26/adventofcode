@@ -7,9 +7,9 @@ export function solve(input) {
     count += quantity;
     if (rules.has(color)) {
       queue.push(
-        ...rules.get(color).map((content) => ({
-          quantity: content.quantity * quantity,
-          color: content.color,
+        ...rules.get(color).map(({ quantity: contentQuantity, color }) => ({
+          quantity: quantity * contentQuantity,
+          color,
         }))
       );
     }
