@@ -1,0 +1,7 @@
+[
+  {
+    "name": "example",
+    "input": ["F10", "N3", "F7", "R90", "F11"],
+    "expected": 25
+  }
+]
