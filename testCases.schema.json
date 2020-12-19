@@ -1,5 +1,5 @@
 {
-  "$id": "https://mfulton26.github.io/adventofcode/testCasesSchema.json",
+  "$id": "https://mfulton26.github.io/adventofcode/testCases.schema.json",
   "$schema": "http://json-schema.org/schema#",
   "type": "array",
   "items": {
@@ -9,7 +9,10 @@
       "functionName": { "type": "string", "default": "solve" },
       "input": { "type": ["string", "array"], "items": { "type": "string" } },
       "options": {},
-      "args": { "type": "array" },
+      "args": {
+        "type": "array",
+        "description": "An entire array of arguments to pass into the solver or function specified by `functionName`."
+      },
       "expected": {}
     },
     "required": ["expected"],
