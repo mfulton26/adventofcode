@@ -1,72 +1,57 @@
 export function solve(input) {
-  let grid = parseGrid(input);
+  let activeCells = parseActiveCells(input);
   for (let n = 0; n < 6; n++) {
-    grid = cycle(grid);
+    activeCells = cycleActiveCells(activeCells);
   }
-  return grid.size;
+  return activeCells.length;
 }
 
-function parseGrid(text) {
-  return new Set(
-    text
-      .split("\n")
-      .flatMap((line, y) =>
-        Array.from(line).flatMap((state, x) =>
-          state === "#" ? [[x, y, 0]] : []
-        )
-      )
-  );
+function parseActiveCells(text) {
+  return text
+    .split("\n")
+    .flatMap((line, y) =>
+      Array.from(line).flatMap((state, x) => (state === "#" ? [[x, y, 0]] : []))
+    );
 }
 
-function cycle(grid) {
-  const cycleMap = createCycleMap(grid);
-  const result = new Set();
-  for (const [coordinates, { active, activeNeighborCount }] of cycleMap) {
-    if (shouldBeActive(active, activeNeighborCount)) {
-      result.add(coordinates);
+function cycleActiveCells(activeCells) {
+  const considerations = createConsiderations(activeCells);
+  activeCells = [];
+  for (const [cell, { active, activeNeighborCount }] of considerations) {
+    if ((active && activeNeighborCount === 2) || activeNeighborCount === 3) {
+      activeCells.push(cell);
     }
   }
-  return result;
+  return activeCells;
 }
 
 const neighborDeltas = [-1, 0, 1]
   .flatMap((x, _, array) => array.flatMap((y) => array.map((z) => [x, y, z])))
-  .filter((coordinates) => coordinates.some((coordinate) => coordinate !== 0));
+  .filter((cell) => cell.some((coordinate) => coordinate !== 0));
 
-function createCycleMap(grid) {
-  const hashMap = new Map(
-    Array.from(grid, (coordinates) => [
-      JSON.stringify(coordinates),
-      [coordinates, true],
-    ])
-  );
-  for (const [x, y, z] of grid) {
+function createConsiderations(activeCells) {
+  const hashMap = new Map(activeCells.map((cell) => [`${cell}`, [cell, true]]));
+  for (const [x, y, z] of activeCells) {
     for (const [dx, dy, dz] of neighborDeltas) {
-      const coordinates = [x + dx, y + dy, z + dz];
-      const hash = JSON.stringify(coordinates);
+      const cell = [x + dx, y + dy, z + dz];
+      const hash = `${cell}`;
       if (!hashMap.has(hash)) {
-        hashMap.set(hash, [coordinates, false]);
+        hashMap.set(hash, [cell, false]);
       }
     }
   }
   const result = new Map();
-  for (const [coordinates, active] of hashMap.values()) {
-    const [x, y, z] = coordinates;
+  for (const [cell, active] of hashMap.values()) {
+    const [x, y, z] = cell;
     let activeNeighborCount = 0;
     for (const [dx, dy, dz] of neighborDeltas) {
-      const hash = JSON.stringify([x + dx, y + dy, z + dz]);
+      const hash = `${[x + dx, y + dy, z + dz]}`;
       const active = hashMap.get(hash)?.[1];
       if (active) {
         activeNeighborCount++;
       }
     }
-    result.set(coordinates, { active, activeNeighborCount });
+    result.set(cell, { active, activeNeighborCount });
   }
   return result;
-}
-
-function shouldBeActive(active, activeNeighborCount) {
-  return active
-    ? activeNeighborCount === 2 || activeNeighborCount === 3
-    : activeNeighborCount === 3;
 }
