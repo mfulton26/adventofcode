@@ -1,5 +1,3 @@
-import { parseDirection } from "../directionParser.js";
-
 export function solve(input) {
   let position = 0;
   let floor = 0;
