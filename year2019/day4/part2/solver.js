@@ -1,7 +1,3 @@
-/**
- * @param {string} input
- * @returns {number}
- */
 export function solve(input) {
   const [start, end] = input.split("-").map(Number);
   let count = 0;
