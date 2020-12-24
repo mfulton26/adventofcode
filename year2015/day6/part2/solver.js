@@ -7,7 +7,7 @@ export function solve(input) {
 
 function* parseInstructions(text) {
   for (const { groups } of text.matchAll(parseInstructions.regExp)) {
-    for (const name in parseInstructions.groupTypes) {
+    for (const name in groups) {
       groups[name] = parseInstructions.groupTypes[name](groups[name]);
     }
     yield groups;
