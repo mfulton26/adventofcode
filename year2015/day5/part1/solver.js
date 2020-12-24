@@ -1,12 +1,12 @@
 const isNiceRegExp = /^(?=(?:.*[aeiou].*){3,})(?=.*(.)\1)(?!.*(?:ab|cd|pq|xy).*).*$/gm;
 
-/**
- * @param {string} input
- * @returns {number}
- */
 export function solve(input) {
+  return count(input.matchAll(isNiceRegExp));
+}
+
+function count(iterable) {
   let count = 0;
-  for (const _ of input.matchAll(isNiceRegExp)) {
+  for (const _ of iterable) {
     count++;
   }
   return count;
