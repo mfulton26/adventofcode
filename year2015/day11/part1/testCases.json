@@ -1,0 +1,19 @@
+[
+  {
+    "functionName": "isValidPassword",
+    "input": "hijklmmn",
+    "expected": false
+  },
+  {
+    "functionName": "isValidPassword",
+    "input": "abbceffg",
+    "expected": false
+  },
+  {
+    "functionName": "isValidPassword",
+    "input": "abbcegjk",
+    "expected": false
+  },
+  { "input": "abcdefgh", "expected": "abcdffaa" },
+  { "input": "ghijklmn", "expected": "ghjaabcc" }
+]
