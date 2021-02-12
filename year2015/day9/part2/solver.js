@@ -3,12 +3,10 @@ import { permute } from "../../../arrays/permuter.js";
 export function solve(input) {
   const distances = parseDistances(input);
   let longestDistance = -Infinity;
-  for (const route of permute(Array.from(distances.keys()))) {
+  for (const route of permute(Array.from(distances.nodes()))) {
     let routeDistance = 0;
     for (let i = 0, j = 1; j < route.length; i++, j++) {
-      const origin = route[i];
-      const destination = route[j];
-      const distance = distances.get(origin).get(destination);
+      const distance = distances.edgeValue(route[i], route[j]);
       routeDistance += distance;
     }
     if (routeDistance > longestDistance) {
@@ -19,19 +17,19 @@ export function solve(input) {
 }
 
 function parseDistances(text) {
-  const result = new Map();
-  function set(origin, destination, distance) {
-    if (!result.has(origin)) {
-      result.set(origin, new Map());
-    }
-    result.get(origin).set(destination, distance);
-  }
+  const edgeValues = new Map();
+  const nodes = new Set();
   for (const line of text.split("\n")) {
     const [lhs, rhs] = line.split(" = ");
-    const [origin, destination] = lhs.split(" to ");
+    const [u, v] = lhs.split(" to ");
     const distance = Number(rhs);
-    set(origin, destination, distance);
-    set(destination, origin, distance);
+    edgeValues.set(JSON.stringify([u, v]), distance);
+    edgeValues.set(JSON.stringify([v, u]), distance);
+    nodes.add(u);
+    nodes.add(v);
   }
-  return result;
+  return {
+    edgeValue: (u, v) => edgeValues.get(JSON.stringify([u, v])),
+    nodes: () => nodes.values(),
+  };
 }
