@@ -1,12 +1,33 @@
-import { findLast } from "../../../iterables/lastFinder.js";
+import { permute } from "../../../arrays/permuter.mjs";
+import { findLast } from "../../../iterables/lastFinder.mjs";
+import { findMax } from "../../../iterables/maxFinder.mjs";
 
 /**
  * @param {string} input
  * @returns {number}
  */
 export function solve(input) {
-  const memory = input.split(",").map(Number);
-  return /** @type {number} */ (findLast(program(memory)([5])));
+  const initialMemory = input.split(",").map(Number);
+  const phaseSettings = [0, 1, 2, 3, 4];
+  return /** @type {number} */ (findMax(
+    outputSignals(initialMemory, phaseSettings)
+  ));
+}
+
+/**
+ * @param {number[]} initialMemory
+ * @param {number[]} phaseSettings
+ */
+function* outputSignals(initialMemory, phaseSettings) {
+  for (const permutation of permute(phaseSettings)) {
+    const memory = initialMemory.slice();
+    let output = 0;
+    for (const phaseSetting of permutation) {
+      const inputs = [phaseSetting, output];
+      output = /** @type {number} */ (findLast(program(memory)(inputs)));
+    }
+    yield output;
+  }
 }
 
 /**

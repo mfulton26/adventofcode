@@ -18,13 +18,13 @@ Solvers and testers for [Advent of Code](https://adventofcode.com/).
 Part one and two can be solved for a puzzle by loading the solver module and callings its `solve` function.
 
 ```js
-await import("https://mfulton26.github.io/adventofcode/solver.js").then(({ solve }) => solve());
+await import("https://mfulton26.github.io/adventofcode/solver.mjs").then(({ solve }) => solve());
 ```
 
 A `part` parameter can be specified to only solve part `1` or `2` of a puzzle.
 
 ```js
-await import("https://mfulton26.github.io/adventofcode/solver.js").then(({ solve }) =>
+await import("https://mfulton26.github.io/adventofcode/solver.mjs").then(({ solve }) =>
   solve({ part: 1 })
 );
 ```
@@ -34,13 +34,13 @@ await import("https://mfulton26.github.io/adventofcode/solver.js").then(({ solve
 Part one and two can be tested for a puzzle by loading the tester module and callings its `test` function.
 
 ```js
-await import("https://mfulton26.github.io/adventofcode/tester.js").then(({ test }) => test());
+await import("https://mfulton26.github.io/adventofcode/tester.mjs").then(({ test }) => test());
 ```
 
 A `part` parameter can be specified to only test part `1` or `2` of a puzzle.
 
 ```js
-await import("https://mfulton26.github.io/adventofcode/tester.js").then(({ test }) =>
+await import("https://mfulton26.github.io/adventofcode/tester.mjs").then(({ test }) =>
   test({ part: 2 })
 );
 ```
@@ -52,11 +52,11 @@ A static HTTP server can be used to serve the scripts locally (e.g. using [Live 
 ### Running Solvers Locally
 
 ```js
-await import("http://127.0.0.1:5500/solver.js").then(({ solve }) => solve());
+await import("http://127.0.0.1:5500/solver.mjs").then(({ solve }) => solve());
 ```
 
 ### Running Testers Locally
 
 ```js
-await import("http://127.0.0.1:5500/tester.js").then(({ test }) => test());
+await import("http://127.0.0.1:5500/tester.mjs").then(({ test }) => test());
 ```

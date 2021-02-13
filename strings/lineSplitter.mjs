@@ -1,4 +1,4 @@
-import { split } from "./splitter.js";
+import { split } from "./splitter.mjs";
 
 /**
  * @returns {(string: string) => Generator<string>}

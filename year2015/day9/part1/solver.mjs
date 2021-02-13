@@ -1,19 +1,19 @@
-import { permute } from "../../../arrays/permuter.js";
+import { permute } from "../../../arrays/permuter.mjs";
 
 export function solve(input) {
   const distances = parseDistances(input);
-  let longestDistance = -Infinity;
+  let shortestDistance = Infinity;
   for (const route of permute(Array.from(distances.nodes()))) {
     let routeDistance = 0;
     for (let i = 0, j = 1; j < route.length; i++, j++) {
       const distance = distances.edgeValue(route[i], route[j]);
       routeDistance += distance;
     }
-    if (routeDistance > longestDistance) {
-      longestDistance = routeDistance;
+    if (routeDistance < shortestDistance) {
+      shortestDistance = routeDistance;
     }
   }
-  return longestDistance;
+  return shortestDistance;
 }
 
 function parseDistances(text) {
