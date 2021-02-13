@@ -30,10 +30,12 @@ function parsePotentialHappinessGraph(text) {
     nodes: () => nodes.values(),
   };
   for (const line of text.split("\n")) {
-    let [person, , verb, amount, , , , , , , neighbor] = line.split(" ");
-    amount = verb === "lose" ? -Number(amount) : Number(amount);
-    neighbor = neighbor.slice(0, -1);
-    graph.set(person, neighbor, amount);
+    const {
+      groups: { person, verb, amount, neighbor },
+    } = line.match(parsePotentialHappinessGraph.regExp);
+    const value = verb === "lose" ? -Number(amount) : Number(amount);
+    graph.set(person, neighbor, value);
   }
   return graph;
 }
+parsePotentialHappinessGraph.regExp = /(?<person>.*) would (?<verb>.*) (?<amount>\d+) happiness units by sitting next to (?<neighbor>.*)\./;
