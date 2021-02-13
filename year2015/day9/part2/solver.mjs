@@ -1,4 +1,4 @@
-import { permute } from "../../../arrays/permuter.mjs";
+import { permute } from "../../../iterables/permuter.mjs";
 
 export function solve(input) {
   const distances = parseDistances(input);

@@ -1,6 +1,6 @@
-import { permute } from "../../../arrays/permuter.mjs";
 import { findLast } from "../../../iterables/lastFinder.mjs";
 import { findMax } from "../../../iterables/maxFinder.mjs";
+import { permute } from "../../../iterables/permuter.mjs";
 
 /**
  * @param {string} input

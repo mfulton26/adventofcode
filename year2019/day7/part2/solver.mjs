@@ -1,6 +1,6 @@
-import { permute } from "../../../arrays/permuter.mjs";
 import { cycle } from "../../../iterables/cycler.mjs";
 import { findMax } from "../../../iterables/maxFinder.mjs";
+import { permute } from "../../../iterables/permuter.mjs";
 
 /**
  * @param {string} input

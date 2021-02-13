@@ -1,19 +1,19 @@
 /**
- * Generator function for iterating through all permutations of an array.
+ * Generator function for iterating through all permutations of an iterable.
  *
  * This is an implementation of the Plain Changes algorithm for permutations generation described in Knuth's "The Art of Computer Programming", Volume 4, Chapter 7, Section 7.2.1.2.
  *
  * Adapted from https://github.com/google/guava/blob/f4b3f611c4e49ecaded58dcb49262f55e56a3322/guava/src/com/google/common/collect/Collections2.java#L622-L683
  *
  * @template T
- * @param {T[]} array The array whose elements will be permuted.
- * @returns {Generator<T[]>} A generator object for iterating through all the different permutations of the array.
+ * @param {Iterable<T>} iterable The iterable whose elements will be permuted.
+ * @returns {Generator<T[]>} A generator object for iterating through all the different permutations of the iterable.
  */
-export function* permute(array) {
+export function* permute(iterable) {
+  let array = Array.from(iterable);
   if (array.length <= 1) {
-    yield array.slice();
+    yield array;
   } else {
-    array = array.slice();
     const c = Array(array.length).fill(0);
     const o = Array(array.length).fill(1);
     let j = Infinity;
