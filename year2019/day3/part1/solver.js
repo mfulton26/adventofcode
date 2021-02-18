@@ -1,5 +1,5 @@
-import { parsePaths } from "../pathsParser.mjs";
-import { calculateManhattanDistance } from "../../../numbers/manhattanDistanceCalculator.mjs";
+import { parsePaths } from "../pathsParser.js";
+import { calculateManhattanDistance } from "../../../numbers/manhattanDistanceCalculator.js";
 
 /**
  * @param {string} input

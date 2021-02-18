@@ -1,4 +1,4 @@
-import { parsePaths } from "../pathsParser.mjs";
+import { parsePaths } from "../pathsParser.js";
 
 /**
  * @param {string} input

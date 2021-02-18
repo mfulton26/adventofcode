@@ -1,9 +1,7 @@
 {
   "json.schemas": [
     {
-      "fileMatch": [
-        "/**/*testCases.json"
-      ],
+      "fileMatch": ["/**/*testCases.json"],
       "url": "./testCases.schema.json"
     }
   ]

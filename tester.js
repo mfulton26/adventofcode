@@ -1,5 +1,5 @@
-import { getSolver, parsePathname } from "./solver.mjs";
-import { index } from "./iterables/indexer.mjs";
+import { getSolver, parsePathname } from "./solver.js";
+import { index } from "./iterables/indexer.js";
 
 /**
  * @typedef {object} TestResult
@@ -188,7 +188,7 @@ function check(actual, expected) {
  */
 export async function getTester(year, day, part) {
   const url = new URL(
-    `year${year}/day${day}/part${part}/solver.tester.mjs`,
+    `year${year}/day${day}/part${part}/solver.tester.js`,
     import.meta.url
   ).toString();
   return import(url);

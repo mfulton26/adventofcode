@@ -4,9 +4,6 @@
     "module": "esnext",
     "target": "esnext",
     "strict": true,
-    "lib": [
-      "dom",
-      "esnext"
-    ]
+    "lib": ["dom", "esnext"]
   }
 }

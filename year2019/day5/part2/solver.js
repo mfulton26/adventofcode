@@ -1,4 +1,4 @@
-import { findLast } from "../../../iterables/lastFinder.mjs";
+import { findLast } from "../../../iterables/lastFinder.js";
 
 /**
  * @param {string} input

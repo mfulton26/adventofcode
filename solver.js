@@ -86,7 +86,7 @@ export async function solvePart(year, day, part, input) {
  */
 export async function getSolver(year, day, part) {
   const url = new URL(
-    `year${year}/day${day}/part${part}/solver.mjs`,
+    `year${year}/day${day}/part${part}/solver.js`,
     import.meta.url
   );
   return await import(url);
