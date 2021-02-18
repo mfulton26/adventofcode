@@ -1,14 +1,19 @@
 export function solve(input, { target = 150 } = {}) {
   const capacities = parseCapacities(input);
   const combinationsCount = 2 ** capacities.length;
-  const counts = new Map();
+  let min = { numberOfContainers: Infinity, count: 0 };
   for (let combination = 0; combination < combinationsCount; combination++) {
     const [capacity, count] = findCapacityCount(capacities, combination);
     if (capacity === target) {
-      counts.set(count, counts.has(count) ? counts.get(count) + 1 : 1);
+      if (count < min.numberOfContainers) {
+        min.numberOfContainers = count;
+        min.count = 1;
+      } else if (count === min.numberOfContainers) {
+        min.count++;
+      }
     }
   }
-  return counts.get(Math.min(...counts.keys()));
+  return min.count;
 }
 
 function parseCapacities(text) {
