@@ -2,15 +2,14 @@ export function solve(input) {
   const rules = parseRules(input);
   const graph = buildContainingColorsGraph(rules);
   const eventuallyContainingColors = new Set();
-  const queue = ["shiny gold"];
-  while (queue.length) {
-    const color = queue.shift();
+  const bags = ["shiny gold"];
+  for (const color of bags) {
     if (!graph.has(color)) {
       continue;
     }
     for (const containingColor of graph.get(color)) {
       eventuallyContainingColors.add(containingColor);
-      queue.push(containingColor);
+      bags.push(containingColor);
     }
   }
   return eventuallyContainingColors.size;

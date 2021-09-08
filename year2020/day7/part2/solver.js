@@ -1,17 +1,13 @@
 export function solve(input) {
   const rules = parseRules(input);
   let count = 0;
-  const queue = [{ quantity: 1, color: "shiny gold" }];
-  while (queue.length) {
-    const { quantity, color } = queue.shift();
+  const bags = [{ quantity: 1, color: "shiny gold" }];
+  for (const { quantity, color } of bags) {
     count += quantity;
     if (rules.has(color)) {
-      queue.push(
-        ...rules.get(color).map(({ quantity: contentQuantity, color }) => ({
-          quantity: quantity * contentQuantity,
-          color,
-        }))
-      );
+      for (const bag of rules.get(color)) {
+        bags.push({ quantity: quantity * bag.quantity, color: bag.color });
+      }
     }
   }
   return count - 1;

@@ -1,6 +1,3 @@
-const twoPi = 2 * Math.PI;
-const halfPi = Math.PI / 2;
-
 export function solve(input) {
   const asteroids = parseAsteroids(input);
   const monitoringStation = findMonitoringStation(asteroids);
@@ -51,19 +48,16 @@ function findMonitoringStation(asteroids) {
   return best;
 }
 
+const twoPi = 2 * Math.PI;
+const halfPi = Math.PI / 2;
+
 function* createAsteroidsVaporizer(monitoringStation) {
-  const queue = Array.from(monitoringStation.detections)
+  const asteroidsByAngle = Array.from(monitoringStation.detections)
     .map(([angle, asteroids]) => [(angle + halfPi + twoPi) % twoPi, asteroids])
     .sort(([a], [b]) => a - b)
     .map(([, targets]) => targets);
-  while (queue.length) {
-    const asteroids = queue.shift();
+  for (const asteroids of asteroidsByAngle) {
     const radius = Math.min(...asteroids.keys());
-    const asteroid = asteroids.get(radius);
-    asteroids.delete(radius);
-    yield asteroid;
-    if (asteroids.size) {
-      queue.push(asteroids);
-    }
+    yield asteroids.get(radius);
   }
 }
