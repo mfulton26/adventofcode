@@ -1,0 +1,20 @@
+[
+  {
+    "name": "HOH",
+    "input": ["e => H", "e => O", "H => HO", "H => OH", "O => HH", "", "HOH"],
+    "expected": 3
+  },
+  {
+    "name": "HOHOHO",
+    "input": [
+      "e => H",
+      "e => O",
+      "H => HO",
+      "H => OH",
+      "O => HH",
+      "",
+      "HOHOHO"
+    ],
+    "expected": 6
+  }
+]
