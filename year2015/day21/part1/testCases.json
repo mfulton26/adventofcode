@@ -1,0 +1,11 @@
+[
+  {
+    "name": "example",
+    "functionName": "calculateHitsToWin",
+    "args": [
+      { "hitPoints": 8, "damage": 5, "armor": 5 },
+      { "hitPoints": 12, "damage": 7, "armor": 2 }
+    ],
+    "expected": 4
+  }
+]
