@@ -6,21 +6,20 @@ export function solve(input) {
 }
 
 function* parseInstructions(text) {
-  for (const { groups } of text.matchAll(parseInstructions.regExp)) {
-    for (const name in groups) {
-      groups[name] = parseInstructions.groupTypes[name](groups[name]);
-    }
-    yield groups;
+  for (const {
+    groups: { name, left, top, right, bottom },
+  } of text.matchAll(parseInstructions.regExp)) {
+    yield {
+      name,
+      left: Number(left),
+      top: Number(top),
+      right: Number(right),
+      bottom: Number(bottom),
+    };
   }
 }
-parseInstructions.regExp = /(?<name>turn on|turn off|toggle) (?<left>\d+),(?<top>\d+) through (?<right>\d+),(?<bottom>\d+)/g;
-parseInstructions.groupTypes = {
-  name: String,
-  left: Number,
-  top: Number,
-  right: Number,
-  bottom: Number,
-};
+parseInstructions.regExp =
+  /(?<name>turn on|turn off|toggle) (?<left>\d+),(?<top>\d+) through (?<right>\d+),(?<bottom>\d+)/g;
 
 function followInstructions(instructions, lights) {
   for (const { name, left, top, right, bottom } of instructions) {

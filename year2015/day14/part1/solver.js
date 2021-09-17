@@ -12,17 +12,12 @@ function parseReindeerDescriptions(text) {
   return text
     .split("\n")
     .map((line) => line.match(parseReindeerDescriptions.regExp))
-    .map(({ groups }) => {
-      for (const name in groups) {
-        groups[name] = parseReindeerDescriptions.groupTypes[name](groups[name]);
-      }
-      return groups;
-    });
+    .map(({ groups: { reindeer, velocity, flying, resting } }) => ({
+      reindeer,
+      velocity: Number(velocity),
+      flying: Number(flying),
+      resting: Number(resting),
+    }));
 }
-parseReindeerDescriptions.regExp = /^(?<reindeer>.*) can fly (?<velocity>\d+) km\/s for (?<flying>\d+) seconds, but then must rest for (?<resting>\d+) seconds./;
-parseReindeerDescriptions.groupTypes = {
-  reindeer: String,
-  velocity: Number,
-  flying: Number,
-  resting: Number,
-};
+parseReindeerDescriptions.regExp =
+  /^(?<reindeer>.*) can fly (?<velocity>\d+) km\/s for (?<flying>\d+) seconds, but then must rest for (?<resting>\d+) seconds./;
