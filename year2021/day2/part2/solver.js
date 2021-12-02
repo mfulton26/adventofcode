@@ -11,19 +11,21 @@ function* parseCommands(text) {
 function parseCommand(text) {
   const [name, unitsText] = text.split(" ");
   const units = Number(unitsText);
-  switch (name) {
-    case "forward":
-      return function () {
-        this.x += units;
-        this.depth += this.aim * units;
-      };
-    case "down":
-      return function () {
-        this.aim += units;
-      };
-    case "up":
-      return function () {
-        this.aim -= units;
-      };
-  }
+  return commandParsers[name](units)
 }
+
+const commandParsers = {
+  forward: (units) =>
+    function () {
+      this.x += units;
+      this.depth += this.aim * units;
+    },
+  down: (units) =>
+    function () {
+      this.aim += units;
+    },
+  up: (units) =>
+    function () {
+      this.aim -= units;
+    },
+};
