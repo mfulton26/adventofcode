@@ -1,5 +1,4 @@
 import { getSolver, parsePathname } from "./solver.js";
-import { index } from "./iterables/indexer.js";
 
 /**
  * @typedef {object} TestResult
@@ -68,7 +67,7 @@ export async function test({ part } = {}) {
       }
     }
     console.group("Test Summary");
-    const resultsByStatus = index(results, ({ status }) => status);
+    const resultsByStatus = results[index](({ status }) => status);
     for (const status of Object.values(Status)) {
       const count = resultsByStatus.get(status)?.length;
       if (count) {
@@ -191,7 +190,7 @@ export async function getTester(year, day, part) {
     `year${year}/day${day}/part${part}/solver.tester.js`,
     import.meta.url
   ).toString();
-  return import(url);
+  return await import(url);
 }
 
 /**
@@ -220,3 +219,20 @@ export async function getTestCases(year, day, part) {
   const response = await fetch(url);
   return response.json();
 }
+
+const index = Symbol();
+Object.defineProperty(Array.prototype, index, {
+  value(fn) {
+    const map = new Map();
+    for (const value of this) {
+      const key = fn(value);
+      const values = map.get(key);
+      if (values === undefined) {
+        map.set(key, [value]);
+      } else {
+        values.push(value);
+      }
+    }
+    return map;
+  },
+});

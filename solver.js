@@ -45,7 +45,7 @@ async function getRawInput(year, day) {
   const pathname = `/${year}/day/${day}/input`;
   return location.pathname === pathname
     ? document.body.innerText
-    : fetch(pathname).then((response) => response.text());
+    : await fetch(pathname).then((response) => response.text());
 }
 
 /**
