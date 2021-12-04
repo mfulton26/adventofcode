@@ -4,5 +4,8 @@
       "fileMatch": ["/**/*testCases.json"],
       "url": "./testCases.schema.json"
     }
-  ]
+  ],
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": false
 }
