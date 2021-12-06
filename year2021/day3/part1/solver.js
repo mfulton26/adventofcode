@@ -1,3 +1,5 @@
+import BitArray from "../../../lib/BitArray.js";
+
 export function solve(input) {
   const bitArrays = parseBitArrays(input);
   const bitCounts = findBitCounts(bitArrays);
@@ -21,10 +23,4 @@ function findBitCounts(bitArrays) {
     ),
     Array.from(bitArrays[0], () => [0, 0])
   );
-}
-
-class BitArray extends Array {
-  toNumber() {
-    return Number(`0b${this.join("")}`);
-  }
 }
