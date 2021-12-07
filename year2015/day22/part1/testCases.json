@@ -1,0 +1,12 @@
+[
+  {
+    "name": "example 1",
+    "input": ["Hit Points: 13", "Damage: 8"],
+    "expected": 226
+  },
+  {
+    "name": "example 2",
+    "input": ["Hit Points: 14", "Damage: 8"],
+    "expected": 641
+  }
+]
