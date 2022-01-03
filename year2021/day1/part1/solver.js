@@ -1,10 +1,10 @@
 import { parseDepths } from "../depthsParser.js";
 
 import count from "../../../lib/count.js";
-import chunked from "../../../lib/chunked.js";
+import windowed from "../../../lib/windowed.js";
 
 export function solve(input) {
   return parseDepths(input)
-    [chunked](2)
+    [windowed](2)
     [count](([a, b]) => b > a);
 }
