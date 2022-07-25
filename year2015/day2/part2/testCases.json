@@ -1,4 +1,0 @@
-[
-  { "input": "2x3x4", "expected": 34 },
-  { "input": "1x1x10", "expected": 14 }
-]

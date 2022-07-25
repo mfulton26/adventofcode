@@ -1,5 +1,0 @@
-[
-  { "input": ">", "expected": 2 },
-  { "input": "^>v<", "expected": 4 },
-  { "input": "^v^v^v^v^v", "expected": 2 }
-]

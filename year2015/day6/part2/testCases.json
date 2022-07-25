@@ -1,4 +1,0 @@
-[
-  { "input": "turn on 0,0 through 0,0", "expected": 1 },
-  { "input": "toggle 0,0 through 999,999", "expected": 2000000 }
-]
