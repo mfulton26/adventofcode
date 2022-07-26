@@ -1,6 +1,7 @@
 import { parse } from "std/flags/mod.ts";
 import { dirname, join } from "std/path/mod.ts";
 import { walk } from "std/fs/mod.ts";
+import { gray } from "std/fmt/colors.ts";
 
 declare global {
   interface NumberConstructor {
@@ -11,8 +12,8 @@ declare global {
 const defaultBaseUrl = "https://adventofcode.com";
 
 if (import.meta.main) {
-  const { _: [command, ...args], h, help, t, time } = parse(Deno.args, {
-    boolean: ["h", "help", "t", "time"],
+  const { _: [command, ...args], h, help } = parse(Deno.args, {
+    boolean: ["h", "help"],
   });
 
   if (h || help) {
@@ -22,7 +23,7 @@ if (import.meta.main) {
 
   switch (command) {
     case "solve":
-      solve(args.length ? args.map(String) : ["."], { time: t || time });
+      solve(args.length ? args.map(String) : ["."]);
       break;
     default:
       console.error(`Unrecognized subcommand: ${command}\n\n${getHelp()}`);
@@ -42,10 +43,7 @@ ARGS:
 
 OPTIONS:
     -h, --help
-            Print help information
-
-    -t, --time
-            Print time it takes to solve`;
+            Print help information`;
     default:
       return `USAGE:
     aoc <SUBCOMMAND>
@@ -69,10 +67,13 @@ ENVIRONMENT VARIABLES:
   }
 }
 
-async function solve(paths: string[], { time }: { time: boolean }) {
+async function solve(paths: string[]) {
   const session = await getSession();
   const cachePath = Deno.env.get("AOC_CACHE_DIR") ??
     join(Deno.env.get("HOME")!, ".aoc", "cache");
+
+  const totalStart = performance.now();
+  let solved = 0;
 
   for (const path of paths) {
     for await (
@@ -83,20 +84,27 @@ async function solve(paths: string[], { time }: { time: boolean }) {
     ) {
       const match = /(?<year>\d{4})\D+(?<day>\d{1,2})/.exec(entry.path);
       if (match?.groups === undefined) continue;
-      const { default: solve } = await import(`./${entry.path}`);
+      const moduleName = `./${entry.path}`;
+      console.log(gray(`running solve from ${moduleName}`));
+      const { default: solve } = await import(moduleName);
       const { year, day } = match.groups;
       const input = await getInput(year, day, session, cachePath);
       try {
         const start = performance.now();
         const answer = solve(input);
         const end = performance.now();
-        console.log(answer);
-        if (time) console.error("time:", (end - start).toFixed(3), "ms");
+        const time = formatTime(start, end);
+        console.log(answer, time);
+        if (answer !== undefined) solved++;
       } catch (e) {
         console.error(e);
       }
     }
   }
+
+  const totalEnd = performance.now();
+
+  console.log(`\n${solved} solved ${formatTime(totalStart, totalEnd)}\n`);
 }
 
 async function getSession() {
@@ -146,4 +154,8 @@ async function getInput(
     }
     return result;
   }
+}
+
+function formatTime(start: number, end: number) {
+  return gray(`(${(end - start).toFixed(3)}ms)`);
 }
