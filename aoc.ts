@@ -75,6 +75,8 @@ async function solve(paths: string[]) {
   const totalStart = performance.now();
   let solved = 0;
 
+  const moduleNames = <string[]> [];
+  const groupsByModuleName = new Map<string, Record<string, string>>();
   for (const path of paths) {
     for await (
       const entry of walk(path, {
@@ -85,20 +87,26 @@ async function solve(paths: string[]) {
       const match = /(?<year>\d{4})\D+(?<day>\d{1,2})/.exec(entry.path);
       if (match?.groups === undefined) continue;
       const moduleName = `./${entry.path}`;
-      console.log(gray(`running solve from ${moduleName}`));
-      const { default: solve } = await import(moduleName);
-      const { year, day } = match.groups;
-      const input = await getInput(year, day, session, cachePath);
-      try {
-        const start = performance.now();
-        const answer = solve(input);
-        const end = performance.now();
-        const time = formatTime(start, end);
-        console.log(answer, time);
-        if (answer !== undefined) solved++;
-      } catch (e) {
-        console.error(e);
-      }
+      moduleNames.push(moduleName);
+      groupsByModuleName.set(moduleName, match.groups);
+    }
+  }
+  moduleNames.sort(alphanumericalCompareFn);
+
+  for (const moduleName of moduleNames) {
+    console.log(gray(`running solve from ${moduleName}`));
+    const { default: solve } = await import(moduleName);
+    const { year, day } = groupsByModuleName.get(moduleName)!;
+    const input = await getInput(year, day, session, cachePath);
+    try {
+      const start = performance.now();
+      const answer = solve(input);
+      const end = performance.now();
+      const time = formatTime(start, end);
+      console.log(answer, time);
+      if (answer !== undefined) solved++;
+    } catch (e) {
+      console.error(e);
     }
   }
 
@@ -158,4 +166,30 @@ async function getInput(
 
 function formatTime(start: number, end: number) {
   return gray(`(${(end - start).toFixed(3)}ms)`);
+}
+
+export function alphanumericalCompareFn(a: string, b: string): number {
+  const aIterator = a.matchAll(/\d+/g);
+  const bIterator = b.matchAll(/\d+/g);
+  let aStart = 0, bStart = 0;
+  for (
+    let aResult = aIterator.next(), bResult = bIterator.next();
+    !aResult.done && !bResult.done;
+    aResult = aIterator.next(), bResult = bIterator.next()
+  ) {
+    const { value: { index: aEnd, 0: aDigits } } = aResult;
+    const { value: { index: bEnd, 0: bDigits } } = bResult;
+    for (; aStart < aEnd! && bStart < bEnd!; aStart++, bStart++) {
+      const m = a[aStart], n = b[bStart];
+      if (m !== n) return m < n ? -1 : 1;
+    }
+    const m = BigInt(aDigits), n = BigInt(bDigits);
+    if (m !== n) return m < n ? -1 : 1;
+    aStart += aDigits.length, bStart += bDigits.length;
+  }
+  for (; aStart < a.length && bStart < b.length; aStart++, bStart++) {
+    const m = a[aStart], n = b[bStart];
+    if (m !== n) return m < n ? -1 : 1;
+  }
+  return a.length - b.length;
 }
