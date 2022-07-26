@@ -5,13 +5,13 @@ export default function solve(input: string) {
   );
   let flashCount = 0;
   for (let step = 1; step <= 100; step++) {
-    const queue = points.slice();
-    while (queue.length) {
-      const [x, y] = queue.shift()!;
+    const stack = points.slice();
+    while (stack.length) {
+      const [x, y] = stack.pop()!;
       if (levels[y]?.[x] === undefined) continue;
       if (++levels[y][x] === 10) {
         flashCount++;
-        queue.push(
+        stack.push(
           [x + 1, y],
           [x + 1, y - 1],
           [x, y - 1],
