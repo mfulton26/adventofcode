@@ -1,5 +1,6 @@
 import { parse } from "std/flags/mod.ts";
 import { dirname, join } from "std/path/mod.ts";
+import { walk } from "std/fs/mod.ts";
 
 declare global {
   interface NumberConstructor {
@@ -10,13 +11,48 @@ declare global {
 const defaultBaseUrl = "https://adventofcode.com";
 
 if (import.meta.main) {
-  const { _: [command, year, day, part], time } = parse(Deno.args, {
-    boolean: ["time"],
+  const { _: [command, ...args], h, help, t, time } = parse(Deno.args, {
+    boolean: ["h", "help", "t", "time"],
   });
 
-  if (command !== "solve") {
-    console.log(`USAGE:
+  if (h || help) {
+    console.log(getHelp(command));
+    Deno.exit(0);
+  }
+
+  switch (command) {
+    case "solve":
+      solve(args.length ? args.map(String) : ["."], { time: t || time });
+      break;
+    default:
+      console.error(`Unrecognized subcommand: ${command}\n\n${getHelp()}`);
+      Deno.exit(1);
+  }
+}
+
+function getHelp(command?: string | number) {
+  switch (command) {
+    case "solve":
+      return `USAGE:
+    aoc solve [OPTIONS] [files]...
+
+ARGS:
+    <files>...
+            List of file names to run
+
+OPTIONS:
+    -h, --help
+            Print help information
+
+    -t, --time
+            Print time it takes to solve`;
+    default:
+      return `USAGE:
     aoc <SUBCOMMAND>
+  
+OPTIONS:
+    -h, --help
+            Print help information
 
 SUBCOMMANDS:
     solve
@@ -29,56 +65,36 @@ ENVIRONMENT VARIABLES:
     AOC_CONFIG_DIR  Set the config directory
                     Defaults to ~/.aoc/cache
     AOC_SESSION     The session value to send in cookies for authentication
-                    Will be read from $AOC_CONFIG_DIR/session if not specified`);
-
-    Deno.exit(1);
+                    Will be read from $AOC_CONFIG_DIR/session if not specified`;
   }
+}
 
-  if (
-    !(
-      command === "solve" &&
-      Number.isSafeInteger(year) &&
-      Number.isSafeInteger(day) &&
-      (part === undefined || part === 1 || part === 2)
-    )
-  ) {
-    console.log(`USAGE:
-    aoc solve [OPTIONS] <year> <day> [<part>]
-
-OPTIONS:
-    --time
-            Print time it takes to solve
-ARGS:
-    <year>
-            The event year
-    <day>
-            The puzzle day
-    [<part>]
-            Part 1 or 2 of the puzzle`);
-
-    Deno.exit(1);
-  }
-
+async function solve(paths: string[], { time }: { time: boolean }) {
   const session = await getSession();
   const cachePath = Deno.env.get("AOC_CACHE_DIR") ??
     join(Deno.env.get("HOME")!, ".aoc", "cache");
 
-  const parts: number[] = part === undefined ? [1, 2] : [part];
-
-  const input = await getInput(year, day, session, cachePath);
-  for (const part of parts) {
-    const moduleName = `./${year}/day/${day}/part/${part}/solve.ts`;
-    try {
-      const { default: solve } = await import(moduleName);
-      const start = performance.now();
-      const answer = solve(input);
-      const end = performance.now();
-      console.log(answer);
-      if (time) {
-        console.error("time:", (end - start).toFixed(3), "ms");
+  for (const path of paths) {
+    for await (
+      const entry of walk(path, {
+        includeDirs: false,
+        match: [/solve\.(js|ts)$/],
+      })
+    ) {
+      const match = /(?<year>\d{4})\D+(?<day>\d{1,2})/.exec(entry.path);
+      if (match?.groups === undefined) continue;
+      const { default: solve } = await import(`./${entry.path}`);
+      const { year, day } = match.groups;
+      const input = await getInput(year, day, session, cachePath);
+      try {
+        const start = performance.now();
+        const answer = solve(input);
+        const end = performance.now();
+        console.log(answer);
+        if (time) console.error("time:", (end - start).toFixed(3), "ms");
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
     }
   }
 }
@@ -106,8 +122,8 @@ async function getSession() {
 }
 
 async function getInput(
-  year: number,
-  day: number,
+  year: string | number,
+  day: string | number,
   session: string,
   cachePath: string,
 ) {
