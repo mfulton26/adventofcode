@@ -1,7 +1,5 @@
 export default function solve(input: string) {
-  const bitArrays = input.trim().split("\n").map((line) =>
-    Array.from(line, Number)
-  );
+  const bitArrays = input.split("\n").map((line) => Array.from(line, Number));
   const bitCounts = findBitCounts(bitArrays);
   const gammaRate = findRate(
     bitCounts,

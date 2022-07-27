@@ -1,5 +1,5 @@
 export default function solve(input: string) {
-  return input.trim().split("\n")
+  return input.split("\n")
     .map((line) => {
       const [, outputValue] = line.split(" | ");
       return outputValue.split(" ").reduce(

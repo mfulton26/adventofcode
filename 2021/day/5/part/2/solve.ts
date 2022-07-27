@@ -1,5 +1,5 @@
 export default function solve(input: string) {
-  const segments = input.trim().split("\n").map((line) =>
+  const segments = input.split("\n").map((line) =>
     line.split(" -> ").map((side) => side.split(",").map(Number))
   );
   const grid = new Map<string, number>();

@@ -1,6 +1,6 @@
 export default function solve(input: string) {
   let x = 0, depth = 0;
-  for (const command of input.trim().split("\n")) {
+  for (const command of input.split("\n")) {
     const [op, arg] = command.split(" ");
     const units = Number(arg);
     switch (op) {

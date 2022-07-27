@@ -160,8 +160,9 @@ async function getInput(
       new URL(inputPathname, Deno.env.get("AOC_BASE_URL") ?? defaultBaseUrl),
       { headers: { cookie: `session=${session}` } },
     );
-    const result = await response.text();
-    if (!response.ok) throw new Error(result);
+    const text = await response.text();
+    if (!response.ok) throw new Error(text);
+    const result = text.replaceAll(/^\n|\n$/g, "");
     try {
       await Deno.mkdir(dirname(inputCachePath), { recursive: true });
       await Deno.writeTextFile(inputCachePath, result);

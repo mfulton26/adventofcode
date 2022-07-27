@@ -1,5 +1,5 @@
 export default function solve(input: string) {
-  const scores = input.trim().split("\n")
+  const scores = input.split("\n")
     .map((line) => {
       const { value, error } = findCompletion(line);
       if (error) return;

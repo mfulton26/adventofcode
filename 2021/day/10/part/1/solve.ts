@@ -1,5 +1,5 @@
 export default function solve(input: string) {
-  return input.trim().split("\n").reduce((sum, line) => {
+  return input.split("\n").reduce((sum, line) => {
     const char = findFirstIllegalCharacter(line);
     if (char === undefined) return sum;
     return sum + pointsTable[char];

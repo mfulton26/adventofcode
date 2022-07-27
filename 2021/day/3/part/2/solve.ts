@@ -1,7 +1,5 @@
 export default function solve(input: string) {
-  const bitArrays = input.trim().split("\n").map((line) =>
-    Array.from(line, Number)
-  );
+  const bitArrays = input.split("\n").map((line) => Array.from(line, Number));
   const oxygenGeneratorRating = findRating(
     bitArrays,
     (counts) => counts[1] >= counts[0] ? 1 : 0,
