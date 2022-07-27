@@ -3,6 +3,8 @@ import { dirname, join } from "std/path/mod.ts";
 import { walk } from "std/fs/mod.ts";
 import { gray } from "std/fmt/colors.ts";
 
+import prettyMs from "https://cdn.skypack.dev/pretty-ms?dts";
+
 declare global {
   interface NumberConstructor {
     isSafeInteger(number: unknown): number is number;
@@ -165,8 +167,12 @@ async function getInput(
 }
 
 function formatTime(start: number, end: number) {
-  return gray(`(${(end - start).toFixed(3)}ms)`);
+  return gray(`(${prettyMs(end - start, formatTime.prettyMsOptions)})`);
 }
+formatTime.prettyMsOptions = Object.freeze({
+  formatSubMilliseconds: true,
+  unitCount: 1,
+});
 
 export function alphanumericalCompareFn(a: string, b: string): number {
   const aIterator = a.matchAll(/\d+/g);
