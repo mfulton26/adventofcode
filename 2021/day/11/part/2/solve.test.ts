@@ -2,7 +2,8 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "std/testing/asserts.ts";
 
-const input = `5483143223
+Deno.test("example", () => {
+  const input = `5483143223
 2745854711
 5264556173
 6141336146
@@ -13,6 +14,5 @@ const input = `5483143223
 4846848554
 5283751526`;
 
-Deno.test("example", () => {
   assertEquals(solve(input), 195);
 });

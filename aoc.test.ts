@@ -3,34 +3,36 @@ import { alphanumericalCompareFn } from "./aoc.ts";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("alphabetical", async (t) => {
-  await t.step('["abc", "abc", 0]', fn);
-  await t.step('["abc", "cba", -1]', fn);
-  await t.step('["cba", "abc", 1]', fn);
+  await t.step('"abc" vs. "abc"', expect(0));
+  await t.step('"abc" vs. "cba"', expect(-1));
+  await t.step('"cba" vs. "abc"', expect(1));
 });
 
 Deno.test("numerical", async (t) => {
-  await t.step('["0", "0", 0]', fn);
-  await t.step('["1", "1", 0]', fn);
-  await t.step('["1", "10", -1]', fn);
-  await t.step('["10", "1", 1]', fn);
-  await t.step('["1", "11", -1]', fn);
-  await t.step('["11", "1", 1]', fn);
-  await t.step('["2", "10", -1]', fn);
-  await t.step('["10", "2", 1]', fn);
+  await t.step('"0" vs. "0"', expect(0));
+  await t.step('"1" vs. "1"', expect(0));
+  await t.step('"1" vs. "10"', expect(-1));
+  await t.step('"10" vs. "1"', expect(1));
+  await t.step('"1" vs. "11"', expect(-1));
+  await t.step('"11" vs. "1"', expect(1));
+  await t.step('"2" vs. "10"', expect(-1));
+  await t.step('"10" vs. "2"', expect(1));
 });
 
 Deno.test("alphanumerical", async (t) => {
-  await t.step('["abc123", "abc123", 0]', fn);
-  await t.step('["abc123", "123abc", -1]', fn);
-  await t.step('["123abc", "abc123", 1]', fn);
-  await t.step('["a1b2c3", "a1b2c3", 0]', fn);
-  await t.step('["a2", "a10", -1]', fn);
-  await t.step('["a10", "a2", 1]', fn);
-  await t.step('["1ab", "1ba", -1]', fn);
-  await t.step('["1ba", "1ab", 1]', fn);
+  await t.step('"abc123" vs. "abc123"', expect(0));
+  await t.step('"abc123" vs. "123abc"', expect(-1));
+  await t.step('"123abc" vs. "abc123"', expect(1));
+  await t.step('"a1b2c3" vs. "a1b2c3"', expect(0));
+  await t.step('"a2" vs. "a10"', expect(-1));
+  await t.step('"a10" vs. "a2"', expect(1));
+  await t.step('"1ab" vs. "1ba"', expect(-1));
+  await t.step('"1ba" vs. "1ab"', expect(1));
 });
 
-function fn(t: Deno.TestContext) {
-  const [a, b, expected] = JSON.parse(t.name);
-  assertEquals(alphanumericalCompareFn(a, b), expected);
+function expect(expected: unknown) {
+  return (t: Deno.TestContext) => {
+    const [a, b] = JSON.parse(`[${t.name.replace(" vs. ", ", ")}]`);
+    assertEquals(alphanumericalCompareFn(a, b), expected);
+  };
 }

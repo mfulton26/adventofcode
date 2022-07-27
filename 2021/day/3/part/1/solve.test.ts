@@ -2,7 +2,8 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "std/testing/asserts.ts";
 
-const input = `00100
+Deno.test("example", () => {
+  const input = `00100
 11110
 10110
 10111
@@ -15,6 +16,5 @@ const input = `00100
 00010
 01010`;
 
-Deno.test("example", () => {
   assertEquals(solve(input), 198);
 });
