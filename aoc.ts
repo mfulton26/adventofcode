@@ -69,7 +69,9 @@ ENVIRONMENT VARIABLES:
   }
 }
 
-async function solve(paths: string[]) {
+async function solve(paths: Iterable<string>) {
+  paths = new Set(paths);
+
   const session = await getSession();
   const cachePath = Deno.env.get("AOC_CACHE_DIR") ??
     join(Deno.env.get("HOME")!, ".aoc", "cache");
@@ -77,9 +79,14 @@ async function solve(paths: string[]) {
   const totalStart = performance.now();
   let solved = 0;
 
-  const moduleNames = <string[]> [];
+  const moduleNames = new Set<string>();
   const groupsByModuleName = new Map<string, Record<string, string>>();
   for (const path of paths) {
+    const fileInfo = await Deno.lstat(path);
+    if (fileInfo.isFile) {
+      (<Set<string>> paths).add(dirname(path));
+      continue;
+    }
     for await (
       const entry of walk(path, {
         includeDirs: false,
@@ -89,13 +96,12 @@ async function solve(paths: string[]) {
       const match = /(?<year>\d{4})\D+(?<day>\d{1,2})/.exec(entry.path);
       if (match?.groups === undefined) continue;
       const moduleName = `./${entry.path}`;
-      moduleNames.push(moduleName);
+      moduleNames.add(moduleName);
       groupsByModuleName.set(moduleName, match.groups);
     }
   }
-  moduleNames.sort(alphanumericalCompareFn);
 
-  for (const moduleName of moduleNames) {
+  for (const moduleName of [...moduleNames].sort(alphanumericalCompareFn)) {
     console.log(gray(`running solve from ${moduleName}`));
     const { default: solve } = await import(moduleName);
     const { year, day } = groupsByModuleName.get(moduleName)!;
