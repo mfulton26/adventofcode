@@ -70,8 +70,6 @@ ENVIRONMENT VARIABLES:
 }
 
 async function solve(paths: Iterable<string>) {
-  paths = new Set(paths);
-
   const session = await getSession();
   const cachePath = Deno.env.get("AOC_CACHE_DIR") ??
     join(Deno.env.get("HOME")!, ".aoc", "cache");
@@ -79,33 +77,38 @@ async function solve(paths: Iterable<string>) {
   const totalStart = performance.now();
   let solved = 0;
 
-  const moduleNames = new Set<string>();
+  const moduleNames = <string[]> [];
   const groupsByModuleName = new Map<string, Record<string, string>>();
-  for (const path of paths) {
+  for (const path of new Set(paths)) {
     const fileInfo = await Deno.lstat(path);
-    if (fileInfo.isFile) {
-      (<Set<string>> paths).add(dirname(path));
-      continue;
-    }
     for await (
-      const entry of walk(path, {
+      const entry of fileInfo.isFile ? [{ path }] : walk(path, {
         includeDirs: false,
         match: [/solve\.(js|ts)$/],
       })
     ) {
-      const match = /(?<year>\d{4})\D+(?<day>\d{1,2})/.exec(entry.path);
-      if (match?.groups === undefined) continue;
       const moduleName = `./${entry.path}`;
-      moduleNames.add(moduleName);
+      const match = /(?<year>\d{4})\D+(?<day>\d{1,2})/.exec(entry.path);
+      if (match?.groups === undefined) {
+        console.log(gray(`puzzle year and day not found in ${moduleName}`));
+        continue;
+      }
+      moduleNames.push(moduleName);
       groupsByModuleName.set(moduleName, match.groups);
     }
   }
 
-  for (const moduleName of [...moduleNames].sort(alphanumericalCompareFn)) {
-    console.log(gray(`running solve from ${moduleName}`));
-    const { default: solve } = await import(moduleName);
+  moduleNames.sort(alphanumericalCompareFn);
+
+  for (const moduleName of new Set(moduleNames)) {
     const { year, day } = groupsByModuleName.get(moduleName)!;
     const input = await getInput(year, day, session, cachePath);
+    const solve = await getSolveFn(moduleName);
+    if (solve === undefined) {
+      console.log(gray(`no default exported function found in ${moduleName}`));
+      continue;
+    }
+    console.log(gray(`running solve from ${moduleName}`));
     try {
       const start = performance.now();
       const answer = solve(input);
@@ -170,6 +173,15 @@ async function getInput(
       console.warn("failed to cache input", e);
     }
     return result;
+  }
+}
+
+async function getSolveFn(moduleName: string) {
+  try {
+    const { default: solve } = await import(moduleName);
+    if (typeof solve === "function") return solve as (input: string) => unknown;
+  } catch {
+    return;
   }
 }
 
