@@ -10,7 +10,10 @@ export default function solve(input: string) {
       position: Number(groups!.position),
     }),
   );
-  const lengths = { x: Infinity, y: Infinity };
+  const lengths = {
+    x: Math.max(...dots.map(({ x }) => x)),
+    y: Math.max(...dots.map(({ y }) => y)),
+  };
   for (const { coordinate, position } of folds) {
     for (const dot of dots) {
       if (dot[coordinate] < position) continue;
