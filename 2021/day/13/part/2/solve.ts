@@ -23,8 +23,8 @@ export default function solve(input: string) {
   }
   const paper = Array.from(
     { length: lengths.y },
-    () => Array.from({ length: lengths.x }, () => "."),
+    () => Array.from({ length: lengths.x }, () => " "),
   );
-  for (const { x, y } of dots) paper[y][x] = "#";
+  for (const { x, y } of dots) paper[y][x] = "█";
   return paper.map((line) => line.join("")).join("\n");
 }
