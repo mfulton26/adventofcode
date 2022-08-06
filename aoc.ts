@@ -180,7 +180,8 @@ async function getSolveFn(moduleName: string) {
   try {
     const { default: solve } = await import(moduleName);
     if (typeof solve === "function") return solve as (input: string) => unknown;
-  } catch {
+  } catch (e) {
+    console.warn(e);
     return;
   }
 }
