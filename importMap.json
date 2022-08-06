@@ -1,5 +1,6 @@
 {
   "imports": {
+    "helpers/": "./helpers/",
     "std/": "https://deno.land/std@0.149.0/"
   }
 }
