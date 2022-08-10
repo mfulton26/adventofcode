@@ -31,16 +31,14 @@ function parseInput(text: string) {
 
 class Board {
   #rows;
-  #numbers;
   #called = new Set<number>();
 
   constructor(rows: number[][]) {
     this.#rows = rows;
-    this.#numbers = new Set(rows.flat());
   }
 
   call(number: number) {
-    if (!this.#numbers.has(number)) return false;
+    if (!this.#rows.some((row) => row.includes(number))) return false;
     this.#called.add(number);
     return true;
   }
