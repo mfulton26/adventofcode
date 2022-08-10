@@ -1,15 +1,13 @@
 export default class Board {
   #rows;
-  #numbers;
   #called = new Set();
 
   constructor(rows) {
     this.#rows = rows;
-    this.#numbers = new Set(rows.flat());
   }
 
   call(number) {
-    if (!this.#numbers.has(number)) return false;
+    if (!this.#rows.some((row) => row.includes(number))) return false;
     this.#called.add(number);
     return true;
   }
