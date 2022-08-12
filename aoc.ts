@@ -4,6 +4,7 @@ import { walk } from "std/fs/mod.ts";
 import { gray } from "std/fmt/colors.ts";
 
 import prettyMs from "https://cdn.skypack.dev/pretty-ms?dts";
+import DotLetters from "helpers/DotLetters.ts";
 
 declare global {
   interface NumberConstructor {
@@ -14,9 +15,19 @@ declare global {
 const defaultBaseUrl = "https://adventofcode.com";
 
 if (import.meta.main) {
-  const { _: [command, ...args], h, help } = parse(Deno.args, {
-    boolean: ["h", "help"],
-  });
+  const {
+    _: [command, ...args],
+    h,
+    help,
+    ["dot-letter-parsing"]: dotLetterParsing,
+  } = parse(
+    Deno.args,
+    {
+      boolean: ["h", "help", "dot-letter-parsing"],
+      negatable: ["dot-letter-parsing"],
+      default: { ["dot-letter-parsing"]: true },
+    },
+  );
 
   if (h || help) {
     console.log(getHelp(command));
@@ -25,7 +36,7 @@ if (import.meta.main) {
 
   switch (command) {
     case "solve":
-      solve(args.length ? args.map(String) : ["."]);
+      solve(args.length ? args.map(String) : ["."], { dotLetterParsing });
       break;
     default:
       console.error(`Unrecognized subcommand: ${command}\n\n${getHelp()}`);
@@ -45,7 +56,10 @@ ARGS:
 
 OPTIONS:
     -h, --help
-            Print help information`;
+            Print help information
+
+        --no-dot-letter-parsing
+            Disable automatic dot letter answer recognition parsing.`;
     default:
       return `USAGE:
     aoc <SUBCOMMAND>
@@ -69,7 +83,10 @@ ENVIRONMENT VARIABLES:
   }
 }
 
-async function solve(paths: Iterable<string>) {
+async function solve(
+  paths: Iterable<string>,
+  { dotLetterParsing = true } = {},
+) {
   const session = await getSession();
   const cachePath = Deno.env.get("AOC_CACHE_DIR") ??
     join(Deno.env.get("HOME")!, ".aoc", "cache");
@@ -114,7 +131,13 @@ async function solve(paths: Iterable<string>) {
       const answer = solve(input);
       const end = performance.now();
       const time = formatTime(start, end);
-      console.log(answer, time);
+      const shouldParseAsDotLetters = dotLetterParsing &&
+        typeof answer === "string" &&
+        /^[#.\n]+(?<=#[\s\S]*)(?<=\.[\s\S]*)(?<=\n[\s\S]*)$/m.test(answer);
+      console.log(
+        shouldParseAsDotLetters ? DotLetters.parse(answer) : answer,
+        time,
+      );
       if (answer !== undefined) solved++;
     } catch (e) {
       console.error(e);
