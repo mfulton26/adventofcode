@@ -9,17 +9,7 @@ export default function solve(input: string) {
   return signals.get("a");
 }
 
-solve.all = (input: string) => {
-  const instructions = parseInstructions(input);
-  const signals = createSignals(instructions);
-  return Object.fromEntries(
-    Array.from(instructions.keys())
-      .sort()
-      .map((key) => [key, signals.get(key)]),
-  );
-};
-
-function parseInstructions(text: string) {
+export function parseInstructions(text: string) {
   const parse = <Record<string, (words: string[]) => [string, Wire]>> {
     "AND": ([a, , b, , destination]) => {
       return [destination, (signals) => signals.get(a) & signals.get(b)];
@@ -62,14 +52,14 @@ function parseInstructions(text: string) {
   return new Map(parseInstructionEntries(text));
 }
 
-function createSignals(instructions: Map<string, Wire>) {
-  const signals = new Map();
+export function createSignals(instructions: Map<string, Wire>) {
+  const signals = new Map<string, number>();
   function get(identifier: string) {
     if (/^\d+$/.test(identifier)) return Number(identifier);
     if (!signals.has(identifier)) {
       signals.set(identifier, instructions.get(identifier)!({ get }));
     }
-    return signals.get(identifier);
+    return signals.get(identifier)!;
   }
   return { get, reset: () => signals.clear() };
 }

@@ -1,4 +1,4 @@
-import solve from "./solve.ts";
+import { createSignals, parseInstructions } from "./solve.ts";
 
 import { assertEquals } from "std/testing/asserts.ts";
 
@@ -12,7 +12,14 @@ y RSHIFT 2 -> g
 NOT x -> h
 NOT y -> i`;
 
-  assertEquals(solve.all(input), {
+  const instructions = parseInstructions(input);
+  const signals = createSignals(instructions);
+  const actual = Object.fromEntries(
+    Array.from(instructions.keys())
+      .sort()
+      .map((key) => [key, signals.get(key)]),
+  );
+  const expected = {
     "d": 72,
     "e": 507,
     "f": 492,
@@ -21,5 +28,7 @@ NOT y -> i`;
     "i": 65079,
     "x": 123,
     "y": 456,
-  });
+  };
+
+  assertEquals(actual, expected);
 });
