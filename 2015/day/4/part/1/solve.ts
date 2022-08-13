@@ -1,8 +1,8 @@
-import { Md5 } from "std/hash/md5.ts";
+import md5 from "helpers/md5.ts";
 
 export default function solve(input: string, prefix = "0".repeat(5)) {
   for (let number = 1;; number++) {
-    const hash = new Md5().update(`${input}${number}`).toString();
+    const hash = md5(`${input}${number}`);
     if (hash.startsWith(prefix)) return number;
   }
 }
