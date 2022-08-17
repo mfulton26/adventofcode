@@ -4,14 +4,9 @@ export default function solve(input: string) {
   );
   const grid = new Map<string, number>();
   for (const [[x1, y1], [x2, y2]] of segments) {
-    const [Δx, Δy] = [x2 - x1, y2 - y1];
-    const [dx, dy] = [Math.sign(Δx), Math.sign(Δy)];
-    const steps = Math.abs(Δx) || Math.abs(Δy);
-    for (
-      let step = 0, x = x1, y = y1;
-      step <= steps;
-      step++, x += dx, y += dy
-    ) {
+    const [dx, dy] = [Math.sign(x2 - x1), Math.sign(y2 - y1)];
+    const [endX, endY] = [x2 + dx, y2 + dy];
+    for (let x = x1, y = y1; x !== endX || y !== endY; x += dx, y += dy) {
       grid.set(`${x},${y}`, (grid.get(`${x},${y}`) ?? 0) + 1);
     }
   }
