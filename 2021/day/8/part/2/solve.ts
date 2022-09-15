@@ -24,26 +24,12 @@ function toOutputValue([patterns, outputValuePatterns]: Set<string>[][]) {
 }
 
 function identifyDigitPatterns(patterns: Set<string>[]) {
-  const digits = Array<Set<string>>(10);
-  const patternsBySize: Record<number, Set<string>[]> = {
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: [],
-    7: [],
-  };
+  const digits: Set<string>[] = Array.from({ length: 10 });
+  const patternsBySize = digits.map(() => <Set<string>[]> []);
   for (const pattern of patterns) patternsBySize[pattern.size].push(pattern);
-  ({
-    2: [digits[1]],
-    3: [digits[7]],
-    4: [digits[4]],
-    7: [digits[8]],
-  } = patternsBySize);
-  const {
-    5: fiveSided,
-    6: sixSided,
-  } = patternsBySize;
+  ({ 2: [digits[1]], 3: [digits[7]], 4: [digits[4]], 7: [digits[8]] } =
+    patternsBySize);
+  const { 5: fiveSided, 6: sixSided } = patternsBySize;
   digits[3] = fiveSided.find((pattern) => isSupersetOf(pattern, digits[1]))!;
   digits[6] = sixSided.find((pattern) => !isSupersetOf(pattern, digits[1]))!;
   digits[9] = sixSided.find((pattern) => isSupersetOf(pattern, digits[3]))!;
