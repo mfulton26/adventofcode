@@ -3,7 +3,8 @@ import { createSignals, parseInstructions } from "./solve.ts";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("example", () => {
-  const input = `123 -> x
+  const input = `\
+123 -> x
 456 -> y
 x AND y -> d
 x OR y -> e

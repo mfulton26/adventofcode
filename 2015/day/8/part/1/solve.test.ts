@@ -14,7 +14,8 @@ function expect(expected: unknown) {
 }
 
 Deno.test("example", () => {
-  const input = `""
+  const input = `\
+""
 "abc"
 "aaa\\"aaa"
 "\\x27"`;

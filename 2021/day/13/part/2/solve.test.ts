@@ -3,7 +3,8 @@ import solve from "./solve.ts";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("example", () => {
-  const input = `6,10
+  const input = `\
+6,10
 0,14
 9,10
 0,3
@@ -27,7 +28,8 @@ fold along x=5`;
 
   assertEquals(
     solve(input),
-    `#####
+    `\
+#####
 #...#
 #...#
 #...#

@@ -3,7 +3,8 @@ import solve from "./solve.ts";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("example", () => {
-  const input = `5483143223
+  const input = `\
+5483143223
 2745854711
 5264556173
 6141336146
