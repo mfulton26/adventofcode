@@ -3,7 +3,8 @@ export default function solve(input: string) {
   function findCostAt(target: number): number {
     let result = 0;
     for (const position of positions) {
-      result += Math.abs(target - position);
+      const n = Math.abs(target - position);
+      result += (n * (n + 1)) / 2;
     }
     return result;
   }
