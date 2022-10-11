@@ -1,4 +1,4 @@
-import solve, { isValidPassword } from "./solve.ts";
+import { isValidPassword } from "./solve.ts";
 
 import { assertEquals } from "std/testing/asserts.ts";
 
