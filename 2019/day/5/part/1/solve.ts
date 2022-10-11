@@ -5,10 +5,8 @@ export default function solve(input: string) {
   return lastOutput!;
 }
 
-function program(
-  memory: number[],
-): (inputs: Iterable<number>) => IterableIterator<number> {
-  return function* (inputs) {
+function program(memory: number[]) {
+  return function* (inputs: Iterable<number>) {
     const inputIterator = inputs[Symbol.iterator]();
     for (let instructionPointer = 0; memory[instructionPointer] !== 99;) {
       const instruction = memory[instructionPointer++];

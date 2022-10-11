@@ -1,46 +1,21 @@
-import permute from "helpers/permute.ts";
+import { unreachable } from "std/testing/asserts.ts";
 
 export default function solve(input: string) {
-  const initialMemory = input.split(",").map(Number);
-  const phaseSettings = [5, 6, 7, 8, 9];
-  let highestSignal = -Infinity;
-  for (const signal of outputSignals(initialMemory, phaseSettings)) {
-    if (signal < highestSignal) continue;
-    highestSignal = signal;
-  }
-  return highestSignal;
-}
-
-function* outputSignals(initialMemory: number[], phaseSettings: number[]) {
-  for (const permutation of permute(phaseSettings)) {
-    let output = 0;
-    const programs = permutation.map((phaseSetting) =>
-      program(initialMemory.slice())(
-        (function* () {
-          yield phaseSetting;
-          while (true) yield output;
-        })(),
-      )
-    );
-    for (const program of cycle(programs)) {
-      const { value, done } = program.next();
-      if (done) break;
-      output = value;
-    }
-    yield output;
-  }
+  const memory = input.split(",").map(Number);
+  const outputs = Array.from(program(memory)([1]));
+  return outputs.join(",");
 }
 
 function program(memory: number[]) {
   return function* (inputs: Iterable<number>) {
     const inputIterator = inputs[Symbol.iterator]();
     for (
-      let instructionPointer = 0;
+      let instructionPointer = 0, relativeBase = 0;
       instructionPointer >= 0 &&
       instructionPointer < memory.length &&
       memory[instructionPointer] !== 99;
     ) {
-      const instruction = memory[instructionPointer++];
+      const instruction = memory[instructionPointer++] ?? 0;
       const opcode = instruction % 100;
       const parameters = {
         [Symbol.iterator]() {
@@ -50,10 +25,21 @@ function program(memory: number[]) {
         next(value?: number) {
           this.divisor *= 10;
           const mode = Math.trunc(instruction / this.divisor) % 10;
-          const position = mode === 0
-            ? memory[instructionPointer++]
-            : instructionPointer++;
-          if (value === undefined) value = memory[position];
+          let position;
+          switch (mode) {
+            case 0:
+              position = memory[instructionPointer++] ?? 0;
+              break;
+            case 1:
+              position = instructionPointer++;
+              break;
+            case 2:
+              position = relativeBase + memory[instructionPointer++] ?? 0;
+              break;
+            default:
+              unreachable();
+          }
+          if (value === undefined) value = memory[position] ?? 0;
           else memory[position] = value;
           return { value, done: false as const };
         },
@@ -70,11 +56,13 @@ function program(memory: number[]) {
           break;
         }
         case 3: {
-          parameters.next(inputIterator.next().value);
+          const { value: input } = inputIterator.next();
+          parameters.next(input);
           break;
         }
         case 4: {
-          yield parameters.next().value;
+          const [output] = parameters;
+          yield output;
           break;
         }
         case 5: {
@@ -101,11 +89,12 @@ function program(memory: number[]) {
           parameters.next(a === b ? 1 : 0);
           break;
         }
+        case 9: {
+          const [a] = parameters;
+          relativeBase += a;
+          break;
+        }
       }
     }
   };
-}
-
-function* cycle<T>(iterable: Iterable<T>) {
-  while (true) yield* iterable;
 }

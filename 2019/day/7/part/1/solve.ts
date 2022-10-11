@@ -23,10 +23,8 @@ function* outputSignals(initialMemory: number[], phaseSettings: number[]) {
   }
 }
 
-function program(
-  memory: number[],
-): (inputs: Iterable<number>) => IterableIterator<number> {
-  return function* (inputs) {
+function program(memory: number[]) {
+  return function* (inputs: Iterable<number>) {
     const inputIterator = inputs[Symbol.iterator]();
     for (
       let instructionPointer = 0;
