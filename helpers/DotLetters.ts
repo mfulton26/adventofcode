@@ -1,3 +1,11 @@
+const B = `\
+###.
+#..#
+###.
+#..#
+#..#
+###.`;
+
 const E = `\
 ####
 #...
@@ -38,6 +46,14 @@ const L = `\
 #...
 ####`;
 
+const P = `\
+###.
+#..#
+#..#
+###.
+#...
+#...`;
+
 const U = `\
 #..#
 #..#
@@ -46,17 +62,28 @@ const U = `\
 #..#
 .##.`;
 
+const Z = `\
+####
+...#
+..#.
+.#..
+#...
+####`;
+
 const dotsToLetter = new Map([
+  [B, "B"],
   [E, "E"],
   [G, "G"],
   [H, "H"],
   [J, "J"],
   [L, "L"],
+  [P, "P"],
   [U, "U"],
+  [Z, "Z"],
 ]);
 
 function parse(text: string) {
-  const lines = text.split("\n");
+  const lines = text.replaceAll("0", ".").replaceAll("1", "#").split("\n");
   const dotLetters: string[] = [];
   for (let i = 0; i < lines[0].length; i += 5) {
     const dotLetter = Array

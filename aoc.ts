@@ -133,7 +133,8 @@ async function solve(
       const time = formatTime(start, end);
       const shouldParseAsDotLetters = dotLetterParsing &&
         typeof answer === "string" &&
-        /^[#.\n]+(?<=#[\s\S]*)(?<=\.[\s\S]*)(?<=\n[\s\S]*)$/m.test(answer);
+        /^[.#\n]+(?<=\.[\s\S]*)(?<=#[\s\S]*)(?<=\n[\s\S]*)|[01\n]+(?<=0[\s\S]*)(?<=1[\s\S]*)(?<=\n[\s\S]*)$/m
+          .test(answer);
       console.log(
         shouldParseAsDotLetters ? DotLetters.parse(answer) : answer,
         time,
