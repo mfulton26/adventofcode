@@ -1,4 +1,0 @@
-[
-  { "input": "abcdef", "expected": 609043 },
-  { "input": "pqrstuv", "expected": 1048970 }
-]

@@ -1,7 +1,0 @@
-[
-  {
-    "functionName": "decryptName",
-    "args": [{ "encryptedName": "qzmt-zixmtkozy-ivhz", "sectorId": 343 }],
-    "expected": "very encrypted name"
-  }
-]

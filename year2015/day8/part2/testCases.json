@@ -1,7 +1,0 @@
-[
-  {
-    "name": "example",
-    "input": ["\"\"", "\"abc\"", "\"aaa\\\"aaa\"", "\"\\x27\""],
-    "expected": 19
-  }
-]

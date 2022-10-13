@@ -1,62 +1,54 @@
 # adventofcode
 
-Solvers and testers for [Advent of Code](https://adventofcode.com/).
+My [Advent of Code](https://adventofcode.com/) solutions.
 
-## Requirements
+## Browser usage
 
-- Chromium web browser with access to [Advent of Code](https://adventofcode.com) and [DevTools](https://devtools.chrome.com).
-- Basic knowledge of [running JavaScript](https://devtools.chrome.com/console#javascript) in the [DevTools Console](https://devtools.chrome.com/console) (see [Get Started With Running JavaScript In The Console](https://devtools.chrome.com/console/javascript)).
+Run the following in the [DevTools Console](https://devtools.chrome.com/console)
+while on a puzzle page (e.g.
+[Day 1 - Advent of Code 2015](https://adventofcode.com/2015/day/1)):
 
-## Usage
-
-1. Open a puzzle page (e.g. [Day 1 - Advent of Code 2015](https://adventofcode.com/2015/day/1)).
-2. Open the [DevTools Console](https://devtools.chrome.com/console).
-3. Run the solver or its tests by copying & pasting code below and running it in the DevTools Console. The scripts detect which puzzle is loaded in the page and solve/test accordingly.
-
-### Solving Puzzles
-
-Part one and two can be solved for a puzzle by loading the solver module and callings its `solve` function.
+Part one and two can be solved for a puzzle by importing the `solve.js` module.
 
 ```js
-const { solve } = await import("https://mfulton26.github.io/adventofcode/solver.js");
-await solve();
+await import("http://localhost:8000/solver.js").then(({ solve }) => solve());
 ```
 
-A `part` parameter can be specified to only solve part `1` or `2` of a puzzle.
+A `part` option can be specified to only solve part `1` or `2`.
 
 ```js
-const { solve } = await import("https://mfulton26.github.io/adventofcode/solver.js");
-await solve({ part: 1 });
+await import("http://localhost:8000/solver.js")
+  .then(({ solve }) => solve({ part: 2 }));
 ```
 
-### Testing Solvers
-
-Part one and two can be tested for a puzzle by loading the tester module and callings its `test` function.
+A `dotLetterParsing` option is also available to disable detection and parsing
+of dot-letter answers.
 
 ```js
-const { test } = await import("https://mfulton26.github.io/adventofcode/tester.js");
-await test();
+await import("http://localhost:8000/solver.js")
+  .then(({ solve }) => solve({ dotLetterParsing: false }));
 ```
 
-A `part` parameter can be specified to only test part `1` or `2` of a puzzle.
+## Command line usage
 
-```js
-const { test } = await import("https://mfulton26.github.io/adventofcode/tester.js");
-await test({ part: 2 });
+<!-- todo: make this work without needing local solutions -->
+
+The below steps currently require solve modules to be available locally.
+
+```sh
+deno run https://mfulton26.github.io/adventofcode/bin/aoc.ts solve 2021/day/1
 ```
 
-## Development
-
-A file server can be used to serve the scripts locally (e.g. using Deno standard library [file server](https://deno.land/manual/examples/file_server#using-the-codestdhttpcode-file-server)).
-
-### Running Solvers Locally
-
-```js
-await import("http://localhost:4507/solver.js").then(({ solve }) => solve());
+```sh
+deno install --allow-env=AOC_BASE_URL,AOC_CACHE_DIR,AOC_CONFIG_DIR,AOC_SESSION,HOME --allow-read=$HOME/.aoc,.. --allow-write=$HOME/.aoc --allow-net=adventofcode.com,deno.land --allow-hrtime https://mfulton26.github.io/adventofcode/bin/aoc.ts
 ```
 
-### Running Testers Locally
+```console
+% aoc solve 2021/day/1
+running solve from ./2021/day/1/part/1/solve.ts
+1298 (559µs)
+running solve from ./2021/day/1/part/2/solve.ts
+1248 (404µs)
 
-```js
-await import("http://localhost:4507/tester.js").then(({ test }) => test());
+2 solved (79ms)
 ```

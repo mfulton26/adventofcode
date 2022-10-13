@@ -1,7 +1,0 @@
-[
-  { "input": "qjhvhtzxzqqjkmpb", "expected": 1 },
-  { "input": "xxyxx", "expected": 1 },
-  { "input": "jchzalrnumimnmhp", "expected": 0 },
-  { "input": "haegwjzuvuyypxyu", "expected": 0 },
-  { "input": "dvszwmarrgswjxmb", "expected": 0 }
-]

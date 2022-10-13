@@ -1,8 +1,0 @@
-[
-  {
-    "name": "example",
-    "input": ["20", "15", "10", "5", "5"],
-    "options": { "target": 25 },
-    "expected": 3
-  }
-]
