@@ -1,5 +1,3 @@
-import { unreachable } from "std/testing/asserts.ts";
-
 export default function solve(input: string) {
   const table = input.split("\n").map((line) => line.split(/\s/).map(Number));
   return table.reduce((sum, values) => {
@@ -13,6 +11,6 @@ export default function solve(input: string) {
         return sum + quotient;
       }
     }
-    unreachable();
+    throw new Error("unreachable");
   }, 0);
 }

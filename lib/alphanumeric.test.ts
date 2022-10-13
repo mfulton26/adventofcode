@@ -1,6 +1,6 @@
-import { alphanumericalCompareFn } from "./aoc.ts";
+import { alphanumericalCompareFn } from "./alphanumeric.ts";
 
-import { assertEquals } from "std/testing/asserts.ts";
+import { assertEquals } from "../lib/testing/asserts.ts";
 
 Deno.test("alphanumericalCompareFn", async (t) => {
   await t.step("alphabetical", async (t) => {

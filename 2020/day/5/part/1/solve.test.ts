@@ -1,6 +1,6 @@
 import solve, { toSeatId } from "./solve.ts";
 
-import { assertEquals } from "std/testing/asserts.ts";
+import { assertEquals } from "../../../../../lib/testing/asserts.ts";
 
 Deno.test("toSeatId", async (t) => {
   await t.step("FBFBBFFRLR", expect(357));

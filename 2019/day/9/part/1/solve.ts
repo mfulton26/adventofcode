@@ -1,5 +1,3 @@
-import { unreachable } from "std/testing/asserts.ts";
-
 export default function solve(input: string) {
   const memory = input.split(",").map(Number);
   const outputs = Array.from(program(memory)([1]));
@@ -37,7 +35,7 @@ function program(memory: number[]) {
               position = relativeBase + memory[instructionPointer++] ?? 0;
               break;
             default:
-              unreachable();
+              throw new Error("unreachable");
           }
           if (value === undefined) value = memory[position] ?? 0;
           else memory[position] = value;

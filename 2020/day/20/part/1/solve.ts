@@ -1,5 +1,3 @@
-import { unreachable } from "std/testing/asserts.ts";
-
 export default function solve(input: string) {
   const tiles = parseTiles(input);
   const assembledTiles = assembleTiles(tiles);
@@ -78,7 +76,7 @@ function assembleTiles(tiles: Tile[]) {
       })),
     );
   }
-  unreachable();
+  throw new Error("unreachable");
 }
 
 function findTileVariationsByTileId(tiles: Tile[]) {

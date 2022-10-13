@@ -1,4 +1,4 @@
-import permute from "helpers/permute.ts";
+import permute from "../../../../../lib/permute.ts";
 
 export default function solve(input: string) {
   const distances = parseDistances(input);

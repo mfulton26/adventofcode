@@ -1,6 +1,6 @@
 import solve, { runProgram } from "./solve.ts";
 
-import { assertEquals } from "std/testing/asserts.ts";
+import { assertEquals } from "../../../../../lib/testing/asserts.ts";
 
 Deno.test("1,9,10,3,2,3,11,0,99,30,40,50", expect(3500));
 Deno.test("1,0,0,0,99", expect(2));

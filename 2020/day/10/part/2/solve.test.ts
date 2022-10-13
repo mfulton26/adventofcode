@@ -1,6 +1,6 @@
 import solve from "./solve.ts";
 
-import { assertEquals } from "std/testing/asserts.ts";
+import { assertEquals } from "../../../../../lib/testing/asserts.ts";
 
 Deno.test("example 1", () => {
   const input = `\
@@ -18,7 +18,6 @@ Deno.test("example 1", () => {
 
   assertEquals(solve(input), 8);
 });
-
 
 Deno.test("example 2", () => {
   const input = `\

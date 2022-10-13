@@ -1,6 +1,6 @@
 import { decryptName } from "./solve.ts";
 
-import { assertEquals } from "std/testing/asserts.ts";
+import { assertEquals } from "../../../../../lib/testing/asserts.ts";
 
 Deno.test("decryptName", async (t) => {
   await t.step("qzmt-zixmtkozy-ivhz", () => {

@@ -1,4 +1,4 @@
-import md5 from "helpers/md5.ts";
+import md5 from "../../../../../lib/md5.ts";
 
 export default function solve(input: string) {
   const password = Array(8).fill("_");

@@ -1,16 +1,12 @@
-import { parse } from "std/flags/mod.ts";
-import { dirname, join } from "std/path/mod.ts";
-import { walk } from "std/fs/mod.ts";
-import { gray } from "std/fmt/colors.ts";
+import { parse } from "https://deno.land/std@0.149.0/flags/mod.ts";
+import { dirname, join } from "https://deno.land/std@0.149.0/path/mod.ts";
+import { walk } from "https://deno.land/std@0.149.0/fs/mod.ts";
+import { bold, gray, red } from "https://deno.land/std@0.149.0/fmt/colors.ts";
 
 import prettyMs from "https://cdn.skypack.dev/pretty-ms?dts";
-import DotLetters from "helpers/DotLetters.ts";
 
-declare global {
-  interface NumberConstructor {
-    isSafeInteger(number: unknown): number is number;
-  }
-}
+import { alphanumericalCompareFn } from "../lib/alphanumeric.ts";
+import { formatAnswer, prettyMsOptions } from "../lib/harness.ts";
 
 const defaultBaseUrl = "https://adventofcode.com";
 
@@ -34,13 +30,21 @@ if (import.meta.main) {
     Deno.exit(0);
   }
 
-  switch (command) {
-    case "solve":
-      solve(args.length ? args.map(String) : ["."], { dotLetterParsing });
-      break;
-    default:
-      console.error(`Unrecognized subcommand: ${command}\n\n${getHelp()}`);
-      Deno.exit(1);
+  try {
+    switch (command) {
+      case "solve":
+        await solve(args.length ? args.map(String) : ["."], {
+          dotLetterParsing,
+        });
+        break;
+      default:
+        console.error(`Unrecognized subcommand: ${command}\n\n${getHelp()}`);
+        Deno.exit(1);
+    }
+  } catch (e) {
+    if (!(e instanceof Error)) throw e;
+    console.error(`${bold(red("error"))}: ${e.message}`);
+    Deno.exit(1);
   }
 }
 
@@ -105,6 +109,7 @@ async function solve(
       })
     ) {
       const moduleName = `./${entry.path}`;
+      // todo: replace with URLPattern
       const match = /(?<year>\d{4})\D+(?<day>\d{1,2})/.exec(entry.path);
       if (match?.groups === undefined) {
         console.log(gray(`puzzle year and day not found in ${moduleName}`));
@@ -120,7 +125,7 @@ async function solve(
   for (const moduleName of new Set(moduleNames)) {
     const { year, day } = groupsByModuleName.get(moduleName)!;
     const input = await getInput(year, day, session, cachePath);
-    const solve = await getSolveFn(moduleName);
+    const solve = await getSolveFn(`.${moduleName}`);
     if (solve === undefined) {
       console.log(gray(`no default exported function found in ${moduleName}`));
       continue;
@@ -130,14 +135,10 @@ async function solve(
       const start = performance.now();
       const answer = solve(input);
       const end = performance.now();
-      const time = formatTime(start, end);
-      const shouldParseAsDotLetters = dotLetterParsing &&
-        typeof answer === "string" &&
-        /^[.#\n]+(?<=\.[\s\S]*)(?<=#[\s\S]*)(?<=\n[\s\S]*)|[01\n]+(?<=0[\s\S]*)(?<=1[\s\S]*)(?<=\n[\s\S]*)$/m
-          .test(answer);
+      const duration = end - start;
       console.log(
-        shouldParseAsDotLetters ? DotLetters.parse(answer) : answer,
-        time,
+        formatAnswer(answer, { dotLetterParsing }),
+        formatDuration(duration),
       );
       if (answer !== undefined) solved++;
     } catch (e) {
@@ -146,8 +147,9 @@ async function solve(
   }
 
   const totalEnd = performance.now();
+  const totalDuration = totalEnd - totalStart;
 
-  console.log(`\n${solved} solved ${formatTime(totalStart, totalEnd)}\n`);
+  console.log(`\n${solved} solved ${formatDuration(totalDuration)}\n`);
 }
 
 async function getSession() {
@@ -173,8 +175,8 @@ async function getSession() {
 }
 
 async function getInput(
-  year: string | number,
-  day: string | number,
+  year: string,
+  day: string,
   session: string,
   cachePath: string,
 ) {
@@ -210,36 +212,6 @@ async function getSolveFn(moduleName: string) {
   }
 }
 
-function formatTime(start: number, end: number) {
-  return gray(`(${prettyMs(end - start, formatTime.prettyMsOptions)})`);
-}
-formatTime.prettyMsOptions = Object.freeze({
-  formatSubMilliseconds: true,
-  unitCount: 1,
-});
-
-export function alphanumericalCompareFn(a: string, b: string): number {
-  const aIterator = a.matchAll(/\d+/g);
-  const bIterator = b.matchAll(/\d+/g);
-  let aStart = 0, bStart = 0;
-  for (
-    let aResult = aIterator.next(), bResult = bIterator.next();
-    !aResult.done && !bResult.done;
-    aResult = aIterator.next(), bResult = bIterator.next()
-  ) {
-    const { value: { index: aEnd, 0: aDigits } } = aResult;
-    const { value: { index: bEnd, 0: bDigits } } = bResult;
-    for (; aStart < aEnd! && bStart < bEnd!; aStart++, bStart++) {
-      const m = a[aStart], n = b[bStart];
-      if (m !== n) return m < n ? -1 : 1;
-    }
-    const m = BigInt(aDigits), n = BigInt(bDigits);
-    if (m !== n) return m < n ? -1 : 1;
-    aStart += aDigits.length, bStart += bDigits.length;
-  }
-  for (; aStart < a.length && bStart < b.length; aStart++, bStart++) {
-    const m = a[aStart], n = b[bStart];
-    if (m !== n) return m < n ? -1 : 1;
-  }
-  return a.length - b.length;
+function formatDuration(milliseconds: number) {
+  return gray(`(${prettyMs(milliseconds, prettyMsOptions)})`);
 }

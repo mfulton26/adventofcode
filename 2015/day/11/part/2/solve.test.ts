@@ -1,6 +1,6 @@
 import { isValidPassword } from "./solve.ts";
 
-import { assertEquals } from "std/testing/asserts.ts";
+import { assertEquals } from "../../../../../lib/testing/asserts.ts";
 
 Deno.test("isValidPassword", async (t) => {
   await t.step("hijklmmn", expect(false));

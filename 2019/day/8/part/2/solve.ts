@@ -1,5 +1,3 @@
-import { unreachable } from "std/testing/asserts.ts";
-
 export default function solve(
   input: string,
   { size = { width: 25, height: 6 } } = {},
@@ -33,7 +31,7 @@ function createImageFromLayers(
           if (pixel === 2) continue;
           return pixel;
         }
-        unreachable();
+        throw new Error("unreachable");
       }),
   );
 }
