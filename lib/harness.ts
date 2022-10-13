@@ -20,8 +20,3 @@ export function formatAnswer(
 }
 formatAnswer.lettersOutputRegExp =
   /^[.#\n]+(?<=\.[\s\S]*)(?<=#[\s\S]*)(?<=\n[\s\S]*)|[01\n]+(?<=0[\s\S]*)(?<=1[\s\S]*)(?<=\n[\s\S]*)$/m;
-
-export const prettyMsOptions = Object.freeze({
-  formatSubMilliseconds: true,
-  unitCount: 1,
-});

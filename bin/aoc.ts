@@ -6,7 +6,7 @@ import { bold, gray, red } from "https://deno.land/std@0.149.0/fmt/colors.ts";
 import prettyMs from "https://cdn.skypack.dev/pretty-ms?dts";
 
 import { alphanumericalCompareFn } from "../lib/alphanumeric.ts";
-import { formatAnswer, prettyMsOptions } from "../lib/harness.ts";
+import { formatAnswer, getSolveFn } from "../lib/harness.ts";
 
 const defaultBaseUrl = "https://adventofcode.com";
 
@@ -202,16 +202,10 @@ async function getInput(
   }
 }
 
-async function getSolveFn(moduleName: string) {
-  try {
-    const { default: solve } = await import(moduleName);
-    if (typeof solve === "function") return solve as (input: string) => unknown;
-  } catch (e) {
-    console.warn(e);
-    return;
-  }
-}
-
 function formatDuration(milliseconds: number) {
-  return gray(`(${prettyMs(milliseconds, prettyMsOptions)})`);
+  return gray(`(${prettyMs(milliseconds, formatDuration.prettyMsOptions)})`);
 }
+formatDuration.prettyMsOptions = Object.freeze({
+  formatSubMilliseconds: true,
+  unitCount: 1,
+});

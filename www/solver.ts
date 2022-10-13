@@ -1,6 +1,4 @@
-import prettyMs from "https://cdn.skypack.dev/pretty-ms?dts";
-
-import { formatAnswer, getSolveFn, prettyMsOptions } from "../lib/harness.ts";
+import { formatAnswer, getSolveFn } from "../lib/harness.ts";
 
 declare let document: { body: { innerText: string } };
 
@@ -56,27 +54,14 @@ async function solvePart(
       console.log(`no default exported function found in ${moduleName}`);
       return;
     }
-    const start = performance.now();
-    let end: number;
+    console.time("duration");
     try {
       const answer = solve(input);
-      end = performance.now();
-      const formattedAnswer = formatAnswer(answer, { dotLetterParsing });
-      if (
-        typeof formattedAnswer === "string" && /[\n\r]/.test(formattedAnswer)
-      ) {
-        console.group("answer");
-        console.log(formattedAnswer);
-        console.groupEnd();
-      } else {
-        console.log("answer:", formattedAnswer);
-      }
-    } catch (error) {
-      end = performance.now();
-      console.error(error);
+      console.log("answer:", formatAnswer(answer, { dotLetterParsing }));
+    } catch (e) {
+      console.error(e);
     } finally {
-      const duration = end! - start;
-      console.log("duration:", prettyMs(duration, prettyMsOptions));
+      console.timeEnd("duration");
     }
   } catch (e) {
     console.error(e);
