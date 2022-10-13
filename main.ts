@@ -1,9 +1,11 @@
 import { serve } from "https://deno.land/std@0.149.0/http/server.ts";
 
-import { bundle } from "https://deno.land/x/emit@0.9.0/mod.ts";
+import { bundle, BundleOptions } from "https://deno.land/x/emit@0.9.0/mod.ts";
+
+const bundleOptions: BundleOptions = { cacheRoot: "/dev/null" };
 
 const solverCode = await (async () => {
-  const { code } = await bundle("./www/solver.ts", { cacheRoot: "/dev/null" });
+  const { code } = await bundle("./www/solver.ts", bundleOptions);
   return code.replace(/^const\s+importMeta\s*=\s*\{$[\s\S]*?^\};$\s*?^/m, "")
     .replaceAll(/\bimportMeta\b/g, "import.meta");
 })();
@@ -35,7 +37,7 @@ const urlPatterns = new Map<
       }
       return {
         GET: async () => {
-          const { code } = await bundle(root);
+          const { code } = await bundle(root, bundleOptions);
           return code;
         },
       };
