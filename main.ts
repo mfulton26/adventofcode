@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.149.0/http/server.ts";
 import { bundle } from "https://deno.land/x/emit@0.9.0/mod.ts";
 
 const solverCode = await (async () => {
-  const { code } = await bundle("./www/solver.ts");
+  const { code } = await bundle("./www/solver.ts", { cacheRoot: "/dev/null" });
   return code.replace(/^const\s+importMeta\s*=\s*\{$[\s\S]*?^\};$\s*?^/m, "")
     .replaceAll(/\bimportMeta\b/g, "import.meta");
 })();
