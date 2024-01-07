@@ -1,5 +1,6 @@
 {
   "imports": {
+    "immutable": "npm:immutable@4.3.0",
     "std/": "https://deno.land/std@0.168.0/"
   }
 }
