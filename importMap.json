@@ -1,6 +1,6 @@
 {
   "imports": {
-    "immutable": "npm:immutable@4.3.0",
+    "immutable": "https://esm.sh/immutable@4.3.0",
     "std/": "https://deno.land/std@0.168.0/"
   }
 }
