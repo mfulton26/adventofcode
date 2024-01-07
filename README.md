@@ -40,7 +40,7 @@ deno run https://mfulton26.github.io/adventofcode/bin/aoc.ts solve 2021/day/1
 ```
 
 ```sh
-deno install --allow-env=AOC_BASE_URL,AOC_CACHE_DIR,AOC_CONFIG_DIR,AOC_SESSION,HOME --allow-read=$HOME/.aoc,.. --allow-write=$HOME/.aoc --allow-net=adventofcode.com,deno.land --allow-hrtime https://mfulton26.github.io/adventofcode/bin/aoc.ts
+deno install --allow-env=AOC_BASE_URL,AOC_CACHE_DIR,AOC_CONFIG_DIR,AOC_SESSION,HOME --allow-read=$HOME/.aoc,.. --allow-write=$HOME/.aoc --allow-net=adventofcode.com,deno.land,esm.sh --allow-hrtime --import-map=./importMap.json ./bin/aoc.ts
 ```
 
 ```console

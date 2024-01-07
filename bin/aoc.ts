@@ -1,9 +1,9 @@
-import { parse } from "https://deno.land/std@0.149.0/flags/mod.ts";
-import { dirname, join } from "https://deno.land/std@0.149.0/path/mod.ts";
-import { walk } from "https://deno.land/std@0.149.0/fs/mod.ts";
-import { bold, gray, red } from "https://deno.land/std@0.149.0/fmt/colors.ts";
+import { parse } from "std/flags/mod.ts";
+import { dirname, join } from "std/path/mod.ts";
+import { walk } from "std/fs/mod.ts";
+import { bold, gray, red } from "std/fmt/colors.ts";
 
-import prettyMs from "https://cdn.skypack.dev/pretty-ms?dts";
+import prettyMs from "pretty-ms";
 
 import { alphanumericalCompareFn } from "../lib/alphanumeric.ts";
 import { formatAnswer, getSolveFn } from "../lib/harness.ts";

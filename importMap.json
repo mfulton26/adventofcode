@@ -1,6 +1,9 @@
 {
   "imports": {
+    "esbuild-deno-loader": "https://deno.land/x/esbuild_deno_loader@0.7.0/mod.ts",
+    "esbuild": "https://deno.land/x/esbuild@v0.17.19/wasm.js",
     "immutable": "https://esm.sh/immutable@4.3.0",
-    "std/": "https://deno.land/std@0.168.0/"
+    "std/": "https://deno.land/std@0.188.0/",
+    "pretty-ms": "https://esm.sh/pretty-ms@8.0.0"
   }
 }

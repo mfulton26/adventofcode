@@ -1,13 +1,30 @@
-import { serve } from "https://deno.land/std@0.149.0/http/server.ts";
+import { serve } from "std/http/server.ts";
 
-import { bundle, BundleOptions } from "https://deno.land/x/emit@0.9.0/mod.ts";
+import { build, initialize } from "esbuild";
+import { denoPlugins } from "esbuild-deno-loader";
 
-const bundleOptions: BundleOptions = { cacheRoot: "/dev/null" };
+await initialize({ worker: false });
 
 const solverCode = await (async () => {
-  const { code } = await bundle("./www/solver.ts", bundleOptions);
-  return code.replace(/^const\s+importMeta\s*=\s*\{$[\s\S]*?^\};$\s*?^/m, "")
-    .replaceAll(/\bimportMeta\b/g, "import.meta");
+  const { outputFiles: [{ contents }] = [] } = await build({
+    entryPoints: [new URL("./www/solver.ts", import.meta.url).href],
+    bundle: true,
+    minify: true,
+    format: "esm",
+    write: false,
+    external: ["esm.sh/*"],
+    plugins: [
+      ...denoPlugins({
+        importMapURL: new URL("./importMap.json", import.meta.url).href,
+        loader: "portable",
+      }),
+    ],
+  });
+  return contents;
+
+  // const { code } = await bundle("./www/solver.ts", bundleOptions);
+  // return code.replace(/^const\s+importMeta\s*=\s*\{$[\s\S]*?^\};$\s*?^/m, "")
+  //   .replaceAll(/\bimportMeta\b/g, "import.meta");
 })();
 
 const unimplementedSolveCode = /* JavaScript */ `\
@@ -37,8 +54,21 @@ const urlPatterns = new Map<
       }
       return {
         GET: async () => {
-          const { code } = await bundle(root, bundleOptions);
-          return code;
+          const { outputFiles: [{ contents }] = [] } = await build({
+            entryPoints: [new URL(root, import.meta.url).href],
+            bundle: true,
+            minify: false,
+            format: "esm",
+            write: false,
+            external: ["esm.sh/*"],
+            plugins: [
+              ...denoPlugins({
+                importMapURL: new URL("./importMap.json", import.meta.url).href,
+                loader: "portable",
+              }),
+            ],
+          });
+          return contents;
         },
       };
     },
