@@ -17,7 +17,9 @@ export default function solve(input: string) {
           x: knotPositions[i - 1].x - knotPositions[i].x,
           y: knotPositions[i - 1].y - knotPositions[i].y,
         });
-        if (Math.abs(diffPosition.x) < 2 && Math.abs(diffPosition.y) < 2) break;
+        if (Math.abs(diffPosition.x) < 2 && Math.abs(diffPosition.y) < 2) {
+          break;
+        }
         knotPositions[i] = intern({
           x: knotPositions[i].x + Math.sign(diffPosition.x),
           y: knotPositions[i].y + Math.sign(diffPosition.y),
