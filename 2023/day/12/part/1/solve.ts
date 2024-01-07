@@ -1,3 +1,5 @@
+// Adapted from https://github.com/hiimjustin000/advent-of-code/blob/master/2023/day12/part1.js
+
 function countArrangements(conditions: string, counts: number[]): number {
   if (counts.length === 0) return conditions.includes("#") ? 0 : 1;
   if (conditions.length < counts.reduce((a, b) => a + b + 1)) return 0;

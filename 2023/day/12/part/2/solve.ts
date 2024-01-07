@@ -1,3 +1,5 @@
+// Adapted from https://github.com/hiimjustin000/advent-of-code/blob/master/2023/day12/part1.js
+
 const cache = new Map<string, number>();
 
 function countArrangements(conditions: string, counts: number[]): number {
