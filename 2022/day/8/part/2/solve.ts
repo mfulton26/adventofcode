@@ -1,32 +1,30 @@
+import { parseGrid } from "../../grid.ts";
+
+function count(
+  grid: number[][],
+  [r0, c0]: [number, number],
+  [dr, dc]: [number, number],
+) {
+  let count = 0;
+  for (
+    let [r, c] = [r0 + dr, c0 + dc];
+    r >= 0 && c >= 0 && r < grid.length && c < grid[r].length;
+    [r, c] = [r + dr, c + dc]
+  ) {
+    count++;
+    if (grid[r][c] >= grid[r0][c0]) break;
+  }
+  return count;
+}
+
 export default function solve(input: string) {
-  const grid = input.split("\n").map((line) => Array.from(line, Number));
+  const grid = parseGrid(input);
   const { 0: { length: width }, length: height } = grid;
-  function countLeft(r: number, c: number) {
-    for (let _c = c - 1; _c >= 0; _c--) {
-      if (grid[r][_c] >= grid[r][c]) return c - _c;
-    }
-    return c;
-  }
-  function countRight(r: number, c: number) {
-    for (let _c = c + 1; _c < width; _c++) {
-      if (grid[r][_c] >= grid[r][c]) return _c - c;
-    }
-    return width - c - 1;
-  }
-  function countUp(r: number, c: number) {
-    for (let _r = r - 1; _r >= 0; _r--) {
-      if (grid[_r][c] >= grid[r][c]) return r - _r;
-    }
-    return r;
-  }
-  function countDown(r: number, c: number) {
-    for (let _r = r + 1; _r < height; _r++) {
-      if (grid[_r][c] >= grid[r][c]) return _r - r;
-    }
-    return height - r - 1;
-  }
   function calculateScenicScore(r: number, c: number) {
-    return countLeft(r, c) * countRight(r, c) * countUp(r, c) * countDown(r, c);
+    return (
+      count(grid, [r, c], [0, -1]) * count(grid, [r, c], [-1, 0]) *
+      count(grid, [r, c], [+1, 0]) * count(grid, [r, c], [0, +1])
+    );
   }
   let max = -Infinity;
   for (let r = 0; r < height; r++) {
