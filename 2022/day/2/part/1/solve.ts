@@ -1,21 +1,17 @@
-function shapeCharToShapeScore(char: string, base: string) {
-  return 1 + char.charCodeAt(0) - base.charCodeAt(0);
-}
-
-function getOutcomeScore(theirShapeScore: number, yourShapeScore: number) {
-  if (theirShapeScore === (yourShapeScore % 3) + 1) return 0;
-  if (theirShapeScore === yourShapeScore) return 3;
-  return 6;
-}
+const scores = {
+  "A": { "X": 1 + 3, "Y": 2 + 6, "Z": 3 + 0 },
+  "B": { "X": 1 + 0, "Y": 2 + 3, "Z": 3 + 6 },
+  "C": { "X": 1 + 6, "Y": 2 + 0, "Z": 3 + 3 },
+};
 
 export default function solve(input: string) {
-  return input.split("\n")
-    .map((line) => {
-      const [theirShapeChar, yourShapeChar] = line.split(" ");
-      const theirShapeScore = shapeCharToShapeScore(theirShapeChar, "A");
-      const yourShapeScore = shapeCharToShapeScore(yourShapeChar, "X");
-      const outcomeScore = getOutcomeScore(theirShapeScore, yourShapeScore);
-      return yourShapeScore + outcomeScore;
-    })
-    .reduce((totalScore, score) => totalScore + score, 0);
+  let totalScore = 0;
+  for (const line of input.split("\n")) {
+    const [theirs, yours] = line.split(" ") as [
+      "A" | "B" | "C",
+      "X" | "Y" | "Z",
+    ];
+    totalScore += scores[theirs][yours];
+  }
+  return totalScore;
 }
