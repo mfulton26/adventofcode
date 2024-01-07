@@ -1,0 +1,15 @@
+import solve from "./solve.ts";
+
+import { assertEquals } from "../../../../../lib/testing/asserts.ts";
+
+Deno.test("example", () => {
+  const input = `\
+???.### 1,1,3
+.??..??...?##. 1,1,3
+?#?#?#?#?#?#?#? 1,3,1,6
+????.#...#... 4,1,1
+????.######..#####. 1,6,5
+?###???????? 3,2,1`;
+
+  assertEquals(solve(input), 21);
+});
