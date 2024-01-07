@@ -1,19 +1,20 @@
-import CoordinateVector from "../../CoordinateVector.ts";
+import intern from "../../../../../lib/intern.ts";
 import { parseMotions } from "../../motionsParser.ts";
-import { Set } from "immutable";
+
+const origin = intern({ x: 0, y: 0 });
 
 export default function solve(input: string) {
-  let headPosition = CoordinateVector();
-  let tailPosition = CoordinateVector();
-  const visited = Set.of(tailPosition).asMutable();
+  let headPosition = origin;
+  let tailPosition = origin;
+  const visited = new Set([tailPosition]);
   for (const { direction, amount } of parseMotions(input)) {
     for (let n = 0; n < amount; n++) {
       const previousHeadPosition = headPosition;
-      headPosition = CoordinateVector({
+      headPosition = intern({
         x: headPosition.x + direction.x,
         y: headPosition.y + direction.y,
       });
-      const diffPosition = CoordinateVector({
+      const diffPosition = intern({
         x: headPosition.x - tailPosition.x,
         y: headPosition.y - tailPosition.y,
       });

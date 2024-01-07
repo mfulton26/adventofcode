@@ -68,10 +68,7 @@
     "https://deno.land/x/esbuild_deno_loader@0.7.0/src/shared.ts": "7233a824b8357836bfa62975f78ab602442a0d880411c32ead8859035abd9d63",
     "https://deno.land/x/importmap@0.2.1/_util.ts": "ada9a9618b537e6c0316c048a898352396c882b9f2de38aba18fd3f2950ede89",
     "https://deno.land/x/importmap@0.2.1/mod.ts": "ae3d1cd7eabd18c01a4960d57db471126b020f23b37ef14e1359bbb949227ade",
-    "https://esm.sh/immutable@4.3.0": "55784da507bf526a1e2b4d7b11da5a5cbbef54b50bd96f40dbe02025ed5dbe9a",
     "https://esm.sh/pretty-ms@8.0.0": "6e335c3456b264d28c87867ae3acb2fc236975ff7e1fd16598699f1af9293694",
-    "https://esm.sh/v122/immutable@4.3.0/deno/immutable.mjs": "5e9b8545101aa1a3695fe66bf82920169d72d8944abfcd698ee2ce2c69164af6",
-    "https://esm.sh/v122/immutable@4.3.0/dist/immutable.d.ts": "e873e8fdeb9295f02b58188c8992a87d403708fc03d12fe8a11bdd79c400189f",
     "https://esm.sh/v122/parse-ms@3.0.0/deno/parse-ms.mjs": "13bbd6a90f0a1e921ad14699bad3f838877bfd0593c53cd05414daa3b4665adc",
     "https://esm.sh/v122/pretty-ms@8.0.0/deno/pretty-ms.mjs": "cca47f90296be6c664786289749f64e5afaff83ad248e49941f7262be7002362",
     "https://esm.sh/v122/pretty-ms@8.0.0/index.d.ts": "4ae779eac2cc17df9f31fd4985adcac35c0904faa3eb103dd9bc90e6261b736b"
