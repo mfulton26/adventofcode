@@ -1,12 +1,7 @@
-const firstRegExp = /\d/;
-const lastRegExp = /.*(\d)/;
+const regExp = /.*?(?=(\d))(?=.*(\d))/;
 
 export default function solve(input: string) {
   return input.split("\n")
-    .map((line) => {
-      const [first] = line.match(firstRegExp)!;
-      const [, last] = line.match(lastRegExp)!;
-      return Number(`${first}${last}`);
-    })
-    .reduce((sum, value) => sum += value, 0);
+    .map((line) => line.match(regExp)!.slice(1).join(""))
+    .reduce((sum, value) => sum += +value, 0);
 }

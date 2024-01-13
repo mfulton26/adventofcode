@@ -1,30 +1,18 @@
-const digitWords = Object.freeze([
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine",
-]);
-
-function digitTextToNumber(text: string) {
-  const index = digitWords.indexOf(text);
-  if (index === -1) return Number(text);
-  return index + 1;
+function digitize(text: string) {
+  return digitize.map.get(text) ?? text;
 }
+digitize.map = new Map(
+  ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    .map((word, index) => [word, `${index + 1}`]),
+);
 
-const firstRegExp = new RegExp(`\\d|${digitWords.join("|")}`);
-const lastRegExp = new RegExp(`.*(\\d|${digitWords.join("|")})`);
+const regExp = (() => {
+  const groupPattern = `(\\d|${[...digitize.map.keys()].join("|")})`;
+  return new RegExp(`.*?(?=${groupPattern})(?=.*${groupPattern})`);
+})();
 
 export default function solve(input: string) {
   return input.split("\n")
-    .map((line) => {
-      const [first] = line.match(firstRegExp)!;
-      const [, last] = line.match(lastRegExp)!;
-      return Number(`${digitTextToNumber(first)}${digitTextToNumber(last)}`);
-    })
-    .reduce((sum, value) => sum += value, 0);
+    .map((line) => line.match(regExp)!.slice(1).map(digitize).join(""))
+    .reduce((sum, value) => sum += +value, 0);
 }
