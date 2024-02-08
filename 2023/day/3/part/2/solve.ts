@@ -24,7 +24,7 @@ export default function solve(input: string) {
   return input.split("\n")
     .flatMap((line, indexOfLine, lines) =>
       Array.from(line.matchAll(/\*/g)).flatMap(({ index }) => {
-        if (typeof index !== "number") return [];
+        if (index === undefined) return [];
         const numbers = parseNumbersAtIndex(line, index);
         if (indexOfLine > 0) {
           numbers.push(...parseNumbersAtIndex(lines[indexOfLine - 1], index));

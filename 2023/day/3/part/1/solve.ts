@@ -3,7 +3,7 @@ export default function solve(input: string) {
     .flatMap((line, indexOfLine, lines) =>
       Array.from(line.matchAll(/\d+/g))
         .filter(({ [0]: value, index: start }) => {
-          if (typeof start !== "number") return false;
+          if (start === undefined) return false;
           if (line[start - 1]?.match(/[^.]/)) return true;
           const end = start + value.length;
           if (line[end]?.match(/[^.]/)) return true;
