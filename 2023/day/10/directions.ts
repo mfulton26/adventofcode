@@ -1,37 +1,48 @@
-export const north = {
+export type Direction = Readonly<{ x: number; y: number; opposite: Direction }>;
+
+type North = { x: 0; y: 1; opposite: South };
+type South = { x: 0; y: -1; opposite: North };
+type East = { x: 1; y: 0; opposite: West };
+type West = { x: -1; y: 0; opposite: East };
+type Directions =
+  & readonly [North, South, East, West]
+  & Readonly<{ north: North; south: South; east: East; west: West }>;
+
+const north: North = Object.freeze({
   x: 0,
   y: 1,
   get opposite() {
     return south;
   },
-} as const;
+});
 
-export const south = {
+const south: South = Object.freeze({
   x: 0,
   y: -1,
   get opposite() {
     return north;
   },
-} as const;
+});
 
-export const east = {
+const east: East = Object.freeze({
   x: 1,
   y: 0,
   get opposite() {
     return west;
   },
-} as const;
+});
 
-export const west = {
+const west: West = Object.freeze({
   x: -1,
   y: 0,
   get opposite() {
     return east;
   },
-} as const;
+});
 
-const directions = Object.freeze([north, south, east, west] as const);
-
-export type Direction = typeof directions[number];
+const directions: Directions = Object.freeze(Object.assign(
+  [north, south, east, west] as const,
+  { north, south, east, west },
+));
 
 export default directions;

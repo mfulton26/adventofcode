@@ -1,10 +1,6 @@
-import directions, {
-  Direction,
-  east,
-  north,
-  south,
-  west,
-} from "./directions.ts";
+import directions, { Direction } from "./directions.ts";
+
+const { north, south, east, west } = directions;
 
 export function parse(text: string) {
   const tiles = text.split("\n").map((line) =>
