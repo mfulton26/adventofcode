@@ -20,9 +20,11 @@ export default function solve(input: string) {
     const focalLength = Number(focalLengthText);
     boxes[hash(label)].set(label, focalLength);
   }
-  return (boxes.flatMap((box, boxIndex) => [
-    ...box.values().map((focalLength, slotIndex) =>
-      (boxIndex + 1) * (slotIndex + 1) * focalLength
-    ),
-  ])).reduce((sum, value) => sum + value, 0);
+  return boxes[Symbol.iterator]()
+    .flatMap((box, boxIndex) =>
+      box.values().map((focalLength, slotIndex) =>
+        (boxIndex + 1) * (slotIndex + 1) * focalLength
+      )
+    )
+    .reduce((sum, value) => sum + value, 0);
 }
