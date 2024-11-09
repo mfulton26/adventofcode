@@ -1,79 +1,73 @@
 {
-  "version": "3",
-  "packages": {
-    "specifiers": {
-      "npm:@graph-algorithm/minimum-cut@^2.0.0": "npm:@graph-algorithm/minimum-cut@2.0.0",
-      "npm:discontinuous-range@^1.0.0": "npm:discontinuous-range@1.0.0"
+  "version": "4",
+  "specifiers": {
+    "npm:@graph-algorithm/minimum-cut@2": "2.0.0",
+    "npm:discontinuous-range@1": "1.0.0",
+    "npm:nerdamer@*": "1.1.13",
+    "npm:nerdamer@1.1.13": "1.1.13"
+  },
+  "npm": {
+    "@data-structure/deque@9.0.1": {
+      "integrity": "sha512-/LSOEPmWGZ10OiKfje06GNDM/fzbY1ZfXyvZKr+/a79ZTlGoTwsQW1uPvtmQDtBzs2h2VbPjHho4zNSP5YH0Zg==",
+      "dependencies": [
+        "@failure-abstraction/error"
+      ]
     },
-    "npm": {
-      "@data-structure/deque@9.0.1": {
-        "integrity": "sha512-/LSOEPmWGZ10OiKfje06GNDM/fzbY1ZfXyvZKr+/a79ZTlGoTwsQW1uPvtmQDtBzs2h2VbPjHho4zNSP5YH0Zg==",
-        "dependencies": {
-          "@failure-abstraction/error": "@failure-abstraction/error@6.0.1"
-        }
-      },
-      "@failure-abstraction/error@6.0.1": {
-        "integrity": "sha512-KvIHhvwfrgbUduQbk55WRDGL2XcXjDLwleId+pSnK7mUUIY7zMGMy3N+ouDcOFymme48tKDlarKsYj5mEEd3fg==",
-        "dependencies": {}
-      },
-      "@graph-algorithm/minimum-cut@2.0.0": {
-        "integrity": "sha512-FKCejPcMHfr2lM/lTIqT2Yuel97kL2rv4D9UjwHNyL9uB4vqU/cvBEBjCV0tOwKfhCkg5GuBDQqxfjELkOmY0A==",
-        "dependencies": {
-          "@heap-data-structure/pairing-heap": "@heap-data-structure/pairing-heap@4.0.0",
-          "@iterable-iterator/list": "@iterable-iterator/list@1.0.1",
-          "@iterable-iterator/map": "@iterable-iterator/map@1.0.1",
-          "@iterable-iterator/reduce": "@iterable-iterator/reduce@1.0.1",
-          "@iterable-iterator/slice": "@iterable-iterator/slice@1.0.2",
-          "@total-order/key": "@total-order/key@1.0.0",
-          "@total-order/primitive": "@total-order/primitive@1.0.1"
-        }
-      },
-      "@heap-data-structure/pairing-heap@4.0.0": {
-        "integrity": "sha512-4wmedekJpr+gkktJ7VnmXTBvJWxvHmWtJT7uvS3cl7vzI4iDGaVVMPqdoWWIPZfaDkgd0kprb6XKBGaO7oFe5A==",
-        "dependencies": {}
-      },
-      "@iterable-iterator/consume@1.0.1": {
-        "integrity": "sha512-KVJufzV8/gOnYqrtO4CFdGZopJ5kkUBhzHcbU0iToOv5aTl0igxnsRzCaDSxUgO4q0mDbf9WEfjz4K39cl1iNA==",
-        "dependencies": {}
-      },
-      "@iterable-iterator/iter@1.0.1": {
-        "integrity": "sha512-/C/Ciq69we9C0wvqx0rOdnpXAoSW+UnyIV/ZQrUYDzmtguvUQ4HjiIPcU2Csdh705VS6TMkUhoaBHIGh44V3OA==",
-        "dependencies": {}
-      },
-      "@iterable-iterator/list@1.0.1": {
-        "integrity": "sha512-234a2cf0a0YhD1Ofb3F0xSjXDkqDK1xCiLnXoMUt/DWAt/odAvJToaxEFMemiKlAUvqF6E8MSi2v2UvlIOpBUA==",
-        "dependencies": {}
-      },
-      "@iterable-iterator/map@1.0.1": {
-        "integrity": "sha512-lUvX8/OCYRdof3eZii8ntJUvqW1MlL2ESkIcQj3cagajKVfBIBj058wE4ScrzQl6U2udMva/n2NwP70smdfZ+g==",
-        "dependencies": {}
-      },
-      "@iterable-iterator/reduce@1.0.1": {
-        "integrity": "sha512-/wwXupEhGb0cwVr4MDbuweD5tZ+wtd8fr8HkWwNre1lZn76Utu0um7nnhFpm9Mk3hifZzrH5dcKLhKB3VEuL/g==",
-        "dependencies": {
-          "@iterable-iterator/iter": "@iterable-iterator/iter@1.0.1"
-        }
-      },
-      "@iterable-iterator/slice@1.0.2": {
-        "integrity": "sha512-r6Z/RPZz4q8GAmqSDlHjTlHpFMDYmBlNQYZ4Rqp7xjn1ihsFVw+7WYH5ivPk11UbE/Inz1ZuBc01/vqT1F9U/g==",
-        "dependencies": {
-          "@data-structure/deque": "@data-structure/deque@9.0.1",
-          "@iterable-iterator/consume": "@iterable-iterator/consume@1.0.1",
-          "@iterable-iterator/iter": "@iterable-iterator/iter@1.0.1"
-        }
-      },
-      "@total-order/key@1.0.0": {
-        "integrity": "sha512-IPrGrxeqP6Oe7b1hrjUzDIWqMiLZV1qmlugbburk4neQKNPyjvQD1WKl0cCNepA20bwS/HrCyCCbRHPAsFm2rA==",
-        "dependencies": {}
-      },
-      "@total-order/primitive@1.0.1": {
-        "integrity": "sha512-BXCXyXoQIpdwFkplPRTuxFB0I1GHHia4t22bLAEqjdk48DFwQMwSbHq1EdLA81X/eFC/b6RdVxG4Q+WEcfs0aA==",
-        "dependencies": {}
-      },
-      "discontinuous-range@1.0.0": {
-        "integrity": "sha512-c68LpLbO+7kP/b1Hr1qs8/BJ09F5khZGTxqxZuhzxpmwJKOgRFHJWIb9/KmqnqHhLdO55aOxFH/EGBvUQbL/RQ==",
-        "dependencies": {}
-      }
+    "@failure-abstraction/error@6.0.1": {
+      "integrity": "sha512-KvIHhvwfrgbUduQbk55WRDGL2XcXjDLwleId+pSnK7mUUIY7zMGMy3N+ouDcOFymme48tKDlarKsYj5mEEd3fg=="
+    },
+    "@graph-algorithm/minimum-cut@2.0.0": {
+      "integrity": "sha512-FKCejPcMHfr2lM/lTIqT2Yuel97kL2rv4D9UjwHNyL9uB4vqU/cvBEBjCV0tOwKfhCkg5GuBDQqxfjELkOmY0A==",
+      "dependencies": [
+        "@heap-data-structure/pairing-heap",
+        "@iterable-iterator/list",
+        "@iterable-iterator/map",
+        "@iterable-iterator/reduce",
+        "@iterable-iterator/slice",
+        "@total-order/key",
+        "@total-order/primitive"
+      ]
+    },
+    "@heap-data-structure/pairing-heap@4.0.0": {
+      "integrity": "sha512-4wmedekJpr+gkktJ7VnmXTBvJWxvHmWtJT7uvS3cl7vzI4iDGaVVMPqdoWWIPZfaDkgd0kprb6XKBGaO7oFe5A=="
+    },
+    "@iterable-iterator/consume@1.0.1": {
+      "integrity": "sha512-KVJufzV8/gOnYqrtO4CFdGZopJ5kkUBhzHcbU0iToOv5aTl0igxnsRzCaDSxUgO4q0mDbf9WEfjz4K39cl1iNA=="
+    },
+    "@iterable-iterator/iter@1.0.1": {
+      "integrity": "sha512-/C/Ciq69we9C0wvqx0rOdnpXAoSW+UnyIV/ZQrUYDzmtguvUQ4HjiIPcU2Csdh705VS6TMkUhoaBHIGh44V3OA=="
+    },
+    "@iterable-iterator/list@1.0.1": {
+      "integrity": "sha512-234a2cf0a0YhD1Ofb3F0xSjXDkqDK1xCiLnXoMUt/DWAt/odAvJToaxEFMemiKlAUvqF6E8MSi2v2UvlIOpBUA=="
+    },
+    "@iterable-iterator/map@1.0.1": {
+      "integrity": "sha512-lUvX8/OCYRdof3eZii8ntJUvqW1MlL2ESkIcQj3cagajKVfBIBj058wE4ScrzQl6U2udMva/n2NwP70smdfZ+g=="
+    },
+    "@iterable-iterator/reduce@1.0.1": {
+      "integrity": "sha512-/wwXupEhGb0cwVr4MDbuweD5tZ+wtd8fr8HkWwNre1lZn76Utu0um7nnhFpm9Mk3hifZzrH5dcKLhKB3VEuL/g==",
+      "dependencies": [
+        "@iterable-iterator/iter"
+      ]
+    },
+    "@iterable-iterator/slice@1.0.2": {
+      "integrity": "sha512-r6Z/RPZz4q8GAmqSDlHjTlHpFMDYmBlNQYZ4Rqp7xjn1ihsFVw+7WYH5ivPk11UbE/Inz1ZuBc01/vqT1F9U/g==",
+      "dependencies": [
+        "@data-structure/deque",
+        "@iterable-iterator/consume",
+        "@iterable-iterator/iter"
+      ]
+    },
+    "@total-order/key@1.0.0": {
+      "integrity": "sha512-IPrGrxeqP6Oe7b1hrjUzDIWqMiLZV1qmlugbburk4neQKNPyjvQD1WKl0cCNepA20bwS/HrCyCCbRHPAsFm2rA=="
+    },
+    "@total-order/primitive@1.0.1": {
+      "integrity": "sha512-BXCXyXoQIpdwFkplPRTuxFB0I1GHHia4t22bLAEqjdk48DFwQMwSbHq1EdLA81X/eFC/b6RdVxG4Q+WEcfs0aA=="
+    },
+    "discontinuous-range@1.0.0": {
+      "integrity": "sha512-c68LpLbO+7kP/b1Hr1qs8/BJ09F5khZGTxqxZuhzxpmwJKOgRFHJWIb9/KmqnqHhLdO55aOxFH/EGBvUQbL/RQ=="
+    },
+    "nerdamer@1.1.13": {
+      "integrity": "sha512-kQGQYd42eQpKDOnU8ZnRKF47c+gK6jVC46eUchrABsovtFruHvsjyjBO32jck8QnpZE5z5R8HQw72hQX9Oq2MQ=="
     }
   },
   "remote": {
