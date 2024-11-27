@@ -9,19 +9,19 @@ export default class HeightMap extends Map<Position, number> {
     super();
   }
 
-  delete(key: Position): boolean {
+  override delete(key: Position): boolean {
     return super.delete(intern(key));
   }
 
-  get(key: Position): number | undefined {
+  override get(key: Position): number | undefined {
     return super.get(intern(key));
   }
 
-  has(key: Position): boolean {
+  override has(key: Position): boolean {
     return super.has(intern(key));
   }
 
-  set(key: Position, value: number): this {
+  override set(key: Position, value: number): this {
     return super.set(intern(key), value);
   }
 
