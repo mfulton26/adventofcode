@@ -1,5 +1,7 @@
 const internedWeakRefs = new Map<unknown, WeakRef<object>>();
-const finalizationRegistry = new FinalizationRegistry(internedWeakRefs.delete);
+const finalizationRegistry = new FinalizationRegistry((heldValue) =>
+  internedWeakRefs.delete(heldValue)
+);
 
 type JSONValue = JSONObject | JSONArray | JSONPrimitive;
 type JSONObject = { [key: string | number]: JSONValue; [key: symbol]: never };
