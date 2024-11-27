@@ -1,9 +1,5 @@
-// deno-lint-ignore-file ban-types
-
 const internedWeakRefs = new Map<unknown, WeakRef<object>>();
-const finalizationRegistry = new FinalizationRegistry((heldValue) =>
-  internedWeakRefs.delete(heldValue)
-);
+const finalizationRegistry = new FinalizationRegistry(internedWeakRefs.delete);
 
 type JSONValue = JSONObject | JSONArray | JSONPrimitive;
 type JSONObject = { [key: string | number]: JSONValue; [key: symbol]: never };
