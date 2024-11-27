@@ -9,7 +9,9 @@
     "jsr:@std/assert@^1.0.9": "1.0.9",
     "jsr:@std/bytes@0.223": "0.223.0",
     "jsr:@std/cli@^1.0.8": "1.0.8",
+    "jsr:@std/crypto@^1.0.3": "1.0.3",
     "jsr:@std/data-structures@^1.0.4": "1.0.4",
+    "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@0.223": "0.223.0",
     "jsr:@std/fmt@^1.0.3": "1.0.3",
     "jsr:@std/fs@0.223": "0.223.0",
@@ -57,8 +59,14 @@
     "@std/cli@1.0.8": {
       "integrity": "3762d8dc9a373715c08d871c38d45e637b25266f013a1d0bbe560bca409de94e"
     },
+    "@std/crypto@1.0.3": {
+      "integrity": "a2a32f51ddef632d299e3879cd027c630dcd4d1d9a5285d6e6788072f4e51e7f"
+    },
     "@std/data-structures@1.0.4": {
       "integrity": "fa0e20c11eb9ba673417450915c750a0001405a784e2a4e0c3725031681684a0"
+    },
+    "@std/encoding@1.0.5": {
+      "integrity": "ecf363d4fc25bd85bd915ff6733a7e79b67e0e7806334af15f4645c569fefc04"
     },
     "@std/fmt@0.223.0": {
       "integrity": "6deb37794127dfc7d7bded2586b9fc6f5d50e62a8134846608baf71ffc1a5208"
@@ -158,7 +166,9 @@
       "jsr:@deno/emit@0.46",
       "jsr:@std/assert@^1.0.9",
       "jsr:@std/cli@^1.0.8",
+      "jsr:@std/crypto@^1.0.3",
       "jsr:@std/data-structures@^1.0.4",
+      "jsr:@std/encoding@^1.0.5",
       "jsr:@std/fmt@^1.0.3",
       "jsr:@std/fs@^1.0.6",
       "jsr:@std/path@^1.0.8",
