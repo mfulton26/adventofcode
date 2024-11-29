@@ -30,7 +30,7 @@ type Blueprint = ReturnType<typeof parseBlueprint>;
 function calculateMaxGeodes(blueprint: Blueprint): number {
   let max = -Infinity;
   let scenarios = [{ stock: zeros, robots: { ...zeros, ore: 1 } }];
-  for (let minute = 0; minute < 24; minute++) {
+  for (let minute = 0; minute < 32; minute++) {
     const stringifiedSet = new Set<string>();
     for (const prev of scenarios) {
       const stock = { ...prev.stock };
@@ -57,17 +57,13 @@ function calculateMaxGeodes(blueprint: Blueprint): number {
       stringifiedSet.add(JSON.stringify({ stock, robots: prev.robots }));
     }
     scenarios = Array.from(stringifiedSet, (hash) => JSON.parse(hash))
-      .filter(({ stock }) => stock.geode >= max);
+      .filter(({ stock }) => stock.geode >= max - 2);
   }
   return max;
 }
 
-function calculateQualityLevel(blueprint: Blueprint): number {
-  return blueprint.id * calculateMaxGeodes(blueprint);
-}
-
 export default function solve(input: string) {
-  const blueprints = input.split("\n").map(parseBlueprint);
-  return blueprints.map(calculateQualityLevel)
-    .reduce((sum, level) => sum + level, 0);
+  const blueprints = input.split("\n").slice(0, 3).map(parseBlueprint);
+  return blueprints.map(calculateMaxGeodes)
+    .reduce((product, geodes) => product * geodes, 1);
 }
