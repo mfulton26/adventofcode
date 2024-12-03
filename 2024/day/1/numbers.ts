@@ -1,6 +1,7 @@
 export function parseNumbers(text: string) {
-  const numbers = text.split("\n").map((line) => line.split(/ +/).map(Number));
-  const left = numbers.map(([left]) => left);
-  const right = numbers.map(([, right]) => right);
+  const { 0: left = [], 1: right = [] } = Object.groupBy(
+    text.split(/\s+/).map(Number),
+    (_, index) => index % 2,
+  );
   return { left, right };
 }
