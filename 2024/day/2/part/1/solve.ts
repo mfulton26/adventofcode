@@ -1,7 +1,6 @@
-import { parseReports } from "../../reports.ts";
-
 export default function solve(input: string) {
-  return parseReports(input).filter(isSafe).length;
+  const records = input.split("\n").map((line) => line.split(" ").map(Number));
+  return records.filter(isSafe).length;
 }
 
 function isSafe(levels: number[]) {
