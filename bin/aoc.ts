@@ -1,12 +1,14 @@
-import { parse } from "std/flags/mod.ts";
-import { dirname, join } from "std/path/mod.ts";
-import { walk } from "std/fs/mod.ts";
-import { bold, gray, red } from "std/fmt/colors.ts";
+#!/usr/bin/env -S deno run --allow-env=AOC_SESSION,AOC_CONFIG_DIR,HOME,AOC_CACHE_DIR,AOC_BASE_URL --allow-read=$HOME/.aoc,.. --allow-write=$HOME/.aoc --allow-net=adventofcode.com
+
+import { parseArgs } from "@std/cli/parse-args";
+import { dirname, join } from "@std/path";
+import { walk } from "@std/fs";
+import { bold, gray, red } from "@std/fmt/colors";
 
 import prettyMs from "pretty-ms";
 
-import { alphanumericalCompareFn } from "../lib/alphanumeric.ts";
-import { formatAnswer, getSolveFn } from "../lib/harness.ts";
+import { alphanumericalCompareFn } from "@lib/alphanumeric.ts";
+import { formatAnswer, getSolveFn } from "@lib/harness.ts";
 
 const defaultBaseUrl = "https://adventofcode.com";
 
@@ -16,7 +18,7 @@ if (import.meta.main) {
     h,
     help,
     ["dot-letter-parsing"]: dotLetterParsing,
-  } = parse(
+  } = parseArgs(
     Deno.args,
     {
       boolean: ["h", "help", "dot-letter-parsing"],
@@ -79,9 +81,9 @@ SUBCOMMANDS:
 ENVIRONMENT VARIABLES:
     AOC_BASE_URL    Default to ${defaultBaseUrl}
     AOC_CACHE_DIR   Set the cache directory
-                    Defaults to ~/.aoc
-    AOC_CONFIG_DIR  Set the config directory
                     Defaults to ~/.aoc/cache
+    AOC_CONFIG_DIR  Set the config directory
+                    Defaults to ~/.aoc
     AOC_SESSION     The session value to send in cookies for authentication
                     Will be read from $AOC_CONFIG_DIR/session if not specified`;
   }

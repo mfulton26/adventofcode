@@ -1,4 +1,4 @@
-import lcm from "../../../../../lib/lcm.ts";
+import lcm from "@lib/lcm.ts";
 
 type Pulse = { source: string; type: "low" | "high"; destination: string };
 

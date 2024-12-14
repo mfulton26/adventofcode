@@ -1,4 +1,4 @@
-import mod from "../../../../../lib/mod.ts";
+import mod from "@lib/mod.ts";
 
 const regExp = /^p=(?<px>\d+),(?<py>\d+) v=(?<vx>-?\d+),(?<vy>-?\d+)$/gm;
 

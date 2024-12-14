@@ -1,6 +1,6 @@
 import type { Position } from "./model.d.ts";
 
-import intern from "../../../lib/intern.ts";
+import intern from "@lib/intern.ts";
 import HeightMap from "./HeightMap.ts";
 
 export function parseInput(text: string) {

@@ -1,6 +1,6 @@
 import solve from "./solve.ts";
 
-import { assertEquals } from "../../../../../lib/testing/asserts.ts";
+import { assertEquals } from "@std/assert";
 
 Deno.test("mini example", () => {
   assertEquals(solve(`1,1,1\n2,1,1`), 10);

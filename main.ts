@@ -1,80 +1,49 @@
-import { serve } from "std/http/server.ts";
-
-import { build, initialize } from "esbuild";
-import { denoPlugins } from "esbuild-deno-loader";
-
-await initialize({ worker: false });
+import { bundle } from "jsr:@deno/emit";
+import importMap from "./deno.json" with { type: "json" };
 
 const solverCode = await (async () => {
-  const { outputFiles: [{ contents }] = [] } = await build({
-    entryPoints: [new URL("./www/solver.ts", import.meta.url).href],
-    bundle: true,
-    minify: true,
-    format: "esm",
-    write: false,
-    external: ["esm.sh/*"],
-    plugins: [
-      ...denoPlugins({
-        importMapURL: new URL("./importMap.json", import.meta.url).href,
-        loader: "portable",
-      }),
-    ],
-  });
-  return contents;
-
-  // const { code } = await bundle("./www/solver.ts", bundleOptions);
-  // return code.replace(/^const\s+importMeta\s*=\s*\{$[\s\S]*?^\};$\s*?^/m, "")
-  //   .replaceAll(/\bimportMeta\b/g, "import.meta");
+  const { code } = await bundle("./www/solver.ts", { importMap });
+  return code.replace(/^const\s+importMeta\s*=\s*\{$[\s\S]*?^\};$\s*?^/m, "")
+    .replaceAll(/\bimportMeta\b/g, "import.meta");
 })();
 
 const unimplementedSolveCode = /* JavaScript */ `\
 export default function solve() { throw new Error("unimplemented"); }
 `;
 
+type PromiseOrNot<T> = Promise<T> | T;
+
 const urlPatterns = new Map<
   URLPattern,
-  (result: URLPatternResult) => Promise<
-    | Record<string, (result: URLPatternResult) => Promise<BodyInit>>
+  (result: URLPatternResult) => PromiseOrNot<
+    | Record<string, (result: URLPatternResult) => PromiseOrNot<BodyInit>>
     | null
   >
 >()
   .set(
     new URLPattern({ pathname: "/solver.js" }),
-    // deno-lint-ignore require-await
-    async () => ({ GET: async () => solverCode }),
+    () => ({ GET: () => solverCode }),
   )
   .set(
     new URLPattern({ pathname: "/:year/day/:day/part/:part/solve.js" }),
     async ({ pathname: { groups: { year, day, part } } }) => {
-      const root = `./${year}/day/${day}/part/${part}/solve.ts`;
+      const path = `./${year}/day/${day}/part/${part}/solve.ts`;
       try {
-        await Deno.lstat(root);
+        await Deno.lstat(path);
       } catch {
         return null;
       }
       return {
         GET: async () => {
-          const { outputFiles: [{ contents }] = [] } = await build({
-            entryPoints: [new URL(root, import.meta.url).href],
-            bundle: true,
-            minify: false,
-            format: "esm",
-            write: false,
-            external: ["esm.sh/*"],
-            plugins: [
-              ...denoPlugins({
-                importMapURL: new URL("./importMap.json", import.meta.url).href,
-                loader: "portable",
-              }),
-            ],
-          });
-          return contents;
+          const root = new URL(path, import.meta.url);
+          const { code } = await bundle(root, { importMap });
+          return code;
         },
       };
     },
   );
 
-serve(async (request) => {
+Deno.serve(async (request) => {
   try {
     for (const [urlPattern, createResource] of urlPatterns) {
       const result = urlPattern.exec(request.url);

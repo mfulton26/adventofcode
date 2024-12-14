@@ -1,6 +1,6 @@
 import type { Position } from "./model.d.ts";
 
-import intern from "../../../lib/intern.ts";
+import intern from "@lib/intern.ts";
 
 export default class HeightMap extends Map<Position, number> {
   static #neighborPositionOffsets = [[0, 1], [0, -1], [-1, 0], [1, 0]] as const;

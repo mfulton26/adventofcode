@@ -1,4 +1,4 @@
-import intern from "../../../../../lib/intern.ts";
+import intern from "@lib/intern.ts";
 import { parseMotions } from "../../motionsParser.ts";
 
 export default function solve(input: string) {

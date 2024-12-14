@@ -1,4 +1,4 @@
-import md5 from "../../../../../lib/md5.ts";
+import md5 from "@lib/md5.ts";
 
 export default function solve(input: string, prefix = "0".repeat(6)) {
   for (let number = 1;; number++) {

@@ -1,5 +1,5 @@
-import nerdamer from "npm:nerdamer@1.1.13";
-import "npm:nerdamer@1.1.13/Solve.js";
+import nerdamer from "nerdamer";
+import "nerdamer/Solve.js";
 
 type Operator = "+" | "-" | "*" | "/" | "=";
 type NumberJob = number;

@@ -1,7 +1,6 @@
-// @deno-types="./discontinuous-range.d.ts"
-import DiscontinuousRange from "npm:discontinuous-range@^1.0.0";
+import DiscontinuousRange from "discontinuous-range";
 import { parseReports } from "../../reports.ts";
-import calculateManhattanDistance from "../../../../../lib/calculateManhattanDistance.ts";
+import calculateManhattanDistance from "@lib/calculateManhattanDistance.ts";
 
 export default function solve(input: string, { y = 2000000 } = {}) {
   const range = new DiscontinuousRange();

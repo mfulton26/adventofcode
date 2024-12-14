@@ -1,4 +1,4 @@
-import { BinaryHeap } from "std/data_structures/binary_heap.ts";
+import { BinaryHeap } from "@std/data-structures/binary-heap";
 
 type Vector = { x: number; y: number };
 type Direction = Vector & { c: number };

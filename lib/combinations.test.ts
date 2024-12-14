@@ -1,6 +1,6 @@
-import combinations from "./combinations.ts";
+import combinations from "@lib/combinations.ts";
 
-import { assertEquals } from "../lib/testing/asserts.ts";
+import { assertEquals } from "@std/assert";
 
 Deno.test("set.size === 3 && size === 2", () => {
   assertEquals(

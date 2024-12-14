@@ -1,4 +1,4 @@
-import DotLetters from "../lib/DotLetters.ts";
+import DotLetters from "@lib/DotLetters.ts";
 
 export async function getSolveFn(moduleName: string) {
   try {

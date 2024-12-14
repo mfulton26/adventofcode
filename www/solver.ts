@@ -1,4 +1,4 @@
-import { formatAnswer, getSolveFn } from "../lib/harness.ts";
+import { formatAnswer, getSolveFn } from "@lib/harness.ts";
 
 declare let document: { body: { innerText: string } };
 
@@ -16,7 +16,7 @@ export async function solve(
       "current document is not recognized as a puzzle page or input page",
     );
   }
-  const { pathname: { groups: { year, day } } } = result;
+  const { year, day } = result.pathname.groups as { year: string; day: string };
   const parts = part ? [`${part}`] : day === "25" ? ["1"] : ["1", "2"];
   const input = await getInput(year, day);
   for (const part of parts) {

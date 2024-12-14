@@ -1,6 +1,6 @@
 import { isValid } from "./solve.ts";
 
-import { assertEquals } from "../../../../../lib/testing/asserts.ts";
+import { assertEquals } from "@std/assert";
 
 Deno.test("isValid", async (t) => {
   await t.step("aa bb cc dd ee", expect(true));

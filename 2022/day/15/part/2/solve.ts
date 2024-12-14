@@ -1,5 +1,5 @@
 import { parseReports } from "../../reports.ts";
-import calculateManhattanDistance from "../../../../../lib/calculateManhattanDistance.ts";
+import calculateManhattanDistance from "@lib/calculateManhattanDistance.ts";
 
 function* border(
   [centerX, centerY]: [number, number],

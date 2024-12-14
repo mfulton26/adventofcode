@@ -1,4 +1,4 @@
-import { mincut } from "npm:@graph-algorithm/minimum-cut@^2.0.0";
+import { mincut } from "@graph-algorithm/minimum-cut";
 
 export default function solve(input: string) {
   const connections = input.split("\n").reduce((connections, line) => {

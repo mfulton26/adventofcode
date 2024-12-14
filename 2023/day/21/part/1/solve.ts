@@ -1,4 +1,4 @@
-import { BinaryHeap } from "std/data_structures/binary_heap.ts";
+import { BinaryHeap } from "@std/data-structures/binary-heap";
 
 const directions = [
   { x: 0, y: 1 },

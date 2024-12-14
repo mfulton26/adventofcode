@@ -1,4 +1,4 @@
-import lcm from "../../../../../lib/lcm.ts";
+import lcm from "@lib/lcm.ts";
 
 function parseDocuments(text: string) {
   const [instructionsText, networkText] = text.split("\n\n");

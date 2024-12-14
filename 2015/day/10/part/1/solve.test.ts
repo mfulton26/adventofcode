@@ -1,6 +1,6 @@
 import { lookAndSay } from "./solve.ts";
 
-import { assertEquals } from "../../../../../lib/testing/asserts.ts";
+import { assertEquals } from "@std/assert";
 
 Deno.test("lookAndSay", async (t) => {
   await t.step("1", expect("11"));

@@ -1,7 +1,7 @@
 import type { Grid, ReadonlyGrid } from "../../grid.ts";
 
-import lcm from "../../../../../lib/lcm.ts";
-import mod from "../../../../../lib/mod.ts";
+import lcm from "@lib/lcm.ts";
+import mod from "@lib/mod.ts";
 
 const charToDirection = {
   "^": { x: 0, y: -1 },

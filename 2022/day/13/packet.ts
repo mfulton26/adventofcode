@@ -1,4 +1,4 @@
-import castArray from "../../../lib/castArray.ts";
+import castArray from "@lib/castArray.ts";
 
 export type Packet = number | Packet[];
 

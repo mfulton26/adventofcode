@@ -1,4 +1,4 @@
-import intern from "../../../../../lib/intern.ts";
+import intern from "@lib/intern.ts";
 
 type Point = { x: number; y: number };
 

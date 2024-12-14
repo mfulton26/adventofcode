@@ -1,4 +1,4 @@
-import { assertEquals } from "std/assert/assert_equals.ts";
+import { assertEquals } from "@std/assert/equals";
 import { parse, stringify } from "./snafu.ts";
 
 Deno.test("toSnafu", async (t) => {
