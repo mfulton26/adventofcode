@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "serve":"deno run -A main.ts",
+    "serve": "deno run -A main.ts",
     "solve": "./bin/aoc.ts solve"
   },
   "imports": {
