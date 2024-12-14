@@ -1,3 +1,5 @@
+import lcm from "../../../../../lib/lcm.ts";
+
 type Pulse = { source: string; type: "low" | "high"; destination: string };
 
 type CommonModuleProps = {
@@ -17,15 +19,6 @@ type UntypedModule = CommonModuleProps & {
   type?: never;
 };
 type Module = FlipFlopModule | ConjunctionModule | UntypedModule;
-
-function gcd(a: number, b: number): number {
-  while (b) [a, b] = [b, a % b];
-  return a;
-}
-
-function lcm(a: number, b: number) {
-  return a * b / gcd(a, b);
-}
 
 export default function solve(input: string) {
   const modules = input.split("\n").map<Module>((line) => {

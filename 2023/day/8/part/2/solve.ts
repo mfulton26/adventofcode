@@ -1,3 +1,5 @@
+import lcm from "../../../../../lib/lcm.ts";
+
 function parseDocuments(text: string) {
   const [instructionsText, networkText] = text.split("\n\n");
   const instructions = Array.from(
@@ -10,15 +12,6 @@ function parseDocuments(text: string) {
     return network.set(key, { left, right });
   }, new Map<string, { left: string; right: string }>());
   return { instructions, network };
-}
-
-function gcd(a: number, b: number): number {
-  while (b) [a, b] = [b, a % b];
-  return a;
-}
-
-function lcm(a: number, b: number) {
-  return a * b / gcd(a, b);
 }
 
 export default function solve(input: string) {

@@ -1,15 +1,13 @@
 import { BinaryHeap } from "std/data_structures/binary_heap.ts";
 
+import mod from "../../../../../lib/mod.ts";
+
 const directions = [
   { x: 0, y: 1 },
   { x: 0, y: -1 },
   { x: -1, y: 0 },
   { x: 1, y: 0 },
 ];
-
-function mod(a: number, b: number) {
-  return ((a % b) + b) % b;
-}
 
 function _solve(input: string, { steps = 26501365 } = {}) {
   const map = input.split("\n");

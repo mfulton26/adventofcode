@@ -1,24 +1,14 @@
 import type { Grid, ReadonlyGrid } from "../../grid.ts";
 
+import lcm from "../../../../../lib/lcm.ts";
+import mod from "../../../../../lib/mod.ts";
+
 const charToDirection = {
   "^": { x: 0, y: -1 },
   "v": { x: 0, y: 1 },
   "<": { x: -1, y: 0 },
   ">": { x: 1, y: 0 },
 };
-
-function gcd(a: number, b: number): number {
-  while (b) [a, b] = [b, a % b];
-  return a;
-}
-
-function lcm(a: number, b: number) {
-  return a * b / gcd(a, b);
-}
-
-function mod(n: number, d: number) {
-  return ((n % d) + d) % d;
-}
 
 function calculateGrid(initialGrid: ReadonlyGrid, step: number): ReadonlyGrid {
   const { length: height, 0: { length: width } } = initialGrid;

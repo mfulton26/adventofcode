@@ -1,3 +1,5 @@
+import mod from "../../../../../lib/mod.ts";
+
 const regExp = /^p=(?<px>\d+),(?<py>\d+) v=(?<vx>-?\d+),(?<vy>-?\d+)$/gm;
 
 export default function solve(
@@ -14,8 +16,4 @@ export default function solve(
     quadrantCounts[(fy < mid.y ? 0 : 2) + (fx < mid.x ? 0 : 1)]++;
   }
   return quadrantCounts.reduce((product, count) => product * count, 1);
-}
-
-function mod(a: number, b: number) {
-  return ((a % b) + b) % b;
 }
