@@ -6,7 +6,6 @@ type Node = Vector & { d: Direction; heatLoss: number };
 
 export default function solve(input: string) {
   const blocks = input.split("\n").map((line) => Array.from(line, Number));
-  const { length: height, 0: { length: width } } = blocks;
   const heatLosses = blocks.map((row) =>
     row.map(() => new Map<string, number>())
   );

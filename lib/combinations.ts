@@ -2,10 +2,6 @@ function setBit(bits: bigint, index: number) {
   return bits | (1n << BigInt(index));
 }
 
-function clearBit(bits: bigint, index: number) {
-  return bits & ~(1n << BigInt(index));
-}
-
 function setBits(bits: bigint, fromIndex: number, toIndex: number) {
   return bits |
     (((1n << BigInt(toIndex)) - 1n) & ~((1n << BigInt(fromIndex)) - 1n));
