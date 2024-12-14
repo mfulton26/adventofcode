@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "prepare":"cp -r :year/day/:day",
+    "prepare": "cp -r :year/day/:day",
     "serve": "deno run -A main.ts",
     "solve": "./bin/aoc.ts solve"
   },
