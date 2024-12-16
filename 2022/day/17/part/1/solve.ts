@@ -8,10 +8,10 @@ const shapes = [
 
 const pushCharToDirection: Record<string, number> = { "<": -1, ">": 1 };
 
-export default function solve(input: string) {
+export default function solve(input: string, { rocks = 2022 } = {}) {
   const chamber: boolean[][] = [];
-  for (let i = 0, j = 0; i < 2022; i++) {
-    const shape = shapes[i % shapes.length];
+  for (let rock = 0, j = 0; rock < rocks; rock++) {
+    const shape = shapes[rock % shapes.length];
     for (let x = 2, y = chamber.length + 3; y >= 0; y--) {
       const dx = pushCharToDirection[input[j++ % input.length]];
       if (
