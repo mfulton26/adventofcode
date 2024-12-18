@@ -1,8 +1,5 @@
-export default function solve(input: string) {
-  const [top, bottom] = input.split("\n\n");
+function run(a: number, b: number, c: number, program: number[]) {
   const output: number[] = [];
-  let [a, b, c] = top.matchAll(/\d+/g)!.map(([v]) => +v);
-  const program = bottom.split(": ")[1].split(",").map(Number);
   function combo(operand: number) {
     if (operand < 4) return operand;
     switch (operand) {
@@ -53,5 +50,12 @@ export default function solve(input: string) {
         break;
     }
   }
-  return output.join(",");
+  return output;
+}
+
+export default function solve(input: string) {
+  const [top, bottom] = input.split("\n\n");
+  const [a, b, c] = top.matchAll(/\d+/g)!.map(([v]) => +v);
+  const program = bottom.split(": ")[1].split(",").map(Number);
+  return run(a, b, c, program).join(",");
 }
