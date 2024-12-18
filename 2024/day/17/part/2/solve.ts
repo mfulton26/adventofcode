@@ -1,4 +1,6 @@
-function run({ a, b, c }: Record<"a" | "b" | "c", bigint>, program: number[]) {
+type Registers = Record<"a" | "b" | "c", bigint>;
+
+function run({ a, b, c }: Registers, program: number[]) {
   const output: number[] = [];
   function combo(operand: number): bigint {
     switch (operand) {
@@ -53,9 +55,28 @@ function run({ a, b, c }: Record<"a" | "b" | "c", bigint>, program: number[]) {
   return output;
 }
 
+/** adapted from https://github.com/gbasov/aoc24/blob/0c8149623f7f7ccf6da1d072d439bb60136aea10/17/part2.ts */
+function findA(
+  { b, c }: Omit<Registers, "a">,
+  program: number[],
+  input = 0n,
+  offset = program.length - 1,
+): bigint | undefined {
+  if (offset === -1) return input;
+
+  for (let i = 0n; i < 8n; i++) {
+    const a = (input << 3n) + i;
+    const output = run({ a, b, c }, program);
+    if (output[0] !== program.at(offset)) continue;
+    const min = findA({ b, c }, program, a, offset - 1);
+    if (min === undefined) continue;
+    return min;
+  }
+}
+
 export default function solve(input: string) {
   const [top, bottom] = input.split("\n\n");
-  const [a, b, c] = top.matchAll(/\d+/g)!.map(([v]) => BigInt(v));
+  const [b, c] = top.matchAll(/\d+/g)!.map(([v]) => BigInt(v));
   const program = bottom.split(": ")[1].split(",").map(Number);
-  return run({ a, b, c }, program).join(",");
+  return findA({ b, c }, program)?.toString();
 }
