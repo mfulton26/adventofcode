@@ -32,20 +32,24 @@ function* manhattanDirections(d: number) {
   }
 }
 
-export function findSavedTimeCountsByCheating(track: string[][]) {
+export function findSavedTimeCountsByCheating(
+  track: string[][],
+  { min = 1 } = {},
+) {
   const result = new Map<number, number>();
   const timeTrack = buildTimeTrack(track);
-  const cheatTime = 2;
-  for (let y = 0; y < timeTrack.length; y++) {
-    for (let x = 0; x < timeTrack[y].length; x++) {
-      const t = timeTrack[y][x];
-      if (t === Infinity) continue;
-      for (const [dx, dy] of manhattanDirections(cheatTime)) {
-        const rt = timeTrack[y + dy]?.[x + dx];
-        if (!isFinite(rt)) continue;
-        const saved = t - rt - cheatTime;
-        if (saved <= 0) continue;
-        result.set(saved, (result.get(saved) ?? 0) + 1);
+  for (let cheatTime = 2; cheatTime <= 20; cheatTime++) {
+    for (let y = 0; y < timeTrack.length; y++) {
+      for (let x = 0; x < timeTrack[y].length; x++) {
+        const t = timeTrack[y][x];
+        if (t === Infinity) continue;
+        for (const [dx, dy] of manhattanDirections(cheatTime)) {
+          const rt = timeTrack[y + dy]?.[x + dx];
+          if (!isFinite(rt)) continue;
+          const saved = t - rt - cheatTime;
+          if (saved < min) continue;
+          result.set(saved, (result.get(saved) ?? 0) + 1);
+        }
       }
     }
   }
