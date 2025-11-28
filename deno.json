@@ -14,7 +14,6 @@
     "@std/fmt": "jsr:@std/fmt@^1.0.3",
     "@std/fs": "jsr:@std/fs@^1.0.6",
     "@std/path": "jsr:@std/path@^1.0.8",
-    "discontinuous-range": "https://esm.sh/discontinuous-range@1.0.3",
     "nerdamer": "npm:nerdamer@^1.1.13",
     "pretty-ms": "https://esm.sh/pretty-ms@9.2.0"
   }

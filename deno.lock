@@ -107,7 +107,6 @@
   "remote": {
     "https://esm.sh/": "a467aff52eab120b03a3732e528166cafcf1837c69b7d8914bcb1ae39ef3bd51",
     "https://esm.sh/@graph-algorithm/minimum-cut@2.0.0": "ff9bfdb61cee3003289127b3e8af88fa279b175b06a2bd4d62a01259edbced55",
-    "https://esm.sh/discontinuous-range@1.0.3": "2b397d906b57195ed10773af7943d88ce041155df287b45f4ffbfad223415bbb",
     "https://esm.sh/got@14.4.5": "d0352ac33fc57f745182ac23c3575fb2100497d9735a2e39a773a8f21839e557",
     "https://esm.sh/ky@1.7.3": "076dcb03860ef5b18267def3394e2e93770cac464ee9b2b8bc3d7e61a02f23eb",
     "https://esm.sh/pretty-ms@9.2.0": "0582d50f2db488da1a68f2b38646e94f28250ac8f00e91756afef459df77b85b",
@@ -132,7 +131,6 @@
     "https://esm.sh/v135/cacheable-request@12.0.1/denonext/cacheable-request.mjs": "6808d2cc6897dba2f10aea330d8463043689098838a5673242f32d1a0cb117cc",
     "https://esm.sh/v135/decompress-response@6.0.0/denonext/decompress-response.mjs": "628e284f44364ba118d76a195493042999cd91ee426b0f14747d4059a7da02ca",
     "https://esm.sh/v135/defer-to-connect@2.0.1/denonext/defer-to-connect.mjs": "c9e0f0cc6367ea27d6ffd08cc519b4dc7732d7cfff47825001117c1e33d0a8b6",
-    "https://esm.sh/v135/discontinuous-range@1.0.3/denonext/discontinuous-range.mjs": "63f8a818f1a51508f679da966dfa91eebd0777c276693a8586f918af083a47c2",
     "https://esm.sh/v135/form-data-encoder@4.0.2/denonext/form-data-encoder.mjs": "a5114030920771c5f0c3938ee841a43727b54576c299fc29c06687485618d131",
     "https://esm.sh/v135/get-stream@9.0.1/denonext/get-stream.mjs": "2b9c8cc992fbc61f470fc25925d31deb09f779a09b2f7e3544a3922306ac80e5",
     "https://esm.sh/v135/got@14.4.5/denonext/got.mjs": "f1276d3ccce6d8d980ebd5a90c90344aa694fd40505f59697ff86c6fddc50843",
