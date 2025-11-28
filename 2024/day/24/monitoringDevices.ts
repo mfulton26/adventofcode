@@ -48,7 +48,7 @@ export function output(
   }
   let result = 0n;
   for (const [wire, value] of wireValues) {
-    if (value === 0 || !wire.startsWith("z")) continue;
+    if (value === 0 || wire[0] !== "z") continue;
     const bit = BigInt(wire.slice(1));
     result ^= 2n ** bit;
   }

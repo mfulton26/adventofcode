@@ -14,6 +14,11 @@ export default function solve(input: string) {
     const [x, op, y, , z] = line.split(" ");
     return { x, op, y, z };
   });
+  const bitLength = Math.max(
+    ...gates.filter(({ z }) => z.startsWith("z")).map(({ z }) => +z.slice(1)),
+  );
+  const connections = new Map<string, Set<string>>();
+  const patterns = Array.from({ length: bitLength }, () => [] as string[]);
   const wires = new Map(initialWires);
   const pending = new Set(gates);
   while (pending.size) {
@@ -24,10 +29,6 @@ export default function solve(input: string) {
       pending.delete(gate);
     }
   }
-  let result = 0;
-  for (const [key, value] of wires) {
-    if (!key.startsWith("z") || !value) continue;
-    result += 2 ** +key.slice(1);
-  }
-  return result;
+  console.log(patterns);
+  return "";
 }
