@@ -32,7 +32,7 @@ function program(memory: number[]) {
               position = instructionPointer++;
               break;
             case 2:
-              position = relativeBase + memory[instructionPointer++] ?? 0;
+              position = relativeBase + (memory[instructionPointer++] ?? 0);
               break;
             default:
               throw new Error("unreachable");
