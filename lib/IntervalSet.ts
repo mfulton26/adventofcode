@@ -15,42 +15,75 @@ export default class IntervalSet {
     return this.#intervals[Symbol.iterator]();
   }
 
-  has(interval: Interval) {
-    return this.#intervals.some((existing) => existing.contains(interval));
+  #findFirstWhere(predicate: (interval: Interval) => boolean) {
+    let left = 0, right = this.#intervals.length;
+    while (left < right) {
+      const middle = Math.floor((left + right) / 2);
+      if (predicate(this.#intervals[middle])) {
+        right = middle;
+      } else {
+        left = middle + 1;
+      }
+    }
+    return left;
   }
 
-  #compareIntervalsTo(other: Interval) {
-    const { [-1]: lower = [], [0]: contiguous = [], [1]: upper = [] } = Object
-      .groupBy(this.#intervals, (interval) => Math.sign(other.gapTo(interval)));
-    return { lower, contiguous, upper };
+  has(interval: Interval) {
+    let left = 0, right = this.#intervals.length - 1;
+    while (left <= right) {
+      const middle = Math.floor((left + right) / 2);
+      const existing = this.#intervals[middle];
+      if (existing.upper < interval.lower) {
+        left = middle + 1;
+      } else if (existing.lower > interval.upper) {
+        right = middle - 1;
+      } else if (existing.contains(interval)) {
+        return true;
+      } else if (existing.upper < interval.upper) {
+        left = middle + 1;
+      } else {
+        right = middle - 1;
+      }
+    }
+    return false;
   }
 
   add(interval: Interval) {
-    const { lower, contiguous, upper } = this.#compareIntervalsTo(interval);
-    if (contiguous.length === 0) {
-      this.#intervals = [...lower, interval, ...upper];
+    const start = this.#findFirstWhere((i) => i.upper >= interval.lower - 1);
+    let end = start;
+    while (
+      end < this.#intervals.length &&
+      this.#intervals[end].lower <= interval.upper + 1
+    ) end++;
+    if (start === end) {
+      this.#intervals.splice(start, 0, interval);
       return;
     }
     const mergedInterval = new Interval(
-      Math.min(interval.lower, contiguous[0].lower),
-      Math.max(interval.upper, contiguous[contiguous.length - 1].upper),
+      Math.min(interval.lower, this.#intervals[start].lower),
+      Math.max(interval.upper, this.#intervals[end - 1].upper),
     );
-    this.#intervals = [...lower, mergedInterval, ...upper];
+    this.#intervals.splice(start, end - start, mergedInterval);
   }
 
   delete(interval: Interval) {
-    const { lower, contiguous, upper } = this.#compareIntervalsTo(interval);
-    if (contiguous.length === 0) return;
+    const start = this.#findFirstWhere((i) => i.upper >= interval.lower);
+    let end = start;
+    while (
+      end < this.#intervals.length &&
+      this.#intervals[end].lower <= interval.upper
+    ) end++;
+    if (start === end) return;
     const newIntervals: Interval[] = [];
-    const first = contiguous[0];
+    const first = this.#intervals[start];
     if (first.lower < interval.lower) {
       newIntervals.push(new Interval(first.lower, interval.lower - 1));
     }
-    const last = contiguous[contiguous.length - 1];
+    const last = this.#intervals[end - 1];
     if (last.upper > interval.upper) {
       newIntervals.push(new Interval(interval.upper + 1, last.upper));
     }
-    this.#intervals = [...lower, ...newIntervals, ...upper];
+    this.#intervals.splice(start, end - start, ...newIntervals);
   }
 
   difference(other: IntervalSet) {
