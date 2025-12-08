@@ -1,4 +1,4 @@
-import calculateSingleLineDistance from "@lib/calculateSingleLineDistance.ts";
+import calculateEuclideanDistance from "@lib/calculateEuclideanDistance.ts";
 
 export function calculateDistances(boxes: number[][]) {
   const distances = new Map<number, Set<(typeof boxes)[number]>>();
@@ -6,7 +6,7 @@ export function calculateDistances(boxes: number[][]) {
     const a = boxes[i];
     for (let j = i + 1; j < boxes.length; j++) {
       const b = boxes[j];
-      const distance = Math.abs(calculateSingleLineDistance(a, b));
+      const distance = Math.abs(calculateEuclideanDistance(a, b));
       distances.set(distance, new Set([a, b]));
     }
   }

@@ -1,4 +1,4 @@
-export default function calculateSingleLineDistance(
+export default function calculateEuclideanDistance(
   a: readonly number[],
   b: readonly number[],
 ) {
