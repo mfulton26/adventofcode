@@ -15,6 +15,6 @@
     "@std/fs": "jsr:@std/fs@^1.0.6",
     "@std/path": "jsr:@std/path@^1.0.8",
     "nerdamer": "npm:nerdamer@^1.1.13",
-    "pretty-ms": "https://esm.sh/pretty-ms@9.2.0"
+    "pretty-ms": "npm:pretty-ms@^9.3.0"
   }
 }

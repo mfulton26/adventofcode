@@ -1,5 +1,5 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@deno/cache-dir@0.13.2": "0.13.2",
     "jsr:@deno/emit@*": "0.46.0",
@@ -19,7 +19,8 @@
     "jsr:@std/path@0.223": "0.223.0",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "npm:nerdamer@1.1.13": "1.1.13",
-    "npm:nerdamer@^1.1.13": "1.1.13"
+    "npm:nerdamer@^1.1.13": "1.1.13",
+    "npm:pretty-ms@^9.3.0": "9.3.0"
   },
   "jsr": {
     "@deno/cache-dir@0.13.2": {
@@ -98,6 +99,15 @@
   "npm": {
     "nerdamer@1.1.13": {
       "integrity": "sha512-kQGQYd42eQpKDOnU8ZnRKF47c+gK6jVC46eUchrABsovtFruHvsjyjBO32jck8QnpZE5z5R8HQw72hQX9Oq2MQ=="
+    },
+    "parse-ms@4.0.0": {
+      "integrity": "sha512-TXfryirbmq34y8QBwgqCVLi+8oA3oWx2eAnSn62ITyEhEYaWRlVZ2DvMM9eZbMs/RfxPu/PK/aBLyGj4IrqMHw=="
+    },
+    "pretty-ms@9.3.0": {
+      "integrity": "sha512-gjVS5hOP+M3wMm5nmNOucbIrqudzs9v/57bWRHQWLYklXqoXKrVfYW2W9+glfGsqtPgpiz5WwyEEB+ksXIx3gQ==",
+      "dependencies": [
+        "parse-ms"
+      ]
     }
   },
   "redirects": {
@@ -109,7 +119,6 @@
     "https://esm.sh/@graph-algorithm/minimum-cut@2.0.0": "ff9bfdb61cee3003289127b3e8af88fa279b175b06a2bd4d62a01259edbced55",
     "https://esm.sh/got@14.4.5": "d0352ac33fc57f745182ac23c3575fb2100497d9735a2e39a773a8f21839e557",
     "https://esm.sh/ky@1.7.3": "076dcb03860ef5b18267def3394e2e93770cac464ee9b2b8bc3d7e61a02f23eb",
-    "https://esm.sh/pretty-ms@9.2.0": "0582d50f2db488da1a68f2b38646e94f28250ac8f00e91756afef459df77b85b",
     "https://esm.sh/v135/@data-structure/deque@9.0.1/denonext/deque.mjs": "bdc730b8b9480083d4d65ae2f9b589275b62e40709a28ccfcaafc6d14be5c84a",
     "https://esm.sh/v135/@failure-abstraction/error@6.0.1/denonext/error.mjs": "b34ae59223829385f8dbc349d2e37d4cf3e7a914260c6f30c0d76dd2f09f7e94",
     "https://esm.sh/v135/@graph-algorithm/minimum-cut@2.0.0/denonext/minimum-cut.mjs": "08aaaebbb3801cd271d50bc935c86f55027f374795e5a6ee2b277b463020e86d",
@@ -146,7 +155,6 @@
     "https://esm.sh/v135/normalize-url@8.0.1/denonext/normalize-url.mjs": "a921bae8f85827620e69d7ff10767c496fcb736f682c0cc0b47a88fac2f50666",
     "https://esm.sh/v135/p-cancelable@4.0.1/denonext/p-cancelable.mjs": "09da19e500fe19a6949e6c92f7ea83397eafcc143c4b15cf501b9b6dc2064322",
     "https://esm.sh/v135/parse-ms@4.0.0/denonext/parse-ms.mjs": "9e53f5d1b0758c9fdab5d2a730a4076c7ca0b115d11481c46dcef6ca6035049c",
-    "https://esm.sh/v135/pretty-ms@9.2.0/denonext/pretty-ms.mjs": "8ca288c130fdcf8986c4831e01166de33901e06f9c219430c9643ac1b770e7b0",
     "https://esm.sh/v135/quick-lru@5.1.1/denonext/quick-lru.mjs": "e95709ad946c65e2c6be24f680b8fa2cd6d810b8765fd055ce0eee3b8e2861a2",
     "https://esm.sh/v135/resolve-alpn@1.2.1/denonext/resolve-alpn.mjs": "efa8c4fccc424483ac7031139dc506a1ca6a3f2c7955f53c2a114993173455bf",
     "https://esm.sh/v135/responselike@3.0.0/denonext/responselike.mjs": "b266a17bdd3165cc2e8c05e1fa7f992ab92a8ba9632106afdd58f789dc252897"
@@ -160,7 +168,8 @@
       "jsr:@std/fmt@^1.0.3",
       "jsr:@std/fs@^1.0.6",
       "jsr:@std/path@^1.0.8",
-      "npm:nerdamer@^1.1.13"
+      "npm:nerdamer@^1.1.13",
+      "npm:pretty-ms@^9.3.0"
     ]
   }
 }
