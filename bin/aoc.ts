@@ -135,7 +135,7 @@ async function solve(
     console.log(gray(`running solve from ${moduleName}`));
     try {
       const start = performance.now();
-      const answer = solve(input);
+      const answer = await solve(input);
       const end = performance.now();
       const duration = end - start;
       console.log(

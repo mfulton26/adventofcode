@@ -56,7 +56,7 @@ async function solvePart(
     }
     console.time("duration");
     try {
-      const answer = solve(input);
+      const answer = await solve(input);
       console.log("answer:", formatAnswer(answer, { dotLetterParsing }));
     } catch (e) {
       console.error(e);
