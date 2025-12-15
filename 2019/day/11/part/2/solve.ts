@@ -1,4 +1,4 @@
-import { program } from "../../../9/intcode.ts";
+import { program } from "../../../../intcode.ts";
 
 
 export default function solve(input: string) {
