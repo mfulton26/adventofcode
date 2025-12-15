@@ -1,14 +1,15 @@
-import process from "node:process";
-import { text } from "node:stream/consumers";
+/// <reference no-default-lib="true" />
+/// <reference lib="deno.worker" />
+
 import { init } from "z3-solver";
 import { parseManual } from "../../manuals.ts";
 
-export default async function solve(input: string) {
+async function solve(input: string) {
   const manual = parseManual(input);
   const { Context } = await init();
+  const { Int, Optimize } = Context("main");
   let sum = 0;
   for (const { buttons, requirements } of manual) {
-    const { Int, Optimize } = Context("main");
     const variables = buttons.map((_, i) => Int.const(`b${i}`));
     const optimize = new Optimize();
     optimize.add(
@@ -29,6 +30,4 @@ export default async function solve(input: string) {
   return sum;
 }
 
-const input = await text(process.stdin);
-const output = await solve(input);
-console.log(output);
+self.onmessage = async ({ data }) => self.postMessage(await solve(data));

@@ -5,6 +5,7 @@
     "jsr:@deno/emit@*": "0.46.0",
     "jsr:@deno/emit@0.46": "0.46.0",
     "jsr:@deno/graph@~0.73.1": "0.73.1",
+    "jsr:@macil/z3-solver@^1.0.4": "1.0.4",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@^1.0.9": "1.0.9",
     "jsr:@std/bytes@0.223": "0.223.0",
@@ -22,7 +23,7 @@
     "npm:nerdamer@1.1.13": "1.1.13",
     "npm:nerdamer@^1.1.13": "1.1.13",
     "npm:pretty-ms@^9.3.0": "9.3.0",
-    "npm:z3-solver@^4.15.4": "4.15.4"
+    "npm:z3-solver@4.15.4": "4.15.4"
   },
   "jsr": {
     "@deno/cache-dir@0.13.2": {
@@ -44,6 +45,12 @@
     },
     "@deno/graph@0.73.1": {
       "integrity": "cd69639d2709d479037d5ce191a422eabe8d71bb68b0098344f6b07411c84d41"
+    },
+    "@macil/z3-solver@1.0.4": {
+      "integrity": "b00cde3c6c046e094fa95849c3099c29b5cd0e05e296050103c7237216343a0b",
+      "dependencies": [
+        "npm:z3-solver"
+      ]
     },
     "@std/assert@0.223.0": {
       "integrity": "eb8d6d879d76e1cc431205bd346ed4d88dc051c6366365b1af47034b0670be24"
@@ -198,6 +205,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@deno/emit@0.46",
+      "jsr:@macil/z3-solver@^1.0.4",
       "jsr:@std/assert@^1.0.9",
       "jsr:@std/cli@^1.0.8",
       "jsr:@std/data-structures@^1.0.4",
@@ -206,8 +214,7 @@
       "jsr:@std/path@^1.0.8",
       "npm:@graph-algorithm/minimum-cut@2",
       "npm:nerdamer@^1.1.13",
-      "npm:pretty-ms@^9.3.0",
-      "npm:z3-solver@^4.15.4"
+      "npm:pretty-ms@^9.3.0"
     ]
   }
 }

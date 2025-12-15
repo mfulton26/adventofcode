@@ -17,6 +17,6 @@
     "@std/path": "jsr:@std/path@^1.0.8",
     "nerdamer": "npm:nerdamer@^1.1.13",
     "pretty-ms": "npm:pretty-ms@^9.3.0",
-    "z3-solver": "npm:z3-solver@^4.15.4"
+    "z3-solver": "jsr:@macil/z3-solver@^1.0.4"
   }
 }
