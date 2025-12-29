@@ -1,12 +1,28 @@
+import { init } from "z3-solver";
+import { parseManual } from "../../manuals.ts";
+
 export default async function solve(input: string) {
-  const { href: workerUrl } = new URL("./worker.ts", import.meta.url);
-  const worker = new Worker(workerUrl, { type: "module" });
-  try {
-    const { promise, resolve } = Promise.withResolvers<number>();
-    worker.onmessage = ({ data }) => resolve(data);
-    worker.postMessage(input);
-    return await promise;
-  } finally {
-    worker.terminate();
+  const manual = parseManual(input);
+  const { Context } = await init();
+  const { Int, Optimize } = Context("main");
+  let sum = 0;
+  for (const { buttons, requirements } of manual) {
+    const variables = buttons.map((_, i) => Int.const(`b${i}`));
+    const optimize = new Optimize();
+    optimize.add(
+      ...requirements.map((requirement, lightIndex) =>
+        buttons.keys()
+          .filter((buttonIndex) => buttons[buttonIndex].includes(lightIndex))
+          .map((buttonIndex) => variables[buttonIndex])
+          .reduce((a, b) => a.add(b), Int.val(0))
+          .eq(Int.val(requirement))
+      ),
+      ...variables.map((variable) => variable.ge(0)),
+    );
+    const sumExpression = variables.reduce((a, x) => a.add(x), Int.val(0));
+    optimize.minimize(sumExpression);
+    if (await optimize.check() !== "sat") throw new Error("No solution found");
+    sum += +optimize.model().eval(sumExpression);
   }
+  return sum;
 }

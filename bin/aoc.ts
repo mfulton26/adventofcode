@@ -8,7 +8,8 @@ import { bold, gray, red } from "@std/fmt/colors";
 import prettyMs from "pretty-ms";
 
 import { alphanumericalCompareFn } from "@lib/alphanumeric.ts";
-import { formatAnswer, getSolveFn } from "@lib/harness.ts";
+import { formatAnswer } from "@lib/harness.ts";
+import type { InputData, OutputData } from "./worker.ts";
 
 const defaultBaseUrl = "https://adventofcode.com";
 
@@ -127,15 +128,19 @@ async function solve(
   for (const moduleName of new Set(moduleNames)) {
     const { year, day } = groupsByModuleName.get(moduleName)!;
     const input = await getInput(year, day, session, cachePath);
-    const solve = await getSolveFn(`.${moduleName}`);
-    if (solve === undefined) {
-      console.log(gray(`no default exported function found in ${moduleName}`));
-      continue;
-    }
-    console.log(gray(`running solve from ${moduleName}`));
+    const { href: workerUrl } = new URL("./worker.ts", import.meta.url);
+    const worker = new Worker(workerUrl, { type: "module" });
     try {
+      const { promise, resolve, reject } = Promise.withResolvers();
+      worker.onmessage = ({ data: { key, value } }: MessageEvent<OutputData>) =>
+        ({ answer: resolve, error: reject })[key](value);
+      worker.onerror = ({ error }) => reject(error);
+      worker.onmessageerror = (cause) =>
+        reject(new Error("failed to receive message from worker", { cause }));
+      console.log(gray(`running solve from ${moduleName}`));
+      worker.postMessage({ input, moduleName } satisfies InputData);
       const start = performance.now();
-      const answer = await solve(input);
+      const answer = await promise;
       const end = performance.now();
       const duration = end - start;
       console.log(
@@ -145,6 +150,8 @@ async function solve(
       if (answer !== undefined) solved++;
     } catch (e) {
       console.error(e);
+    } finally {
+      worker.terminate();
     }
   }
 
