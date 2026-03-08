@@ -17,7 +17,7 @@ export default function solve(input: string) {
   }
   function putUpdateInTheRightOrder(update: number[]): typeof update {
     const predecessors = rules.reduce(
-      (map, [x, y]) => (map.get(x)?.push(y) ?? map.set(x, [y]), map),
+      (map, [x, y]) => (map.getOrInsert(x, []).push(y), map),
       new Map<number, number[]>(),
     );
     return update.sort((a, b) => {

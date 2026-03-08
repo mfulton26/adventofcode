@@ -1,4 +1,5 @@
 {
+  "compilerOptions": { "types": ["./global.d.ts"] },
   "nodeModulesDir": "auto",
   "tasks": {
     "prepare": "cp -r :year/day/:day",

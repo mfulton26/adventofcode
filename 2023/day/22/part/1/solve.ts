@@ -36,8 +36,7 @@ export default function solve(input: string) {
     let falling = true;
     while (falling && brick.bottomLeft.z > 1) {
       for (let y = brick.bottomLeft.y; y <= brick.topRight.y; y++) {
-        if (!bricksInFront.has(y)) bricksInFront.set(y, new Map());
-        const row = bricksInFront.get(y)!;
+        const row = bricksInFront.getOrInsert(y, new Map());
         for (let x = brick.bottomLeft.x; x <= brick.topRight.x; x++) {
           const brickBehind = row.get(x);
           if (brickBehind === undefined) continue;
@@ -50,8 +49,7 @@ export default function solve(input: string) {
       if (falling) brick.bottomLeft.z--, brick.topRight.z--;
     }
     for (let y = brick.bottomLeft.y; y <= brick.topRight.y; y++) {
-      if (!bricksInFront.has(y)) bricksInFront.set(y, new Map());
-      const row = bricksInFront.get(y)!;
+      const row = bricksInFront.getOrInsert(y, new Map());
       for (let x = brick.bottomLeft.x; x <= brick.topRight.x; x++) {
         row.set(x, brick);
       }

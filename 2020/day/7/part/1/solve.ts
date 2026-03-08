@@ -43,8 +43,7 @@ function buildContainingColorsGraph(rules: ReturnType<typeof parseRules>) {
   const graph = new Map<string, Set<string>>();
   for (const [containingColor, contents] of rules) {
     for (const { color: child } of contents) {
-      if (!graph.has(child)) graph.set(child, new Set());
-      graph.get(child)!.add(containingColor);
+      graph.getOrInsert(child, new Set()).add(containingColor);
     }
   }
   return graph;

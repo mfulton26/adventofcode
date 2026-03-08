@@ -33,8 +33,7 @@ function findMonitoringStation(asteroids: [number, number][]) {
       const [x, y] = [x2 - x1, y2 - y1];
       const radius = Math.sqrt(x * x + y * y);
       const angle = Math.atan2(y, x);
-      if (!detections.has(angle)) detections.set(angle, new Map());
-      detections.get(angle)!.set(radius, asteroid);
+      detections.getOrInsert(angle, new Map()).set(radius, asteroid);
     }
     if (detections.size <= best.detections.size) continue;
     best = { location, detections };

@@ -43,10 +43,8 @@ function findIntersections(
     for (const [[dx, dy], amount] of path) {
       for (let i = 0; i < amount; i++) {
         x += dx, y += dy, stepCount++;
-        if (!grid.has(y)) grid.set(y, new Map<number, Map<Path, number>>());
-        const row = grid.get(y)!;
-        if (!row.has(x)) row.set(x, new Map<Path, number>());
-        const stepCountsByPath = row.get(x)!;
+        const row = grid.getOrInsert(y, new Map());
+        const stepCountsByPath = row.getOrInsert(x, new Map());
         if (stepCountsByPath.has(path)) continue;
         stepCountsByPath.set(path, stepCount);
         if (stepCountsByPath.size !== 2) continue;

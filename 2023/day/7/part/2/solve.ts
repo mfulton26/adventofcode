@@ -34,7 +34,7 @@ type HandType = typeof handTypes[number];
 
 function determineHandType(cards: Card[]): HandType {
   const counts = new Map<Card, number>();
-  for (const card of cards) counts.set(card, (counts.get(card) ?? 0) + 1);
+  for (const card of cards) counts.set(card, counts.getOrInsert(card, 0) + 1);
   switch (counts.size) {
     case 1:
       return "Five of a kind";

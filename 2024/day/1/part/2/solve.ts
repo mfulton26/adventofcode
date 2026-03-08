@@ -4,8 +4,10 @@ export default function solve(input: string) {
     (_, index) => index % 2,
   );
   const counts = new Map<number, number>();
-  for (const value of right) counts.set(value, (counts.get(value) ?? 0) + 1);
+  for (const value of right) {
+    counts.set(value, counts.getOrInsert(value, 0) + 1);
+  }
   let sum = 0;
-  for (const value of left) sum += value * (counts.get(value) ?? 0);
+  for (const value of left) sum += value * counts.getOrInsert(value, 0);
   return sum;
 }

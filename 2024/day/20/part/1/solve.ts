@@ -45,7 +45,7 @@ export function findSavedTimeCountsByCheating(track: string[][]) {
         if (!isFinite(rt)) continue;
         const saved = t - rt - cheatTime;
         if (saved <= 0) continue;
-        result.set(saved, (result.get(saved) ?? 0) + 1);
+        result.set(saved, result.getOrInsert(saved, 0) + 1);
       }
     }
   }

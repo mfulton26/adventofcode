@@ -9,13 +9,13 @@ export default function solve(input: string) {
 function parseSleepHistogramsByGuardId(text: string) {
   const result = new Map<number, number[]>();
   let guardId: number, minuteFellAsleep: number, minuteWokeUp: number;
+  const createBin = () => Array.from({ length: 60 }, () => 0);
   for (const line of text.split("\n").sort()) {
     const [timeText, message] = line.split(/(?<=]) /);
     switch (message.replace(/Guard #\d+ /, "")) {
       case "begins shift":
         guardId = Number(message.match(/\d+/));
-        if (result.has(guardId)) break;
-        result.set(guardId, Array(60).fill(0));
+        result.getOrInsertComputed(guardId, createBin);
         break;
       case "falls asleep":
         minuteFellAsleep = Number(timeText.substring(15, 17));

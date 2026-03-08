@@ -3,9 +3,9 @@ export default function solve(input: string) {
   let count = 1;
   const counts = new Map([[0, count]]);
   for (const adapter of adapters) {
-    count = (counts.get(adapter - 3) ?? 0) +
-      (counts.get(adapter - 2) ?? 0) +
-      (counts.get(adapter - 1) ?? 0);
+    count = counts.getOrInsert(adapter - 3, 0) +
+      counts.getOrInsert(adapter - 2, 0) +
+      counts.getOrInsert(adapter - 1, 0);
     counts.set(adapter, count);
   }
   return count;

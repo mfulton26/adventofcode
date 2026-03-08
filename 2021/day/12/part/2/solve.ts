@@ -34,7 +34,7 @@ function parseConnections(text: string) {
   const result = new Map<string, string[]>();
   const add = (a: string, b: string) => {
     if (a === "end" || b === "start") return;
-    result.get(a)?.push(b) ?? result.set(a, [b]);
+    result.getOrInsert(a, []).push(b);
   };
   for (const line of text.trim().split("\n")) {
     const [a, b] = line.split("-");

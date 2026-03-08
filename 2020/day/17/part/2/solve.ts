@@ -41,8 +41,7 @@ function createConsiderations(activeCells: Coordinates[]) {
     for (const [dx, dy, dz, dw] of neighborDeltas) {
       const cell = <Coordinates> [x + dx, y + dy, z + dz, w + dw];
       const hash = `${cell}`;
-      if (hashMap.has(hash)) continue;
-      hashMap.set(hash, { cell, active: false });
+      hashMap.getOrInsert(hash, { cell, active: false });
     }
   }
   const result = new Map();

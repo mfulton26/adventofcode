@@ -7,8 +7,8 @@ export default function solve(input: string) {
       timelineCounts.delete(beamColumnIndex);
       for (const direction of [-1, 1]) {
         const splitColumnIndex = beamColumnIndex + direction;
-        const prevTimelineCount = timelineCounts.get(splitColumnIndex);
-        const nextTimelineCount = (prevTimelineCount ?? 0) + timelineCount;
+        const prevTimelineCount = timelineCounts.get(splitColumnIndex) ?? 0;
+        const nextTimelineCount = prevTimelineCount + timelineCount;
         timelineCounts.set(splitColumnIndex, nextTimelineCount);
       }
     }

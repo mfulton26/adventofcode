@@ -4,10 +4,8 @@ export default function solve(input: string) {
   const connections = input.split("\n").reduce((connections, line) => {
     const [u, rightText] = line.split(": ");
     for (const v of rightText.split(" ")) {
-      if (!connections.has(u)) connections.set(u, new Set());
-      connections.get(u)!.add(v);
-      if (!connections.has(v)) connections.set(v, new Set());
-      connections.get(v)!.add(u);
+      connections.getOrInsert(u, new Set()).add(v);
+      connections.getOrInsert(v, new Set()).add(u);
     }
     return connections;
   }, new Map<string, Set<string>>());

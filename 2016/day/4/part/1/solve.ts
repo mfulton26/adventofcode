@@ -25,6 +25,6 @@ function isRealRoom(
 
 function countChars(string: string) {
   const result = new Map<string, number>();
-  for (const char of string) result.set(char, (result.get(char) ?? 0) + 1);
+  for (const char of string) result.set(char, result.getOrInsert(char, 0) + 1);
   return result;
 }

@@ -36,10 +36,9 @@ function findIntersections(
     for (const [[dx, dy], amount] of path) {
       for (let i = 0; i < amount; i++) {
         x += dx, y += dy;
-        if (!grid.has(y)) grid.set(y, new Map<number, Set<Path>>());
-        const row = grid.get(y)!;
-        if (!row.has(x)) row.set(x, new Set<Path>());
-        const intersectingPaths = row.get(x)!;
+        const intersectingPaths = grid
+          .getOrInsert(y, new Map())
+          .getOrInsert(x, new Set());
         if (intersectingPaths.has(path)) continue;
         intersectingPaths.add(path);
         if (intersectingPaths.size !== 2) continue;

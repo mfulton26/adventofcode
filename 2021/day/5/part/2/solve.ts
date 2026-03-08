@@ -7,7 +7,7 @@ export default function solve(input: string) {
     const [dx, dy] = [Math.sign(x2 - x1), Math.sign(y2 - y1)];
     const [endX, endY] = [x2 + dx, y2 + dy];
     for (let x = x1, y = y1; x !== endX || y !== endY; x += dx, y += dy) {
-      grid.set(`${x},${y}`, (grid.get(`${x},${y}`) ?? 0) + 1);
+      grid.set(`${x},${y}`, grid.getOrInsert(`${x},${y}`, 0) + 1);
     }
   }
   let count = 0;

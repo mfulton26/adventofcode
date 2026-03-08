@@ -18,8 +18,7 @@ export default function solve(input: string, { steps = 64 } = {}) {
   const distances = new Map<number, Map<number, number>>();
   for (const { x, y, step } of heap.drain()) {
     if (map[y][x] === "#" || step > steps) continue;
-    if (!distances.has(y)) distances.set(y, new Map());
-    const row = distances.get(y)!;
+    const row = distances.getOrInsert(y, new Map());
     if (step >= (row.get(x) ?? Infinity)) continue;
     row.set(x, step);
     for (const d of directions) {

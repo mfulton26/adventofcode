@@ -7,7 +7,7 @@ export default function solve(input: string) {
   const pairCounts = new Map<string, number>();
   for (let i = 1; i < template.length; i++) {
     const pair = template.slice(i - 1, i + 1);
-    const count = pairCounts.get(pair) ?? 0;
+    const count = pairCounts.getOrInsert(pair, 0);
     pairCounts.set(pair, count + 1);
   }
   for (let i = 0; i < 40; i++) {
@@ -15,13 +15,13 @@ export default function solve(input: string) {
       const insertion = insertions.get(pair);
       if (insertion === undefined) continue;
       {
-        const count = pairCounts.get(pair) ?? 0;
+        const count = pairCounts.getOrInsert(pair, 0);
         if (count === pairCount) pairCounts.delete(pair);
         else pairCounts.set(pair, count - pairCount);
       }
       const [left, right] = pair;
       for (const pair of [`${left}${insertion}`, `${insertion}${right}`]) {
-        const count = pairCounts.get(pair) ?? 0;
+        const count = pairCounts.getOrInsert(pair, 0);
         pairCounts.set(pair, count + pairCount);
       }
     }
@@ -29,7 +29,7 @@ export default function solve(input: string) {
   const elementCounts = new Map<string, number>();
   for (const [pair, pairCount] of pairCounts) {
     for (const element of pair) {
-      const count = elementCounts.get(element) ?? 0;
+      const count = elementCounts.getOrInsert(element, 0);
       elementCounts.set(element, count + pairCount);
     }
   }

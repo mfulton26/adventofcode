@@ -16,7 +16,7 @@ export default function solve(input: string) {
       const hash = sequence.join(",");
       if (sequenceToPrice.has(hash)) continue;
       sequenceToPrice.set(hash, price);
-      const total = sequenceToTotalPrice.get(hash) ?? 0;
+      const total = sequenceToTotalPrice.getOrInsert(hash, 0);
       sequenceToTotalPrice.set(hash, total + price);
     }
   }

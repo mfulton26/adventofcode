@@ -84,10 +84,7 @@ export default function solve(input: string) {
   const sourcesByName = new Map<string, Set<string>>();
   for (const { name, destinations } of modules) {
     for (const destination of destinations) {
-      if (!sourcesByName.has(destination)) {
-        sourcesByName.set(destination, new Set());
-      }
-      sourcesByName.get(destination)!.add(name);
+      sourcesByName.getOrInsert(destination, new Set()).add(name);
     }
   }
   const modulesByName = modules.reduce(

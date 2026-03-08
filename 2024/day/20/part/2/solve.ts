@@ -48,7 +48,7 @@ export function findSavedTimeCountsByCheating(
           if (!isFinite(rt)) continue;
           const saved = t - rt - cheatTime;
           if (saved < min) continue;
-          result.set(saved, (result.get(saved) ?? 0) + 1);
+          result.set(saved, result.getOrInsert(saved, 0) + 1);
         }
       }
     }

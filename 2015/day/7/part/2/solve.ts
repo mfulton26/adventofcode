@@ -56,10 +56,10 @@ export function createSignals(instructions: Map<string, Wire>) {
   const signals = new Map<string, number>();
   function get(identifier: string) {
     if (/^\d+$/.test(identifier)) return Number(identifier);
-    if (!signals.has(identifier)) {
-      signals.set(identifier, instructions.get(identifier)!({ get }));
-    }
-    return signals.get(identifier)!;
+    return signals.getOrInsertComputed(
+      identifier,
+      () => instructions.get(identifier)!({ get }),
+    );
   }
   return { get, reset: () => signals.clear() };
 }

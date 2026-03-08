@@ -2,8 +2,8 @@ export default function solve(input: string) {
   const connections = input.split("\n").map((line) => line.split("-"));
   const edges = new Map<string, Set<string>>();
   for (const [u, v] of connections) {
-    edges.get(u)?.add(v) ?? edges.set(u, new Set([v]));
-    edges.get(v)?.add(u) ?? edges.set(v, new Set([u]));
+    edges.getOrInsert(u, new Set()).add(v);
+    edges.getOrInsert(v, new Set()).add(u);
   }
   const interconnections = new Set<string>();
   for (const [u, uNeighbors] of edges) {

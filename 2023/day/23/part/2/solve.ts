@@ -39,10 +39,8 @@ function parse(text: string) {
         u = v, [v] = options;
         steps++;
       }
-      if (!edges.has(node)) edges.set(node, new Map());
-      edges.get(node)!.set(v, steps);
-      if (!edges.has(v)) edges.set(v, new Map());
-      edges.get(v)!.set(node, steps);
+      edges.getOrInsert(node, new Map()).set(v, steps);
+      edges.getOrInsert(v, new Map()).set(node, steps);
     }
   }
   return {

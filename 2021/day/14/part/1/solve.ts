@@ -18,7 +18,7 @@ export default function solve(input: string) {
   }
   const elementCounts = new Map<string, number>();
   for (const element of polymer) {
-    elementCounts.set(element, (elementCounts.get(element) ?? 0) + 1);
+    elementCounts.set(element, elementCounts.getOrInsert(element, 0) + 1);
   }
   const max = Math.max(...elementCounts.values());
   const min = Math.min(...elementCounts.values());

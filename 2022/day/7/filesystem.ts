@@ -44,8 +44,10 @@ export function parseFromTerminalOutput(text: string) {
         for (const line of output) {
           const [info, name] = line.split(" ");
           if (info === "dir") {
-            if (current.subdirs.has(name)) continue;
-            current.subdirs.set(name, new DirInfo({ name, parent: current }));
+            current.subdirs.getOrInsertComputed(
+              name,
+              () => new DirInfo({ name, parent: current }),
+            );
             continue;
           }
           const size = parseInt(info);
