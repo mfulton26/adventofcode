@@ -1,7 +1,7 @@
 import md5 from "@lib/md5.ts";
 
 export default function solve(input: string) {
-  const password = Array(8).fill("_");
+  const password = Array.from({ length: 8 }, () => "_");
   let integer = 0;
   while (password.some((char) => char === "_")) {
     let hash;

@@ -28,7 +28,7 @@ function parseClaims(text: string): Map<number, Rect> {
 function transformClaimsToClaimSquares(claims: Map<number, Rect>) {
   const squares: ClaimSquare[] = Array.from(
     { length: 1000 },
-    () => Array(1000),
+    () => Array.from({ length: 1000 }),
   );
   for (const [id, { left, right, top, bottom }] of claims) {
     for (let x = left; x < right; x++) {

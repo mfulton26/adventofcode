@@ -15,7 +15,7 @@ function parseSleepHistogramsByGuardId(text: string) {
       case "begins shift":
         guardId = Number(message.match(/\d+/));
         if (result.has(guardId)) break;
-        result.set(guardId, Array(60).fill(0));
+        result.set(guardId, Array.from({ length: 60 }, () => 0));
         break;
       case "falls asleep":
         minuteFellAsleep = Number(timeText.substring(15, 17));

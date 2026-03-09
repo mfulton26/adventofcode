@@ -1,9 +1,9 @@
 export default function solve(input: string) {
   const levels = (() => {
     const levels = input.split("\n").map((line) => Array.from(line, Number));
-    return [...Array(5).keys()].flatMap((m) =>
+    return [...Array.from({ length: 5 }).keys()].flatMap((m) =>
       levels.map((row) =>
-        [...Array(5).keys()].flatMap((n) =>
+        [...Array.from({ length: 5 }).keys()].flatMap((n) =>
           row.map((level) => (level + m + n - 1) % 9 + 1)
         )
       )

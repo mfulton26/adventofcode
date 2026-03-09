@@ -28,8 +28,8 @@ export default function solve(input: string) {
       return { conditions, counts };
     })
     .map(({ conditions, counts }) => ({
-      conditions: Array(5).fill(conditions).join("?"),
-      counts: Array(5).fill(counts).flat(),
+      conditions: Array.from({ length: 5 }, () => conditions).join("?"),
+      counts: Array.from({ length: 5 }, () => counts).flat(),
     }))
     .map(({ conditions, counts }) => countArrangements(conditions, counts))
     .reduce((sum, count) => sum + count, 0);
