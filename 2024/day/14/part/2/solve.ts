@@ -1,3 +1,5 @@
+import mod from "@lib/mod.ts";
+
 const regExp = /^p=(?<px>\d+),(?<py>\d+) v=(?<vx>-?\d+),(?<vy>-?\d+)$/gm;
 
 export default function solve(
@@ -16,8 +18,4 @@ export default function solve(
     }
     return t;
   }
-}
-
-function mod(a: number, b: number) {
-  return ((a % b) + b) % b;
 }
