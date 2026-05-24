@@ -1,12 +1,3 @@
-interface Rect {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-  width: number;
-  height: number;
-}
-
 type ClaimSquare = (number | "X")[];
 
 export default function solve(input: string) {
@@ -15,17 +6,16 @@ export default function solve(input: string) {
   return findCountOfConflictingClaimSquares(squares);
 }
 
-function parseClaims(text: string): Map<number, Rect> {
+function parseClaims(text: string): Map<number, DOMRect> {
   return new Map(
     text.split("\n").map((line) => {
       const [, id, left, top, width, height] = line.split(/\D+/).map(Number);
-      const right = left + width, bottom = top + height;
-      return [id, { left, right, top, bottom, width, height }];
+      return [id, new DOMRect(left, top, width, height)];
     }),
   );
 }
 
-function transformClaimsToClaimSquares(claims: Map<number, Rect>) {
+function transformClaimsToClaimSquares(claims: Map<number, DOMRect>) {
   const squares: ClaimSquare[] = Array.from(
     { length: 1000 },
     () => Array.from({ length: 1000 }),
