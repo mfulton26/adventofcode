@@ -4,7 +4,6 @@
     "jsr:@deno/cache-dir@0.13.2": "0.13.2",
     "jsr:@deno/emit@0.46": "0.46.0",
     "jsr:@deno/graph@~0.73.1": "0.73.1",
-    "jsr:@macil/z3-solver@^1.0.4": "1.0.4",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@^1.0.9": "1.0.13",
     "jsr:@std/bytes@0.223": "0.223.0",
@@ -25,7 +24,8 @@
     "npm:@graph-algorithm/minimum-cut@2": "2.0.0",
     "npm:nerdamer@^1.1.13": "1.1.13",
     "npm:pretty-ms@^9.3.0": "9.3.0",
-    "npm:z3-solver@4.15.4": "4.15.4"
+    "npm:z3-solver@*": "4.16.0",
+    "npm:z3-solver@^4.16.0": "4.16.0"
   },
   "jsr": {
     "@deno/cache-dir@0.13.2": {
@@ -47,12 +47,6 @@
     },
     "@deno/graph@0.73.1": {
       "integrity": "cd69639d2709d479037d5ce191a422eabe8d71bb68b0098344f6b07411c84d41"
-    },
-    "@macil/z3-solver@1.0.4": {
-      "integrity": "b00cde3c6c046e094fa95849c3099c29b5cd0e05e296050103c7237216343a0b",
-      "dependencies": [
-        "npm:z3-solver"
-      ]
     },
     "@std/assert@0.223.0": {
       "integrity": "eb8d6d879d76e1cc431205bd346ed4d88dc051c6366365b1af47034b0670be24"
@@ -204,8 +198,8 @@
     "tslib@2.8.1": {
       "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
     },
-    "z3-solver@4.15.4": {
-      "integrity": "sha512-Tcv55+k5VsPQEX7R3gIu5ieUeLp9fP1r+8+c85dQORj/v4Fy+LvOzVzZZtg4mJjUgfIhGCg6ZfAeiUiUxDPRVg==",
+    "z3-solver@4.16.0": {
+      "integrity": "sha512-vWT+I5Yz0dXtseLVZsnkwAIrRmbxw0rCX5a6Xglc6n1CyPESNMnHB3iAWh7XTQQHZRlpWYnKJXTJ0ahTTNHZEg==",
       "dependencies": [
         "async-mutex"
       ]
@@ -214,7 +208,6 @@
   "workspace": {
     "dependencies": [
       "jsr:@deno/emit@0.46",
-      "jsr:@macil/z3-solver@^1.0.4",
       "jsr:@std/assert@^1.0.9",
       "jsr:@std/cli@^1.0.8",
       "jsr:@std/data-structures@^1.0.4",
@@ -223,7 +216,8 @@
       "jsr:@std/path@^1.0.8",
       "npm:@graph-algorithm/minimum-cut@2",
       "npm:nerdamer@^1.1.13",
-      "npm:pretty-ms@^9.3.0"
+      "npm:pretty-ms@^9.3.0",
+      "npm:z3-solver@^4.16.0"
     ]
   }
 }

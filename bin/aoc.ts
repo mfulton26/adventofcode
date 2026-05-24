@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-env=AOC_SESSION,AOC_CONFIG_DIR,HOME,AOC_CACHE_DIR,AOC_BASE_URL --allow-read=$HOME/.aoc,.. --allow-write=$HOME/.aoc --allow-net=adventofcode.com
+#!/usr/bin/env -S deno run --allow-env=AOC_*,HOME,NODE_* --allow-read=$HOME/.aoc,.. --allow-write=$HOME/.aoc --allow-net=adventofcode.com --deny-env=*
 
 import { parseArgs } from "@std/cli/parse-args";
 import { dirname, join } from "@std/path";
