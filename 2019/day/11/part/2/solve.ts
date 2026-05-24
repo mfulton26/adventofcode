@@ -1,6 +1,5 @@
 import { program } from "../../../9/intcode.ts";
 
-
 export default function solve(input: string) {
   const memory = input.split(",").map(Number);
   const panels = paintPanels(program(memory));
@@ -23,7 +22,7 @@ export function paintPanels(outputs: ReturnType<typeof program>) {
   return result;
 }
 
-function stringify(hashedCoordinates: Pick<Set<string>, "has" | >) {
+function stringify(hashedCoordinates: Pick<Set<string>, "has" | "keys">) {
   let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
   for (const coordinates of hashedCoordinates.keys()) {
     const [x, y] = coordinates.split(",").map(Number);
