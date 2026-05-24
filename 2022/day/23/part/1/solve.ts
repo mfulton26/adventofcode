@@ -68,7 +68,7 @@ export default function solve(input: string) {
       );
       if (!d) continue;
       const point = intern({ x: elf.x + d.x, y: elf.y + d.y });
-      proposals.get(point)?.add(elf) ?? proposals.set(point, new Set([elf]));
+      proposals.getOrInsertComputed(point, () => new Set()).add(elf);
     }
     for (const [point, proposed] of proposals) {
       if (proposed.size > 1) continue;

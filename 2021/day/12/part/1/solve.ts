@@ -29,7 +29,7 @@ export default function solve(input: string) {
 function parseConnections(text: string) {
   const result = new Map<string, string[]>();
   const add = (a: string, b: string) => {
-    result.get(a)?.push(b) ?? result.set(a, [b]);
+    result.getOrInsertComputed(a, () => []).push(b);
   };
   for (const line of text.trim().split("\n")) {
     const [a, b] = line.split("-");

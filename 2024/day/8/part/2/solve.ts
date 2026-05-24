@@ -3,7 +3,7 @@ function getAntennaLocationsByFrequency(grid: string[][]) {
   for (const [y, row] of grid.entries()) {
     for (const [x, char] of row.entries()) {
       if (char === ".") continue;
-      map.get(char)?.push({ x, y }) ?? map.set(char, [{ x, y }]);
+      map.getOrInsertComputed(char, () => []).push({ x, y });
     }
   }
   return map;

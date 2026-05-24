@@ -26,8 +26,8 @@ export default function solve(input: string) {
   const connections = input.split("\n").map((line) => line.split("-"));
   const edges = new Map<string, Set<string>>();
   for (const [u, v] of connections) {
-    edges.get(u)?.add(v) ?? edges.set(u, new Set([v]));
-    edges.get(v)?.add(u) ?? edges.set(v, new Set([u]));
+    edges.getOrInsertComputed(u, () => new Set()).add(v);
+    edges.getOrInsertComputed(v, () => new Set()).add(u);
   }
   const graph: Graph<string> = {
     nodes: new Set(edges.keys()),
