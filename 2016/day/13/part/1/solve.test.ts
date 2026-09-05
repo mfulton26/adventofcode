@@ -1,0 +1,11 @@
+import solve from "./solve.ts";
+
+import { assertEquals } from "@std/assert";
+
+Deno.test("example", () => {
+  const input = `\
+10
+`;
+
+  assertEquals(solve(input, { x: 7, y: 4 }), 11);
+});
