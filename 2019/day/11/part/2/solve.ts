@@ -1,13 +1,13 @@
-import { program } from "../../../9/intcode.ts";
+import { createProgram } from "../../../9/intcode.ts";
 
 export default function solve(input: string) {
   const memory = input.split(",").map(Number);
-  const panels = paintPanels(program(memory));
+  const panels = paintPanels(createProgram(memory));
   for (const [key, value] of panels) if (value === 0) panels.delete(key);
   return stringify(panels);
 }
 
-export function paintPanels(outputs: ReturnType<typeof program>) {
+export function paintPanels(outputs: ReturnType<typeof createProgram>) {
   const result = new Map<string, number>();
   let x = 0, y = 0, dx = 0, dy = -1;
   const paintingRobot = outputs((function* () {

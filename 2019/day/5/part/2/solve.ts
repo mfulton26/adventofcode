@@ -1,80 +1,73 @@
 export default function solve(input: string) {
   const memory = input.split(",").map(Number);
-  let lastOutput: number;
-  for (const output of program(memory)([5])) lastOutput = output;
-  return lastOutput!;
+  const program = createProgram(memory);
+  return program([5]).reduce((_, lastOutput) => lastOutput);
 }
 
-function program(memory: number[]) {
+function createProgram(memory: number[]) {
   return function* (inputs: Iterable<number>) {
     const inputIterator = inputs[Symbol.iterator]();
-    for (
-      let instructionPointer = 0;
-      instructionPointer >= 0 &&
-      instructionPointer < memory.length &&
-      memory[instructionPointer] !== 99;
-    ) {
-      const instruction = memory[instructionPointer++];
+    let ip = 0;
+    function readParam(mode: number) {
+      return mode === 0 ? memory[memory[ip++]] : memory[ip++];
+    }
+    function writeParam(mode: number, value: number) {
+      const target = mode === 0 ? memory[ip++] : ip++;
+      memory[target] = value;
+    }
+    while (ip >= 0 && ip < memory.length) {
+      const instruction = memory[ip++];
       const opcode = instruction % 100;
-      const parameters = {
-        [Symbol.iterator]() {
-          return this;
-        },
-        divisor: 10,
-        next(value?: number) {
-          this.divisor *= 10;
-          const mode = Math.trunc(instruction / this.divisor) % 10;
-          const position = mode === 0
-            ? memory[instructionPointer++]
-            : instructionPointer++;
-          if (value === undefined) value = memory[position];
-          else memory[position] = value;
-          return { value, done: false as const };
-        },
-      };
+      const mode1 = Math.floor(instruction / 1e2) % 10;
+      const mode2 = Math.floor(instruction / 1e3) % 10;
+      const mode3 = Math.floor(instruction / 1e4) % 10;
       switch (opcode) {
         case 1: {
-          const [a, b] = parameters;
-          parameters.next(a + b);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a + b);
           break;
         }
         case 2: {
-          const [a, b] = parameters;
-          parameters.next(a * b);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a * b);
           break;
         }
         case 3: {
-          parameters.next(inputIterator.next().value);
+          writeParam(mode1, inputIterator.next().value);
           break;
         }
         case 4: {
-          yield parameters.next().value;
+          yield readParam(mode1);
           break;
         }
         case 5: {
-          const [a, b] = parameters;
-          if (a !== 0) {
-            instructionPointer = b;
-          }
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          if (a !== 0) ip = b;
           break;
         }
         case 6: {
-          const [a, b] = parameters;
-          if (a === 0) {
-            instructionPointer = b;
-          }
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          if (a === 0) ip = b;
           break;
         }
         case 7: {
-          const [a, b] = parameters;
-          parameters.next(a < b ? 1 : 0);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a < b ? 1 : 0);
           break;
         }
         case 8: {
-          const [a, b] = parameters;
-          parameters.next(a === b ? 1 : 0);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a === b ? 1 : 0);
           break;
         }
+        case 99:
+          return;
       }
     }
   };

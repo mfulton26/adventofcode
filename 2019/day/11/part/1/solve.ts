@@ -1,12 +1,12 @@
-import { program } from "../../../9/intcode.ts";
+import { createProgram } from "../../../9/intcode.ts";
 
 export default function solve(input: string) {
   const memory = input.split(",").map(Number);
-  const panels = paintPanels(program(memory));
+  const panels = paintPanels(createProgram(memory));
   return panels.size;
 }
 
-export function paintPanels(outputs: ReturnType<typeof program>) {
+export function paintPanels(outputs: ReturnType<typeof createProgram>) {
   const result = new Map<string, number>();
   let x = 0, y = 0, dx = 0, dy = -1;
   const paintingRobot = outputs((function* () {

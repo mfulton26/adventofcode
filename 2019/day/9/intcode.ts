@@ -1,91 +1,77 @@
-export function program(memory: number[]) {
+export function createProgram(memory: number[]) {
   return function* (inputs: Iterable<number>) {
     const inputIterator = inputs[Symbol.iterator]();
-    for (
-      let instructionPointer = 0, relativeBase = 0;
-      instructionPointer >= 0 &&
-      instructionPointer < memory.length &&
-      memory[instructionPointer] !== 99;
-    ) {
-      const instruction = memory[instructionPointer++] ?? 0;
+    let ip = 0;
+    let relativeBase = 0;
+    function readParam(mode: number) {
+      const value = memory[ip++] ?? 0;
+      if (mode === 0) return memory[value] ?? 0;
+      if (mode === 1) return value;
+      return memory[relativeBase + value] ?? 0;
+    }
+    function writeParam(mode: number, value: number) {
+      const target = memory[ip++] ?? 0;
+      if (mode === 0) memory[target] = value;
+      memory[relativeBase + target] = value;
+    }
+    while (ip >= 0 && ip < memory.length) {
+      const instruction = memory[ip++] ?? 0;
       const opcode = instruction % 100;
-      const parameters = {
-        [Symbol.iterator]() {
-          return this;
-        },
-        divisor: 10,
-        next(value?: number) {
-          this.divisor *= 10;
-          const mode = Math.trunc(instruction / this.divisor) % 10;
-          let position;
-          switch (mode) {
-            case 0:
-              position = memory[instructionPointer++] ?? 0;
-              break;
-            case 1:
-              position = instructionPointer++;
-              break;
-            case 2:
-              position = relativeBase + (memory[instructionPointer++] ?? 0);
-              break;
-            default:
-              throw new Error("unreachable");
-          }
-          if (value === undefined) value = memory[position] ?? 0;
-          else memory[position] = value;
-          return { value, done: false as const };
-        },
-      };
+      const mode1 = Math.floor(instruction / 1e2) % 10;
+      const mode2 = Math.floor(instruction / 1e3) % 10;
+      const mode3 = Math.floor(instruction / 1e4) % 10;
       switch (opcode) {
         case 1: {
-          const [a, b] = parameters;
-          parameters.next(a + b);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a + b);
           break;
         }
         case 2: {
-          const [a, b] = parameters;
-          parameters.next(a * b);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a * b);
           break;
         }
         case 3: {
-          const { value: input } = inputIterator.next();
-          parameters.next(input);
+          writeParam(mode1, inputIterator.next().value ?? 0);
           break;
         }
         case 4: {
-          const [output] = parameters;
-          yield output;
+          yield readParam(mode1);
           break;
         }
         case 5: {
-          const [a, b] = parameters;
-          if (a !== 0) {
-            instructionPointer = b;
-          }
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          if (a !== 0) ip = b;
           break;
         }
         case 6: {
-          const [a, b] = parameters;
-          if (a === 0) {
-            instructionPointer = b;
-          }
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          if (a === 0) ip = b;
           break;
         }
         case 7: {
-          const [a, b] = parameters;
-          parameters.next(a < b ? 1 : 0);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a < b ? 1 : 0);
           break;
         }
         case 8: {
-          const [a, b] = parameters;
-          parameters.next(a === b ? 1 : 0);
+          const a = readParam(mode1);
+          const b = readParam(mode2);
+          writeParam(mode3, a === b ? 1 : 0);
           break;
         }
         case 9: {
-          const [a] = parameters;
+          const a = readParam(mode1);
           relativeBase += a;
           break;
         }
+        case 99:
+          return;
       }
     }
   };

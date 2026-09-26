@@ -9,22 +9,18 @@ export default function solve(
 }
 
 export function runProgram(memory: number[]) {
-  for (let instructionPointer = 0; memory[instructionPointer] !== 99;) {
-    const opcode = memory[instructionPointer++];
-    const parameters = (function* () {
-      while (true) yield memory[instructionPointer++];
-    })();
+  for (let ip = 0; memory[ip] !== 99;) {
+    const opcode = memory[ip++];
+    const a = memory[ip++];
+    const b = memory[ip++];
+    const c = memory[ip++];
     switch (opcode) {
-      case 1: {
-        const [a, b, c] = parameters;
+      case 1:
         memory[c] = memory[a] + memory[b];
         break;
-      }
-      case 2: {
-        const [a, b, c] = parameters;
+      case 2:
         memory[c] = memory[a] * memory[b];
         break;
-      }
     }
   }
   return memory;
