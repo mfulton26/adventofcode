@@ -2,39 +2,26 @@ import { alphanumericalCompareFn } from "@lib/alphanumeric.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("alphanumericalCompareFn", async (t) => {
-  await t.step("alphabetical", async (t) => {
-    await t.step('"abc" vs. "abc"', expect(0));
-    await t.step('"abc" vs. "cba"', expect(-1));
-    await t.step('"cba" vs. "abc"', expect(1));
-  });
-
-  await t.step("numerical", async (t) => {
-    await t.step('"0" vs. "0"', expect(0));
-    await t.step('"1" vs. "1"', expect(0));
-    await t.step('"1" vs. "10"', expect(-1));
-    await t.step('"10" vs. "1"', expect(1));
-    await t.step('"1" vs. "11"', expect(-1));
-    await t.step('"11" vs. "1"', expect(1));
-    await t.step('"2" vs. "10"', expect(-1));
-    await t.step('"10" vs. "2"', expect(1));
-  });
-
-  await t.step("alphanumerical", async (t) => {
-    await t.step('"abc123" vs. "abc123"', expect(0));
-    await t.step('"abc123" vs. "123abc"', expect(-1));
-    await t.step('"123abc" vs. "abc123"', expect(1));
-    await t.step('"a1b2c3" vs. "a1b2c3"', expect(0));
-    await t.step('"a2" vs. "a10"', expect(-1));
-    await t.step('"a10" vs. "a2"', expect(1));
-    await t.step('"1ab" vs. "1ba"', expect(-1));
-    await t.step('"1ba" vs. "1ab"', expect(1));
-  });
-
-  function expect(expected: unknown) {
-    return (t: Deno.TestContext) => {
-      const [a, b] = JSON.parse(`[${t.name.replace(" vs. ", ", ")}]`);
-      assertEquals(alphanumericalCompareFn(a, b), expected);
-    };
-  }
+Deno.test.each([
+  { category: "alphabetical", a: "abc", b: "abc", expected: 0 },
+  { category: "alphabetical", a: "abc", b: "cba", expected: -1 },
+  { category: "alphabetical", a: "cba", b: "abc", expected: 1 },
+  { category: "numerical", a: "0", b: "0", expected: 0 },
+  { category: "numerical", a: "1", b: "1", expected: 0 },
+  { category: "numerical", a: "1", b: "10", expected: -1 },
+  { category: "numerical", a: "10", b: "1", expected: 1 },
+  { category: "numerical", a: "1", b: "11", expected: -1 },
+  { category: "numerical", a: "11", b: "1", expected: 1 },
+  { category: "numerical", a: "2", b: "10", expected: -1 },
+  { category: "numerical", a: "10", b: "2", expected: 1 },
+  { category: "alphanumerical", a: "abc123", b: "abc123", expected: 0 },
+  { category: "alphanumerical", a: "abc123", b: "123abc", expected: -1 },
+  { category: "alphanumerical", a: "123abc", b: "abc123", expected: 1 },
+  { category: "alphanumerical", a: "a1b2c3", b: "a1b2c3", expected: 0 },
+  { category: "alphanumerical", a: "a2", b: "a10", expected: -1 },
+  { category: "alphanumerical", a: "a10", b: "a2", expected: 1 },
+  { category: "alphanumerical", a: "1ab", b: "1ba", expected: -1 },
+  { category: "alphanumerical", a: "1ba", b: "1ab", expected: 1 },
+])('$category: "$a" vs. "$b"', ({ a, b, expected }) => {
+  assertEquals(alphanumericalCompareFn(a, b), expected);
 });

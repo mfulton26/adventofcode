@@ -2,16 +2,14 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("0,3,6", expect(436));
-Deno.test("1,3,2", expect(1));
-Deno.test("2,1,3", expect(10));
-Deno.test("1,2,3", expect(27));
-Deno.test("2,3,1", expect(78));
-Deno.test("3,2,1", expect(438));
-Deno.test("3,1,2", expect(1836));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: "0,3,6", expected: 436 },
+  { input: "1,3,2", expected: 1 },
+  { input: "2,1,3", expected: 10 },
+  { input: "1,2,3", expected: 27 },
+  { input: "2,3,1", expected: 78 },
+  { input: "3,2,1", expected: 438 },
+  { input: "3,1,2", expected: 1836 },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});

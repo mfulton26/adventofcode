@@ -2,14 +2,12 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("ugknbfddgicrmopn", expect(1));
-Deno.test("aaa", expect(1));
-Deno.test("jchzalrnumimnmhp", expect(0));
-Deno.test("haegwjzuvuyypxyu", expect(0));
-Deno.test("dvszwmarrgswjxmb", expect(0));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: "ugknbfddgicrmopn", expected: 1 },
+  { input: "aaa", expected: 1 },
+  { input: "jchzalrnumimnmhp", expected: 0 },
+  { input: "haegwjzuvuyypxyu", expected: 0 },
+  { input: "dvszwmarrgswjxmb", expected: 0 },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});

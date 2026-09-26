@@ -2,19 +2,18 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("HOH", expect(4));
-Deno.test("HOHOHO", expect(7));
-Deno.test("H2O", expect(3));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    const input = `\
+Deno.test.each([
+  { molecule: "HOH", expected: 4 },
+  { molecule: "HOHOHO", expected: 7 },
+  { molecule: "H2O", expected: 3 },
+])("$molecule", ({ molecule, expected }) => {
+  const input = `\
 H => HO
 H => OH
 O => HH
 
-${t.name}`;
+${molecule}
+`;
 
-    assertEquals(solve(input), expected);
-  };
-}
+  assertEquals(solve(input), expected);
+});

@@ -2,14 +2,10 @@ import { isValid } from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("isValid", async (t) => {
-  await t.step("aa bb cc dd ee", expect(true));
-  await t.step("aa bb cc dd aa", expect(false));
-  await t.step("aa bb cc dd aaa", expect(true));
-
-  function expect(expected: unknown) {
-    return (t: Deno.TestContext) => {
-      assertEquals(isValid(t.name), expected);
-    };
-  }
+Deno.test.each([
+  { input: "aa bb cc dd ee", expected: true },
+  { input: "aa bb cc dd aa", expected: false },
+  { input: "aa bb cc dd aaa", expected: true },
+])("isValid $input", ({ input, expected }) => {
+  assertEquals(isValid(input), expected);
 });

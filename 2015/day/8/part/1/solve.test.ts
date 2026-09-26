@@ -2,16 +2,14 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test('""', expect(2 - 0));
-Deno.test('"abc"', expect(5 - 3));
-Deno.test('"aaa\\"aaa"', expect(10 - 7));
-Deno.test('"\\x27"', expect(6 - 1));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: '""', expected: 2 - 0 },
+  { input: '"abc"', expected: 5 - 3 },
+  { input: '"aaa\\"aaa"', expected: 10 - 7 },
+  { input: '"\\x27"', expected: 6 - 1 },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});
 
 Deno.test("example", () => {
   const input = `\

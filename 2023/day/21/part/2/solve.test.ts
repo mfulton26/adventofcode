@@ -16,16 +16,14 @@ const input = `\
 ...........`;
 
 /* couldn't get tests to work */
-Deno.test("6", { ignore: true }, expect(16));
-Deno.test("10", { ignore: true }, expect(50));
-Deno.test("50", { ignore: true }, expect(1594));
-Deno.test("100", { ignore: true }, expect(6536));
-Deno.test("500", { ignore: true }, expect(167004));
-Deno.test("1000", { ignore: true }, expect(668697));
-Deno.test("5000", { ignore: true }, expect(16733044));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(input, { steps: +t.name }), expected);
-  };
-}
+Deno.test.each([
+  { steps: 6, expected: 16 },
+  { steps: 10, expected: 50 },
+  { steps: 50, expected: 1594 },
+  { steps: 100, expected: 6536 },
+  { steps: 500, expected: 167004 },
+  { steps: 1000, expected: 668697 },
+  { steps: 5000, expected: 16733044 },
+])("$steps", { ignore: true }, ({ steps, expected }) => {
+  assertEquals(solve(input, { steps }), expected);
+});

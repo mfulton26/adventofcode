@@ -2,11 +2,9 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("2x3x4", expect(34));
-Deno.test("1x1x10", expect(14));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: "2x3x4", expected: 34 },
+  { input: "1x1x10", expected: 14 },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});

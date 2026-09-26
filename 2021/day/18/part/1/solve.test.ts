@@ -2,21 +2,19 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("[[1,2],[[3,4],5]]", expect(143));
-Deno.test("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]", expect(1384));
-Deno.test("[[[[1,1],[2,2]],[3,3]],[4,4]]", expect(445));
-Deno.test("[[[[3,0],[5,3]],[4,4]],[5,5]]", expect(791));
-Deno.test("[[[[5,0],[7,4]],[5,5]],[6,6]]", expect(1137));
-Deno.test(
-  "[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]",
-  expect(3488),
-);
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: "[[1,2],[[3,4],5]]", expected: 143 },
+  { input: "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]", expected: 1384 },
+  { input: "[[[[1,1],[2,2]],[3,3]],[4,4]]", expected: 445 },
+  { input: "[[[[3,0],[5,3]],[4,4]],[5,5]]", expected: 791 },
+  { input: "[[[[5,0],[7,4]],[5,5]],[6,6]]", expected: 1137 },
+  {
+    input: "[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]",
+    expected: 3488,
+  },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});
 
 Deno.test("example", () => {
   const input = `\

@@ -2,16 +2,12 @@ import { isValid } from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("isValid", async (t) => {
-  await t.step("abcde fghij", expect(true));
-  await t.step("abcde xyz ecdab", expect(false));
-  await t.step("a ab abc abd abf abj", expect(true));
-  await t.step("iiii oiii ooii oooi oooo", expect(true));
-  await t.step("oiii ioii iioi iiio", expect(false));
-
-  function expect(expected: unknown) {
-    return (t: Deno.TestContext) => {
-      assertEquals(isValid(t.name), expected);
-    };
-  }
+Deno.test.each([
+  { input: "abcde fghij", expected: true },
+  { input: "abcde xyz ecdab", expected: false },
+  { input: "a ab abc abd abf abj", expected: true },
+  { input: "iiii oiii ooii oooi oooo", expected: true },
+  { input: "oiii ioii iioi iiio", expected: false },
+])("isValid $input", ({ input, expected }) => {
+  assertEquals(isValid(input), expected);
 });

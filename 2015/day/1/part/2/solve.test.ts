@@ -2,11 +2,9 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test(")", expect(1));
-Deno.test("()())", expect(5));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: ")", expected: 1 },
+  { input: "()())", expected: 5 },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});

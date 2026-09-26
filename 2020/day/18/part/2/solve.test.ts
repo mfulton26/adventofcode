@@ -2,14 +2,12 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("1 + 2 * 3 + 4 * 5 + 6", expect(231));
-Deno.test("2 * 3 + (4 * 5)", expect(46));
-Deno.test("5 + (8 * 3 + 9 + 3 * 4 * 3)", expect(1445));
-Deno.test("5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))", expect(669060));
-Deno.test("((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2", expect(23340));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: "1 + 2 * 3 + 4 * 5 + 6", expected: 231 },
+  { input: "2 * 3 + (4 * 5)", expected: 46 },
+  { input: "5 + (8 * 3 + 9 + 3 * 4 * 3)", expected: 1445 },
+  { input: "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))", expected: 669060 },
+  { input: "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2", expected: 23340 },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});

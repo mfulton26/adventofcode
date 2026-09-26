@@ -2,12 +2,10 @@ import solve from "./solve.ts";
 
 import { assertEquals } from "@std/assert";
 
-Deno.test("^v", expect(3));
-Deno.test("^>v<", expect(3));
-Deno.test("^v^v^v^v^v", expect(11));
-
-function expect(expected: unknown) {
-  return (t: Deno.TestContext) => {
-    assertEquals(solve(t.name), expected);
-  };
-}
+Deno.test.each([
+  { input: "^v", expected: 3 },
+  { input: "^>v<", expected: 3 },
+  { input: "^v^v^v^v^v", expected: 11 },
+])("$input", ({ input, expected }) => {
+  assertEquals(solve(input), expected);
+});
