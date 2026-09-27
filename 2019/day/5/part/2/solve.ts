@@ -1,12 +1,11 @@
 export default function solve(input: string) {
   const memory = input.split(",").map(Number);
   const program = createProgram(memory);
-  return program([5]).reduce((_, lastOutput) => lastOutput);
+  return program(() => 5).reduce((_, lastOutput) => lastOutput);
 }
 
 function createProgram(memory: number[]) {
-  return function* (inputs: Iterable<number>) {
-    const inputIterator = inputs[Symbol.iterator]();
+  return function* (getInput: () => number) {
     let ip = 0;
     function readParam(mode: number) {
       return mode === 0 ? memory[memory[ip++]] : memory[ip++];
@@ -35,7 +34,7 @@ function createProgram(memory: number[]) {
           break;
         }
         case 3: {
-          writeParam(mode1, inputIterator.next().value);
+          writeParam(mode1, getInput());
           break;
         }
         case 4: {

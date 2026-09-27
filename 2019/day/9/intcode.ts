@@ -1,6 +1,5 @@
 export function createProgram(memory: number[]) {
-  return function* (inputs: Iterable<number>) {
-    const inputIterator = inputs[Symbol.iterator]();
+  return function* (getInput = () => 0) {
     let ip = 0;
     let relativeBase = 0;
     function readParam(mode: number) {
@@ -12,7 +11,7 @@ export function createProgram(memory: number[]) {
     function writeParam(mode: number, value: number) {
       const target = memory[ip++] ?? 0;
       if (mode === 0) memory[target] = value;
-      memory[relativeBase + target] = value;
+      else if (mode === 2) memory[relativeBase + target] = value;
     }
     while (ip >= 0 && ip < memory.length) {
       const instruction = memory[ip++] ?? 0;
@@ -34,7 +33,7 @@ export function createProgram(memory: number[]) {
           break;
         }
         case 3: {
-          writeParam(mode1, inputIterator.next().value ?? 0);
+          writeParam(mode1, getInput() ?? 0);
           break;
         }
         case 4: {

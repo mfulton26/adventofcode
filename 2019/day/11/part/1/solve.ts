@@ -6,12 +6,10 @@ export default function solve(input: string) {
   return panels.size;
 }
 
-export function paintPanels(outputs: ReturnType<typeof createProgram>) {
+export function paintPanels(program: ReturnType<typeof createProgram>) {
   const result = new Map<string, number>();
   let x = 0, y = 0, dx = 0, dy = -1;
-  const paintingRobot = outputs((function* () {
-    while (true) yield result.get(`${x},${y}`) ?? 0;
-  })());
+  const paintingRobot = program(() => result.get(`${x},${y}`) ?? 0);
   for (const paintColor of paintingRobot) {
     const turnDirection = paintingRobot.next().value ? 1 : -1;
     result.set(`${x},${y}`, paintColor);

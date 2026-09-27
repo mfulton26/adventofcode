@@ -23,11 +23,18 @@ Deno.test("createProgram handles quine-style output", () => {
   ];
   const expected = [...memory];
 
-  assertEquals(createProgram(memory)([]).toArray(), expected);
+  assertEquals(createProgram(memory)().toArray(), expected);
 });
 
 Deno.test("program supports relative mode output", () => {
   const memory = [104, 1125899906842624, 99];
 
-  assertEquals(createProgram(memory)([]).toArray(), [1125899906842624]);
+  assertEquals(createProgram(memory)().toArray(), [1125899906842624]);
+});
+
+Deno.test("program writes to relative-address parameters", () => {
+  const memory = [109, 1, 203, 2, 204, 2, 99];
+
+  assertEquals(createProgram(memory)().toArray(), [0]);
+  assertEquals(memory[3], 0);
 });
